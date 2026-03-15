@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>REGISTRO EVENTO</title>
+    <meta name="description" content="Accede al área de socios de ATHENA Wellness Club para consultar 
+        tu cuenta, gestionar tu plan y reservar actividades o clases.">
+    <meta name="keywords" content="evento, registro, registro evento">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo1.css">
+</head>
+
+<body>
+    <!-- HEADER / CABECERA PRINCIPAL -->
+    <!-- Logo del club y menú de navegación -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <!-- Logo e identidad visual de la marca -->
+            <a class="brand" href="index.html" aria-label="ATHENA Wellness Club">
+                <img src="img/athena_logo.png" alt="Logo del Club">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Strength with Intelligence</span>
+                </span>
+            </a>
+            <!-- Menú principal de navegación -->
+            <nav class="nav" aria-label="Navegación principal">
+                <a href="nosotros.html">Sobre nosotros</a>
+                <a href="tarifas.html">Tarifas</a>
+                <a href="actividades.html">Actividades</a>
+                <a href="horarios.html">Horarios</a>
+                <a href="unete.html">Únete</a>
+                <a href="socios.html">Área socios</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- SECCIÓN: ÁREA DE SOCIOS -->
+        <!-- Formulario de acceso para usuarios registrados -->
+        <section class="section">
+            <div class="container">
+                <!-- Título y descripción de la sección -->
+                <h2 class="h2">Área de socios</h2>
+                <p class="lead">Accede a tu cuenta para reservar clases y ver tu plan.</p>
+                <!-- Contenedor visual del formulario -->
+                <div class="form-shell" style="max-width: 520px;">
+                    <!-- Formulario de inicio de sesión -->
+                    <form method="post" action="/login">
+                        <!-- Campo: nombre de usuario -->
+                        <div class="form-row">
+                            <label for="nombreUsuario">Nombre de usuario</label>
+                            <input type="text" id="nombreUsuario" name="nombreUsuario" required
+                                placeholder="Tu usuario">
+                        </div>
+                        <!-- Campo: contraseña -->
+                        <div class="form-row">
+                            <label for="password">Contraseña</label>
+                            <input type="password" id="password" name="password" required minlength="8"
+                                placeholder="Tu contraseña">
+                        </div>
+                        <!-- Botones de acción del formulario -->
+                        <div class="actions">
+                            <button class="btn btn--primary" type="submit">Entrar</button>
+                            <a class="btn btn--ghost" href="unete.html">Crear cuenta</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER / PIE DE PÁGINA -->
+    <!-- Información de contacto y horario -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123 · 912 345 678</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

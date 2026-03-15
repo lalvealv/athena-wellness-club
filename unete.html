@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Únete al club | ATHENA Wellness Club</title>
+    <meta name="description" content="Completa tu registro en ATHENA Wellness Club y únete a un 
+    club deportivo premium con membresías, actividades y espacios diseñados para bienestar y rendimiento.">
+    <meta name="keywords" content="evento, registro, registro evento">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo1.css">
+</head>
+
+<body>
+    <!-- HEADER / CABECERA PRINCIPAL -->
+    <!-- Logo del club y menú de navegación -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <!-- Logo e identidad visual de la marca -->
+            <a class="brand" href="index.html" aria-label="ATHENA Wellness Club">
+                <img src="img/athena_logo.png" alt="Logo del Club">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Strength with Intelligence</span>
+                </span>
+            </a>
+            <!-- Menú principal de navegación -->
+            <nav class="nav" aria-label="Navegación principal">
+                <a href="nosotros.html">Sobre nosotros</a>
+                <a href="tarifas.html">Tarifas</a>
+                <a href="actividades.html">Actividades</a>
+                <a href="horarios.html">Horarios</a>
+                <a href="unete.html">Únete</a>
+                <a href="socios.html">Área socios</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="section">
+            <!-- SECCIÓN: FORMULARIO DE ALTA -->
+            <!-- Permite al usuario registrarse en el club -->
+            <div class="container">
+                <!-- Título y descripción de la sección -->
+                <h2 class="h2">Únete al club</h2>
+                <p class="lead">Completa tu registro. Estética premium, datos claros.</p>
+                <!-- Contenedor visual del formulario -->
+                <div class="form-shell">
+                    <!-- Formulario principal de registro -->
+                    <form method="post" action="/enviar-registro">
+                        <!-- BLOQUE: DATOS PERSONALES -->
+                        <!-- Información básica del nuevo usuario -->
+                        <fieldset>
+                            <legend>Datos personales</legend>
+
+                            <div class="form-grid">
+                                <div class="form-row">
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" id="nombre" name="nombre" required
+                                        placeholder="Escribe tu nombre">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="apellidos">Apellidos</label>
+                                    <input type="text" id="apellidos" name="apellidos" required minlength="3"
+                                        maxlength="50" placeholder="Escribe tus apellidos">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="nacimiento">Fecha de nacimiento</label>
+                                    <input type="date" id="nacimiento" name="fecha_nacimiento" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="dni">DNI</label>
+                                    <input type="text" id="dni" name="dni" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="telefono">Teléfono</label>
+                                    <input type="tel" id="telefono" name="telefono" required pattern="[6-9]\d{8}"
+                                        inputmode="tel" placeholder="612345678">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="alias">Nombre de usuario</label>
+                                    <input type="text" id="alias" name="alias" required unique
+                                        placeholder="Tu nombre de usuario">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="email">Correo electrónico</label>
+                                    <input type="email" id="email" name="email" required unique autocomplete="email"
+                                        placeholder="tu@email.com">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="password">Contraseña</label>
+                                    <input type="password" id="password" name="password" required minlength="8"
+                                        autocomplete="new-password" placeholder="Mínimo 8 caracteres">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="password2">Repite contraseña</label>
+                                    <input type="password" id="password2" name="password2" required minlength="8"
+                                        autocomplete="new-password" placeholder="Mínimo 8 caracteres">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- BLOQUE: SEXO -->
+                        <!-- Selección mediante botones radio -->
+                        <fieldset>
+                            <legend>Sexo</legend>
+                            <div class="inline">
+                                <input type="radio" id="hombre" name="sexo" value="hombre" required>
+                                <label for="hombre">Hombre</label>
+
+                                <input type="radio" id="mujer" name="sexo" value="mujer" required>
+                                <label for="mujer">Mujer</label>
+
+                                <input type="radio" id="otros" name="sexo" value="otros" required>
+                                <label for="otros">Otros</label>
+                            </div>
+                        </fieldset>
+
+                        <!-- BLOQUE: DIRECCIÓN -->
+                        <!-- Datos de localización del usuario -->
+                        <fieldset>
+                            <legend>Dirección</legend>
+                            <div class="form-grid">
+                                <div class="form-row">
+                                    <label for="calle">Calle</label>
+                                    <input type="text" id="calle" name="calle" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="portal">Portal</label>
+                                    <input type="text" id="portal" name="portal" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="piso">Piso</label>
+                                    <input type="text" id="piso" name="piso" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="codigoPost">Código Postal</label>
+                                    <input type="text" id="codigoPost" name="codigoPost" required>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="ciudad">Ciudad</label>
+                                    <select id="ciudad" name="ciudad" required>
+                                        <option value="">Selecciona una ciudad</option>
+                                        <optgroup label="España">
+                                            <option value="gijon">Gijón</option>
+                                            <option value="madrid">Madrid</option>
+                                            <option value="barcelona">Barcelona</option>
+                                            <option value="valladolid">Valladolid</option>
+                                            <option value="valencia">Valencia</option>
+                                        </optgroup>
+                                        <optgroup label="Francia">
+                                            <option value="paris">París</option>
+                                            <option value="toulouse">Toulouse</option>
+                                            <option value="burdeos">Burdeos</option>
+                                            <option value="lyon">Lyon</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="pais">País</label>
+                                    <select id="pais" name="pais" required>
+                                        <option value="">Selecciona un país</option>
+                                        <option value="espana">España</option>
+                                        <option value="francia">Francia</option>
+                                        <option value="portugal">Portugal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- BLOQUE: SELECCIÓN DE MEMBRESÍA -->
+                        <!-- El usuario elige su plan -->
+                        <fieldset>
+                            <legend>Membresía</legend>
+                            <label for="tarifa">Selecciona una membresía</label>
+                            <select id="tarifa" name="tarifa" required>
+                                <option value="">Selecciona una membresía</option>
+                                <option value="manana">Essential Morning Membership</option>
+                                <option value="esencial">Essential Membership</option>
+                                <option value="premium">Premium Membership</option>
+                                <option value="ejecutiva">Executive Membership</option>
+                            </select>
+                        </fieldset>
+
+                        <div class="inline">
+                            <input type="checkbox" id="terminos" name="terminos" required>
+                            <label for="terminos">Acepto los términos y condiciones</label>
+                        </div>
+
+                        <div class="actions">
+                            <button class="btn btn--primary" type="submit">Enviar</button>
+                            <a class="btn" href="tarifas.html">Ver tarifas</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER / PIE DE PÁGINA -->
+    <!-- Información de contacto y horario del club -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123 · 912 345 678</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
