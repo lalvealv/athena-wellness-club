@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Notificaciones | Área de socios | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Consulta tus notificaciones en el área privada de 
+        ATHENA Wellness Club: confirmaciones de reservas, recordatorios de clases y avisos importantes sobre tu suscripción.">
+    <meta name="keywords" content="notificaciones gimnasio, avisos reservas gimnasio,
+         recordatorios clases fitness, área socios gimnasio, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo-general.css">
+    <link rel="stylesheet" href="estilo-socios.css">
+</head>
+
+<body>
+    <!-- HEADER / CABECERA DEL ÁREA PRIVADA -->
+    <!-- Logo del club y menú de navegación superior -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo e identidad visual del club -->
+            <a class="brand" href="index.html">
+                <img src="img/athena_logo.png">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Área privada</span>
+                </span>
+            </a>
+
+            <!-- Navegación superior del área privada -->
+            <nav class="nav nav--socios">
+                <a href="area-socios.html">Resumen</a>
+                <a href="perfil.html">Mi perfil</a>
+                <a href="suscripcion.html">Suscripción</a>
+                <a href="horarios-reservas.html">Reservas</a>
+                <a href="entrenamientos.html">Entrenamientos</a>
+                <a href="estadisticas.html">Estadísticas</a>
+                <a class="is-active" href="notificaciones.html">Avisos</a>
+                <!-- Botón para cerrar sesión -->
+                <button class="btn btn--ghost btn--small">Cerrar sesión</button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section section-socios">
+
+        <!-- Layout principal con sidebar + contenido -->
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR DEL SOCIO -->
+            <!-- Información del usuario + menú lateral -->
+            <aside class="socios-sidebar">
+
+                <!-- Información básica del usuario -->
+                <div class="socios-user">
+                    <img src="img-socios/socio1.png">
+                    <h3>Lorena Alvarez Alves</h3>
+                    <p>Socia Premium</p>
+                </div>
+
+                <!-- Navegación lateral del área privada -->
+                <nav class="socios-menu">
+                    <a href="area-socios.html">Resumen</a>
+                    <a href="perfil.html">Mi perfil</a>
+                    <a href="suscripcion.html">Mi suscripción</a>
+                    <a href="horarios-reservas.html">Horarios y reservas</a>
+                    <a href="historial-reservas.html">Historial reservas</a>
+                    <a href="entrenamientos.html">Entrenamientos</a>
+                    <a href="estadisticas.html">Estadísticas</a>
+                    <a href="objetivo-fitness.html">Objetivo fitness</a>
+                    <a class="is-active" href="notificaciones.html">Notificaciones</a>
+                </nav>
+
+            </aside>
+
+            <!-- CONTENIDO CENTRAL -->
+            <!-- Panel de notificaciones del usuario -->
+            <div class="socios-content">
+                <section class="socios-panel">
+
+                    <!-- Título del panel -->
+                    <h2 class="h2">Notificaciones</h2>
+
+                    <!-- Contenedor principal de notificaciones -->
+                    <div class="notification-box">
+                        <div class="notifications-list">
+
+                            <!-- Notificación de confirmación de reserva -->
+                            <div class="notification-item">
+                                <strong>Reserva confirmada</strong>
+                                <p>Tu plaza para Yoga / Pilates del sábado a las 07:30 ha sido confirmada.</p>
+                            </div>
+
+                            <!-- Recordatorio de próxima clase -->
+                            <div class="notification-item">
+                                <strong>Recordatorio</strong>
+                                <p>Tienes una clase mañana a las 18:30. Llega con 10 minutos de antelación.</p>
+                            </div>
+
+                            <!-- Aviso de renovación de suscripción -->
+                            <div class="notification-item">
+                                <strong>Progreso</strong>
+                                <p>Has completado 4 entrenamientos esta semana. Sigue así.</p>
+                            </div>
+
+                            <div class="notification-item">
+                                <strong>Renovación</strong>
+                                <p>Tu suscripción Premium se renovará automáticamente el 01/04/2026.</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </section>
+
+
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER / PIE DE PÁGINA -->
+    <!-- Información de contacto del club -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

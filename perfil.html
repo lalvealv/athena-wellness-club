@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mi perfil | Área de socios | ATHENA Wellness Club</title>
+    <meta name="description" content="Consulta y revisa tu información personal en el área privada
+         de ATHENA Wellness Club: datos personales, contacto y membresía activa.">
+    <meta name="keywords" content="perfil socio, datos personales gimnasio,
+         área privada gimnasio, cuenta usuario, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo-general.css">
+    <link rel="stylesheet" href="estilo-socios.css">
+</head>
+
+<body>
+    <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
+    <!-- Logo del club + menú superior privado -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo e identidad del club -->
+            <a class="brand" href="index.html">
+                <img src="img/athena_logo.png">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Área privada</span>
+                </span>
+            </a>
+
+            <!-- Navegación superior del área privada -->
+            <nav class="nav nav--socios">
+                <a href="area-socios.html">Resumen</a>
+                <a class="is-active" href="perfil.html">Mi perfil</a>
+                <a href="suscripcion.html">Suscripción</a>
+                <a href="horarios-reservas.html">Reservas</a>
+                <a href="entrenamientos.html">Entrenamientos</a>
+                <a href="estadisticas.html">Estadísticas</a>
+                <a href="notificaciones.html">Avisos</a>
+                <!-- Botón para cerrar sesión -->
+                <button class="btn btn--ghost btn--small">Cerrar sesión</button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section section-socios">
+
+        <!-- Layout general con sidebar y contenido -->
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR DEL SOCIO -->
+            <!-- Foto, nombre y navegación lateral -->
+            <aside class="socios-sidebar">
+
+                <!-- Información básica del usuario -->
+                <div class="socios-user">
+                    <img src="img-socios/socio1.png">
+                    <h3>Lorena Alvarez Alves</h3>
+                    <p>Socia Premium</p>
+                </div>
+
+                <!-- Menú lateral del área privada -->
+                <nav class="socios-menu">
+                    <a href="area-socios.html">Resumen</a>
+                    <a class="is-active" href="perfil.html">Mi perfil</a>
+                    <a href="suscripcion.html">Mi suscripción</a>
+                    <a href="horarios-reservas.html">Horarios y reservas</a>
+                    <a href="historial-reservas.html">Historial reservas</a>
+                    <a href="entrenamientos.html">Entrenamientos</a>
+                    <a href="estadisticas.html">Estadísticas</a>
+                    <a href="objetivo-fitness.html">Objetivo fitness</a>
+                    <a href="notificaciones.html">Notificaciones</a>
+                </nav>
+
+            </aside>
+
+            <!-- CONTENIDO CENTRAL -->
+            <!-- Información del perfil del usuario -->
+            <div class="socios-content">
+
+                <section class="socios-panel">
+
+                    <!-- Título del panel -->
+                    <h2 class="h2">Mi perfil</h2>
+
+                    <!-- Caja que contiene la información del usuario -->
+                    <div class="profile-box">
+
+                        <div class="profile-grid">
+
+                            <!-- Foto del usuario -->
+                            <div class="profile-photo-wrap">
+                                <img src="img-socios/socio1.png">
+                            </div>
+
+                            <!-- Información personal -->
+                            <div class="profile-data">
+
+                                <div class="profile-item">
+                                    <span>Nombre</span>
+                                    <strong>Lorena</strong>
+                                </div>
+
+                                <div class="profile-item">
+                                    <span>Apellidos</span>
+                                    <strong>Alvarez Alves</strong>
+                                </div>
+
+                                <div class="profile-item">
+                                    <span>Email</span>
+                                    <strong>lorena@email.com</strong>
+                                </div>
+
+                                <div class="profile-item">
+                                    <span>Teléfono</span>
+                                    <strong>600 000 000</strong>
+                                </div>
+
+                                <div class="profile-item">
+                                    <span>Dirección</span>
+                                    <strong>Madrid</strong>
+                                </div>
+
+                                <div class="profile-item">
+                                    <span>Plan</span>
+                                    <strong>ATHENA Premium</strong>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER / PIE DE PÁGINA -->
+    <!-- Información de contacto del club -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

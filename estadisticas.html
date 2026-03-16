@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Estadísticas | Área de socios | ATHENA Wellness Club</title>
+    <meta name="description" content="Consulta tus estadísticas de actividad en el área privada de 
+        ATHENA Wellness Club: clases realizadas, asistencia, entrenamientos semanales y progreso general.">
+    <meta name="keywords" content="estadísticas gimnasio, progreso fitness,
+         asistencia gimnasio, clases realizadas, área socios, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo-general.css">
+    <link rel="stylesheet" href="estilo-socios.css">
+</head>
+
+<body>
+    <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
+    <!-- Logo del club y navegación superior privada -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo e identidad visual del club -->
+            <a class="brand" href="index.html">
+                <img src="img/athena_logo.png">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Área privada</span>
+                </span>
+            </a>
+            <!-- Navegación superior del área privada -->
+            <nav class="nav nav--socios">
+                <a href="area-socios.html">Resumen</a>
+                <a href="perfil.html">Mi perfil</a>
+                <a href="suscripcion.html">Suscripción</a>
+                <a href="horarios-reservas.html">Reservas</a>
+                <a href="entrenamientos.html">Entrenamientos</a>
+                <a class="is-active" href="estadisticas.html">Estadísticas</a>
+                <a href="notificaciones.html">Avisos</a>
+                <!-- Botón para cerrar sesión -->
+                <button class="btn btn--ghost btn--small">Cerrar sesión</button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
+    <main class="section section-socios">
+
+        <!-- Estructura principal con menú lateral y contenido -->
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR / MENÚ LATERAL DEL SOCIO -->
+            <aside class="socios-sidebar">
+
+                <!-- Información resumida del usuario -->
+                <div class="socios-user">
+                    <img src="img-socios/socio1.png">
+                    <h3>Lorena Alvarez Alves</h3>
+                    <p>Socia Premium</p>
+                </div>
+
+                <!-- Navegación lateral del área privada -->
+                <nav class="socios-menu">
+                    <a href="area-socios.html">Resumen</a>
+                    <a href="perfil.html">Mi perfil</a>
+                    <a href="suscripcion.html">Mi suscripción</a>
+                    <a href="horarios-reservas.html">Horarios y reservas</a>
+                    <a href="historial-reservas.html">Historial reservas</a>
+                    <a href="entrenamientos.html">Entrenamientos</a>
+                    <a class="is-active" href="estadisticas.html">Estadísticas</a>
+                    <a href="objetivo-fitness.html">Objetivo fitness</a>
+                    <a href="notificaciones.html">Notificaciones</a>
+                </nav>
+
+            </aside>
+
+            <!-- CONTENIDO CENTRAL -->
+            <!-- Panel principal de estadísticas del socio -->
+            <div class="socios-content">
+
+                <section class="socios-panel">
+
+                    <!-- Título del panel -->
+                    <h2 class="h2">Estadísticas</h2>
+
+                    <!-- Tarjeta: clases realizadas este mes -->
+                    <div class="dashboard-grid">
+                        <div class="info-card">
+                            <span class="label">Clases este mes</span>
+                            <h3>12</h3>
+                            <p>+3 respecto al mes pasado</p>
+                        </div>
+
+                        <!-- Tarjeta: actividad más frecuente -->
+                        <div class="info-card">
+                            <span class="label">Actividad favorita</span>
+                            <h3>Yoga / Pilates</h3>
+                            <p>La más reservada</p>
+                        </div>
+
+                        <!-- Tarjeta: número de entrenamientos semanales -->
+                        <div class="info-card">
+                            <span class="label">Entrenamientos semanales</span>
+                            <h3>4</h3>
+                            <p>Muy buena regularidad</p>
+                        </div>
+
+                        <!-- Tarjeta: porcentaje de asistencia -->
+                        <div class="info-card">
+                            <span class="label">Asistencia</span>
+                            <h3>87%</h3>
+                            <p>Excelente constancia</p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER / PIE DE PÁGINA -->
+    <!-- Información de contacto y horario del club -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
