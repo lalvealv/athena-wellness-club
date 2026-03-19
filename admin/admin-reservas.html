@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de reservas | Administración | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Consulta, filtra y supervisa las reservas de clases desde el panel de administración de ATHENA Wellness Club.">
+    <meta name="keywords"
+        content="gestión de reservas, panel administrador, clases gimnasio, control de asistencia, administración gimnasio, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-admin.css">
+</head>
+
+<body>
+
+    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo e identidad visual -->
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Administración</span>
+                </span>
+            </a>
+
+            <!-- Navegación superior -->
+            <nav class="nav nav--socios" aria-label="Navegación del área de administración">
+                <a href="admin-panel.html">Resumen</a>
+                <a href="admin-usuarios.html">Usuarios</a>
+                <a href="admin-suscripciones.html">Suscripciones</a>
+                <a class="is-active" href="admin-reservas.html">Reservas</a>
+                <a href="admin-entrenamientos.html">Entrenamientos</a>
+                <a href="admin-notificaciones.html">Avisos</a>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section section-socios">
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR / MENÚ LATERAL -->
+            <aside class="socios-sidebar">
+                <div class="socios-user">
+                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3>Administrador ATHENA</h3>
+                    <p>Perfil ADMIN</p>
+                </div>
+
+                <nav class="socios-menu" aria-label="Menú lateral de administración">
+                    <a href="admin-panel.html">Resumen general</a>
+                    <a href="admin-usuarios.html">Gestión de usuarios</a>
+                    <a href="admin-suscripciones.html">Gestión de suscripciones</a>
+                    <a class="is-active" href="admin-reservas.html">Gestión de reservas</a>
+                    <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
+                    <a href="admin-notificaciones.html">Gestión de notificaciones</a>
+                </nav>
+            </aside>
+
+            <!-- CONTENIDO CENTRAL -->
+            <div class="socios-content">
+
+                <!-- FILTROS Y LISTADO -->
+                <section class="socios-panel">
+                    <h2 class="h2">Gestión de reservas</h2>
+
+                    <div class="profile-box box-spacing">
+                        <form action="#" method="get">
+                            <div class="two-cols">
+                                <div class="form-row">
+                                    <label for="buscarReserva">Buscar usuario o actividad</label>
+                                    <input type="text" id="buscarReserva" name="buscarReserva"
+                                        placeholder="Nombre del socio o clase">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="filtrarEstadoReserva">Estado</label>
+                                    <select id="filtrarEstadoReserva" name="filtrarEstadoReserva">
+                                        <option value="">Todos</option>
+                                        <option value="Confirmada">Confirmada</option>
+                                        <option value="Asistida">Asistida</option>
+                                        <option value="Cancelada">Cancelada</option>
+                                        <option value="No asistida">No asistida</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="fechaReserva">Fecha</label>
+                                    <input type="date" id="fechaReserva" name="fechaReserva">
+                                </div>
+                            </div>
+
+                            <div class="actions actions-top">
+                                <button class="btn btn--primary btn--small" type="submit">Buscar</button>
+                                <button class="btn btn--ghost btn--small" type="reset">Limpiar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Actividad</th>
+                                    <th>Fecha</th>
+                                    <th>Horario</th>
+                                    <th>Sala</th>
+                                    <th>Instructor</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>101</td>
+                                    <td>Lorena Alvarez Alves</td>
+                                    <td>Yoga / Pilates</td>
+                                    <td>15/03/2026</td>
+                                    <td>07:30 - 08:20</td>
+                                    <td>Sala Mind &amp; Body</td>
+                                    <td>Claudia Ruiz</td>
+                                    <td class="status-ok">Confirmada</td>
+                                    <td><a href="admin-editar-usuario.html">Ver usuario</a></td>
+                                </tr>
+                                <tr>
+                                    <td>102</td>
+                                    <td>Marta Gómez Ruiz</td>
+                                    <td>Spinning</td>
+                                    <td>15/03/2026</td>
+                                    <td>18:30 - 19:20</td>
+                                    <td>Sala Cycle</td>
+                                    <td>David León</td>
+                                    <td class="status-ok">Asistida</td>
+                                    <td><a href="admin-editar-usuario.html">Ver usuario</a></td>
+                                </tr>
+                                <tr>
+                                    <td>103</td>
+                                    <td>Carlos Pérez Soto</td>
+                                    <td>Zumba</td>
+                                    <td>14/03/2026</td>
+                                    <td>17:30 - 18:20</td>
+                                    <td>Studio 2</td>
+                                    <td>Laura Martín</td>
+                                    <td class="status-cancel">Cancelada</td>
+                                    <td><a href="admin-editar-usuario.html">Ver usuario</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- RESUMEN DIARIO -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Resumen diario</h2>
+
+                    <div class="dashboard-grid">
+                        <div class="info-card">
+                            <span class="label">Reservas confirmadas</span>
+                            <h3>37</h3>
+                            <p>Sesiones activas para hoy</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Asistencias</span>
+                            <h3>29</h3>
+                            <p>Usuarios ya registrados como presentes</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Cancelaciones</span>
+                            <h3>5</h3>
+                            <p>Bajas registradas hoy</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">No asistidas</span>
+                            <h3>3</h3>
+                            <p>Reservas con ausencia</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- GESTIÓN OPERATIVA -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Gestión operativa</h2>
+
+                    <div class="two-cols">
+                        <div class="info-card">
+                            <span class="label">Seguimiento</span>
+                            <h3>Controlar ocupación</h3>
+                            <p>Supervisa el estado de cada clase y la asistencia.</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Gestión interna</span>
+                            <h3>Resolver incidencias</h3>
+                            <p>Revisa cancelaciones, cambios de horario y errores de reserva.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

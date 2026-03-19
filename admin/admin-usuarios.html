@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de usuarios | Administración | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Consulta, busca y gestiona los usuarios desde el panel de administración de ATHENA Wellness Club.">
+    <meta name="keywords"
+        content="gestión de usuarios, panel administrador, usuarios gimnasio, perfiles, administración gimnasio, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-admin.css">
+</head>
+
+<body>
+
+    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo e identidad visual -->
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Administración</span>
+                </span>
+            </a>
+
+            <!-- Navegación superior -->
+            <nav class="nav nav--socios" aria-label="Navegación del área de administración">
+                <a href="admin-panel.html">Resumen</a>
+                <a class="is-active" href="admin-usuarios.html">Usuarios</a>
+                <a href="admin-suscripciones.html">Suscripciones</a>
+                <a href="admin-reservas.html">Reservas</a>
+                <a href="admin-entrenamientos.html">Entrenamientos</a>
+                <a href="admin-notificaciones.html">Avisos</a>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section section-socios">
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR / MENÚ LATERAL -->
+            <aside class="socios-sidebar">
+                <div class="socios-user">
+                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3>Administrador ATHENA</h3>
+                    <p>Perfil ADMIN</p>
+                </div>
+
+                <nav class="socios-menu" aria-label="Menú lateral de administración">
+                    <a href="admin-panel.html">Resumen general</a>
+                    <a class="is-active" href="admin-usuarios.html">Gestión de usuarios</a>
+                    <a href="admin-suscripciones.html">Gestión de suscripciones</a>
+                    <a href="admin-reservas.html">Gestión de reservas</a>
+                    <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
+                    <a href="admin-notificaciones.html">Gestión de notificaciones</a>
+                </nav>
+            </aside>
+
+            <!-- CONTENIDO CENTRAL -->
+            <div class="socios-content">
+
+                <!-- BUSCADOR Y TABLA -->
+                <section class="socios-panel">
+                    <h2 class="h2">Gestión de usuarios</h2>
+
+                    <div class="profile-box box-spacing">
+                        <form action="#" method="get">
+                            <div class="form-row">
+                                <label for="buscarUsuario">Buscar usuario</label>
+                                <input type="text" id="buscarUsuario" name="buscarUsuario"
+                                    placeholder="Buscar por alias, nombre o correo">
+                            </div>
+
+                            <div class="actions actions-top">
+                                <button class="btn btn--primary btn--small" type="submit">Buscar</button>
+                                <button class="btn btn--ghost btn--small" type="reset">Limpiar</button>
+                                <a class="btn btn--primary btn--small" href="admin-crear-usuario.html">Nuevo usuario</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Alias</th>
+                                    <th>Nombre completo</th>
+                                    <th>Correo</th>
+                                    <th>Teléfono</th>
+                                    <th>Perfil</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>adminathena</td>
+                                    <td>Administrador ATHENA</td>
+                                    <td>admin@athena.com</td>
+                                    <td>600000000</td>
+                                    <td>ADMIN</td>
+                                    <td class="status-ok">Activo</td>
+                                    <td><a href="admin-editar-usuario.html">Editar</a></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>lorena01</td>
+                                    <td>Lorena Alvarez Alves</td>
+                                    <td>lorena@email.com</td>
+                                    <td>645789123</td>
+                                    <td>CLIENTE</td>
+                                    <td class="status-ok">Activo</td>
+                                    <td><a href="admin-editar-usuario.html">Editar</a></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>marta_fit</td>
+                                    <td>Marta Gómez Ruiz</td>
+                                    <td>marta@email.com</td>
+                                    <td>611223344</td>
+                                    <td>CLIENTE</td>
+                                    <td class="status-ok">Activo</td>
+                                    <td><a href="admin-editar-usuario.html">Editar</a></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>carlosgym</td>
+                                    <td>Carlos Pérez Soto</td>
+                                    <td>carlos@email.com</td>
+                                    <td>622334455</td>
+                                    <td>CLIENTE</td>
+                                    <td class="status-cancel">Bloqueado</td>
+                                    <td><a href="admin-editar-usuario.html">Editar</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- ACCIONES RÁPIDAS -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Acciones rápidas</h2>
+
+                    <div class="two-cols">
+                        <div class="info-card">
+                            <span class="label">Cambios frecuentes</span>
+                            <h3>Editar estado</h3>
+                            <p>Activa, bloquea o desactiva usuarios cuando sea necesario.</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Permisos</span>
+                            <h3>Cambiar perfil</h3>
+                            <p>Convierte usuarios en administradores o clientes.</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Gestión comercial</span>
+                            <h3>Actualizar suscripción</h3>
+                            <p>Modifica el plan asignado al usuario.</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Seguimiento</span>
+                            <h3>Consultar actividad</h3>
+                            <p>Revisa reservas, entrenamientos y evolución del socio.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

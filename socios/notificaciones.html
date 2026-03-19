@@ -5,33 +5,31 @@
     <meta charset="UTF-8">
     <title>Notificaciones | Área de socios | ATHENA Wellness Club</title>
     <meta name="description"
-        content="Consulta tus notificaciones en el área privada de 
-        ATHENA Wellness Club: confirmaciones de reservas, recordatorios de clases y avisos importantes sobre tu suscripción.">
-    <meta name="keywords" content="notificaciones gimnasio, avisos reservas gimnasio,
-         recordatorios clases fitness, área socios gimnasio, ATHENA Wellness Club">
+        content="Consulta tus notificaciones en el área privada de ATHENA Wellness Club: confirmaciones de reservas, recordatorios de clases y avisos importantes sobre tu suscripción.">
+    <meta name="keywords"
+        content="notificaciones gimnasio, avisos reservas gimnasio, recordatorios clases fitness, área socios gimnasio, ATHENA Wellness Club">
     <meta name="author" content="lavealv">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilo-general.css">
-    <link rel="stylesheet" href="estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
 </head>
 
 <body>
-    <!-- HEADER / CABECERA DEL ÁREA PRIVADA -->
-    <!-- Logo del club y menú de navegación superior -->
+    <!-- HEADER -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo e identidad visual del club -->
-            <a class="brand" href="index.html">
-                <img src="img/athena_logo.png">
+            <!-- Logo -->
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Área privada</span>
                 </span>
             </a>
 
-            <!-- Navegación superior del área privada -->
-            <nav class="nav nav--socios">
+            <!-- Navegación superior -->
+            <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
@@ -39,32 +37,29 @@
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
                 <a class="is-active" href="notificaciones.html">Avisos</a>
-                <!-- Botón para cerrar sesión -->
-                <button class="btn btn--ghost btn--small">Cerrar sesión</button>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
             </nav>
 
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
+    <!-- MAIN -->
     <main class="section section-socios">
 
-        <!-- Layout principal con sidebar + contenido -->
         <div class="container socios-layout">
 
-            <!-- SIDEBAR DEL SOCIO -->
-            <!-- Información del usuario + menú lateral -->
+            <!-- SIDEBAR -->
             <aside class="socios-sidebar">
 
-                <!-- Información básica del usuario -->
+                <!-- Usuario -->
                 <div class="socios-user">
-                    <img src="img-socios/socio1.png">
+                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3>Lorena Alvarez Alves</h3>
                     <p>Socia Premium</p>
                 </div>
 
-                <!-- Navegación lateral del área privada -->
-                <nav class="socios-menu">
+                <!-- Menú lateral -->
+                <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
@@ -78,31 +73,27 @@
 
             </aside>
 
-            <!-- CONTENIDO CENTRAL -->
-            <!-- Panel de notificaciones del usuario -->
+            <!-- CONTENIDO -->
             <div class="socios-content">
+
                 <section class="socios-panel">
 
-                    <!-- Título del panel -->
                     <h2 class="h2">Notificaciones</h2>
 
-                    <!-- Contenedor principal de notificaciones -->
+                    <!-- Lista de notificaciones -->
                     <div class="notification-box">
                         <div class="notifications-list">
 
-                            <!-- Notificación de confirmación de reserva -->
                             <div class="notification-item">
                                 <strong>Reserva confirmada</strong>
                                 <p>Tu plaza para Yoga / Pilates del sábado a las 07:30 ha sido confirmada.</p>
                             </div>
 
-                            <!-- Recordatorio de próxima clase -->
                             <div class="notification-item">
                                 <strong>Recordatorio</strong>
                                 <p>Tienes una clase mañana a las 18:30. Llega con 10 minutos de antelación.</p>
                             </div>
 
-                            <!-- Aviso de renovación de suscripción -->
                             <div class="notification-item">
                                 <strong>Progreso</strong>
                                 <p>Has completado 4 entrenamientos esta semana. Sigue así.</p>
@@ -118,16 +109,13 @@
 
                 </section>
 
-
-
             </div>
 
         </div>
 
     </main>
 
-    <!-- FOOTER / PIE DE PÁGINA -->
-    <!-- Información de contacto del club -->
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>

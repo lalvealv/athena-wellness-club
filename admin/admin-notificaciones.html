@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de notificaciones | Administración | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Crea, envía y revisa notificaciones desde el panel de administración de ATHENA Wellness Club.">
+    <meta name="keywords"
+        content="gestión de notificaciones, avisos a socios, panel administrador, comunicación gimnasio, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-admin.css">
+</head>
+
+<body>
+
+    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo e identidad visual -->
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Administración</span>
+                </span>
+            </a>
+
+            <!-- Navegación superior -->
+            <nav class="nav nav--socios" aria-label="Navegación del área de administración">
+                <a href="admin-panel.html">Resumen</a>
+                <a href="admin-usuarios.html">Usuarios</a>
+                <a href="admin-suscripciones.html">Suscripciones</a>
+                <a href="admin-reservas.html">Reservas</a>
+                <a href="admin-entrenamientos.html">Entrenamientos</a>
+                <a class="is-active" href="admin-notificaciones.html">Avisos</a>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section section-socios">
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR / MENÚ LATERAL -->
+            <aside class="socios-sidebar">
+                <div class="socios-user">
+                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3>Administrador ATHENA</h3>
+                    <p>Perfil ADMIN</p>
+                </div>
+
+                <nav class="socios-menu" aria-label="Menú lateral de administración">
+                    <a href="admin-panel.html">Resumen general</a>
+                    <a href="admin-usuarios.html">Gestión de usuarios</a>
+                    <a href="admin-suscripciones.html">Gestión de suscripciones</a>
+                    <a href="admin-reservas.html">Gestión de reservas</a>
+                    <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
+                    <a class="is-active" href="admin-notificaciones.html">Gestión de notificaciones</a>
+                </nav>
+            </aside>
+
+            <!-- CONTENIDO CENTRAL -->
+            <div class="socios-content">
+
+                <!-- FORMULARIO DE ENVÍO -->
+                <section class="socios-panel">
+                    <h2 class="h2">Gestión de notificaciones</h2>
+
+                    <div class="profile-box">
+                        <form action="#" method="post">
+                            <div class="two-cols">
+                                <div class="form-row">
+                                    <label for="destinatario">Destinatario</label>
+                                    <select id="destinatario" name="destinatario">
+                                        <option value="todos">Todos los usuarios</option>
+                                        <option value="premium">Usuarios Premium</option>
+                                        <option value="elite">Usuarios Elite</option>
+                                        <option value="usuario">Usuario específico</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="tipoAviso">Tipo de aviso</label>
+                                    <select id="tipoAviso" name="tipoAviso">
+                                        <option value="general">General</option>
+                                        <option value="reserva">Reserva</option>
+                                        <option value="suscripcion">Suscripción</option>
+                                        <option value="recordatorio">Recordatorio</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="tituloAviso">Título</label>
+                                <input type="text" id="tituloAviso" name="tituloAviso"
+                                    placeholder="Escribe el título del aviso">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="mensajeAviso">Mensaje</label>
+                                <textarea id="mensajeAviso" name="mensajeAviso" rows="6"
+                                    placeholder="Escribe aquí el contenido de la notificación"></textarea>
+                            </div>
+
+                            <div class="actions actions-top">
+                                <button class="btn btn--primary" type="submit">Enviar notificación</button>
+                                <button class="btn btn--ghost" type="reset">Limpiar</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- ÚLTIMAS NOTIFICACIONES -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Últimas notificaciones enviadas</h2>
+
+                    <div class="notification-box">
+                        <div class="notifications-list">
+                            <div class="notification-item">
+                                <strong>Reserva confirmada</strong>
+                                <p>Tu plaza para Yoga / Pilates del sábado a las 07:30 ha sido confirmada.</p>
+                                <p class="muted">Enviada a: Lorena Alvarez Alves · 15/03/2026</p>
+                            </div>
+
+                            <div class="notification-item">
+                                <strong>Renovación próxima</strong>
+                                <p>Tu suscripción Premium se renovará automáticamente el 01/04/2026.</p>
+                                <p class="muted">Enviada a: usuarios Premium · 14/03/2026</p>
+                            </div>
+
+                            <div class="notification-item">
+                                <strong>Nuevo horario disponible</strong>
+                                <p>Ya puedes consultar los nuevos horarios de actividades de esta semana.</p>
+                                <p class="muted">Enviada a: todos los usuarios · 13/03/2026</p>
+                            </div>
+
+                            <div class="notification-item">
+                                <strong>Recordatorio de asistencia</strong>
+                                <p>Recuerda llegar con 10 minutos de antelación a tu próxima clase.</p>
+                                <p class="muted">Enviada a: usuarios con reserva activa · 12/03/2026</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- RESUMEN DE COMUNICACIÓN -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Resumen de comunicación</h2>
+
+                    <div class="dashboard-grid">
+                        <div class="info-card">
+                            <span class="label">Avisos enviados hoy</span>
+                            <h3>12</h3>
+                            <p>Mensajes registrados en el sistema</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Avisos generales</span>
+                            <h3>5</h3>
+                            <p>Comunicaciones para todos los socios</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Recordatorios</span>
+                            <h3>4</h3>
+                            <p>Mensajes automáticos o manuales</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Pendientes de lectura</span>
+                            <h3>18</h3>
+                            <p>Usuarios que aún no los han revisado</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

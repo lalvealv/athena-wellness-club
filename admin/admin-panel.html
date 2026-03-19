@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de administración | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Consulta el resumen general del panel de administración de ATHENA Wellness Club: usuarios, reservas, suscripciones, avisos y accesos rápidos.">
+    <meta name="keywords"
+        content="panel de administración, gestión gimnasio, usuarios, reservas, suscripciones, avisos, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-admin.css">
+</head>
+
+<body>
+
+    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo e identidad visual -->
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Administración</span>
+                </span>
+            </a>
+
+            <!-- Navegación superior -->
+            <nav class="nav nav--socios" aria-label="Navegación del área de administración">
+                <a class="is-active" href="admin-panel.html">Resumen</a>
+                <a href="admin-usuarios.html">Usuarios</a>
+                <a href="admin-suscripciones.html">Suscripciones</a>
+                <a href="admin-reservas.html">Reservas</a>
+                <a href="admin-entrenamientos.html">Entrenamientos</a>
+                <a href="admin-notificaciones.html">Avisos</a>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section section-socios">
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR / MENÚ LATERAL -->
+            <aside class="socios-sidebar">
+                <div class="socios-user">
+                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3>Administrador ATHENA</h3>
+                    <p>Perfil ADMIN</p>
+                </div>
+
+                <nav class="socios-menu" aria-label="Menú lateral de administración">
+                    <a class="is-active" href="admin-panel.html">Resumen general</a>
+                    <a href="admin-usuarios.html">Gestión de usuarios</a>
+                    <a href="admin-suscripciones.html">Gestión de suscripciones</a>
+                    <a href="admin-reservas.html">Gestión de reservas</a>
+                    <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
+                    <a href="admin-notificaciones.html">Gestión de notificaciones</a>
+                </nav>
+            </aside>
+
+            <!-- CONTENIDO CENTRAL -->
+            <div class="socios-content">
+
+                <!-- RESUMEN GENERAL -->
+                <section class="socios-panel">
+                    <h2 class="h2">Panel de administración</h2>
+
+                    <div class="dashboard-grid">
+                        <div class="info-card">
+                            <span class="label">Usuarios activos</span>
+                            <h3>128</h3>
+                            <p>Socios con acceso activo</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Usuarios bloqueados</span>
+                            <h3>4</h3>
+                            <p>Requieren revisión</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Reservas hoy</span>
+                            <h3>37</h3>
+                            <p>Sesiones confirmadas</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Nuevas altas</span>
+                            <h3>6</h3>
+                            <p>Últimos 7 días</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ACCESOS RÁPIDOS -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Accesos rápidos</h2>
+
+                    <div class="two-cols">
+                        <div class="info-card">
+                            <span class="label">Usuarios</span>
+                            <h3>Gestionar clientes</h3>
+                            <p>Consulta, edita, bloquea o cambia perfiles.</p>
+                            <div class="card-action">
+                                <a class="btn btn--primary btn--small" href="admin-usuarios.html">Ir a usuarios</a>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Reservas</span>
+                            <h3>Control de clases</h3>
+                            <p>Consulta reservas activas, cancelaciones y asistencia.</p>
+                            <div class="card-action">
+                                <a class="btn btn--primary btn--small" href="admin-reservas.html">Ir a reservas</a>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Suscripciones</span>
+                            <h3>Planes y renovaciones</h3>
+                            <p>Gestiona tarifas, fechas y estados de suscripción.</p>
+                            <div class="card-action">
+                                <a class="btn btn--primary btn--small" href="admin-suscripciones.html">Ir a
+                                    suscripciones</a>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Avisos</span>
+                            <h3>Comunicación con socios</h3>
+                            <p>Revisa y crea notificaciones para los usuarios.</p>
+                            <div class="card-action">
+                                <a class="btn btn--primary btn--small" href="admin-notificaciones.html">Ir a avisos</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ÚLTIMOS USUARIOS -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Últimos usuarios registrados</h2>
+
+                    <div class="table-wrap">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>Alias</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Fecha alta</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>lorena01</td>
+                                    <td>Lorena Alvarez Alves</td>
+                                    <td>lorena@email.com</td>
+                                    <td>10/03/2026</td>
+                                    <td class="status-ok">Activo</td>
+                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
+                                </tr>
+                                <tr>
+                                    <td>marta_fit</td>
+                                    <td>Marta Gómez Ruiz</td>
+                                    <td>marta@email.com</td>
+                                    <td>11/03/2026</td>
+                                    <td class="status-ok">Activo</td>
+                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
+                                </tr>
+                                <tr>
+                                    <td>carlosgym</td>
+                                    <td>Carlos Pérez Soto</td>
+                                    <td>carlos@email.com</td>
+                                    <td>12/03/2026</td>
+                                    <td class="status-cancel">Bloqueado</td>
+                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

@@ -3,42 +3,42 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Estadísticas | Área de socios | ATHENA Wellness Club</title>
-    <meta name="description" content="Consulta tus estadísticas de actividad en el área privada de 
-        ATHENA Wellness Club: clases realizadas, asistencia, entrenamientos semanales y progreso general.">
-    <meta name="keywords" content="estadísticas gimnasio, progreso fitness,
-         asistencia gimnasio, clases realizadas, área socios, ATHENA Wellness Club">
+    <title>Mi suscripción | Área de socios | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Consulta los detalles de tu suscripción en el área privada de ATHENA Wellness Club: plan contratado, precio, fecha de inicio, renovación y beneficios incluidos.">
+    <meta name="keywords"
+        content="suscripción gimnasio, plan premium, membresía gimnasio, cuota mensual, área socios, ATHENA Wellness Club">
     <meta name="author" content="lavealv">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilo-general.css">
-    <link rel="stylesheet" href="estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
 </head>
 
 <body>
+
     <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
-    <!-- Logo del club y navegación superior privada -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
             <!-- Logo e identidad visual del club -->
-            <a class="brand" href="index.html">
-                <img src="img/athena_logo.png">
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Área privada</span>
                 </span>
             </a>
+
             <!-- Navegación superior del área privada -->
-            <nav class="nav nav--socios">
+            <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
-                <a href="suscripcion.html">Suscripción</a>
+                <a class="is-active" href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
-                <a class="is-active" href="estadisticas.html">Estadísticas</a>
+                <a href="estadisticas.html">Estadísticas</a>
                 <a href="notificaciones.html">Avisos</a>
-                <!-- Botón para cerrar sesión -->
-                <button class="btn btn--ghost btn--small">Cerrar sesión</button>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
             </nav>
 
         </div>
@@ -47,7 +47,7 @@
     <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
     <main class="section section-socios">
 
-        <!-- Estructura principal con menú lateral y contenido -->
+        <!-- Estructura principal con sidebar y contenido -->
         <div class="container socios-layout">
 
             <!-- SIDEBAR / MENÚ LATERAL DEL SOCIO -->
@@ -55,20 +55,20 @@
 
                 <!-- Información resumida del usuario -->
                 <div class="socios-user">
-                    <img src="img-socios/socio1.png">
+                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3>Lorena Alvarez Alves</h3>
                     <p>Socia Premium</p>
                 </div>
 
                 <!-- Navegación lateral del área privada -->
-                <nav class="socios-menu">
+                <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
-                    <a href="suscripcion.html">Mi suscripción</a>
+                    <a class="is-active" href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>
                     <a href="historial-reservas.html">Historial reservas</a>
                     <a href="entrenamientos.html">Entrenamientos</a>
-                    <a class="is-active" href="estadisticas.html">Estadísticas</a>
+                    <a href="estadisticas.html">Estadísticas</a>
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
                     <a href="notificaciones.html">Notificaciones</a>
                 </nav>
@@ -76,42 +76,28 @@
             </aside>
 
             <!-- CONTENIDO CENTRAL -->
-            <!-- Panel principal de estadísticas del socio -->
             <div class="socios-content">
 
+                <!-- Panel principal con información de la suscripción -->
                 <section class="socios-panel">
 
                     <!-- Título del panel -->
-                    <h2 class="h2">Estadísticas</h2>
+                    <h2 class="h2">Mi suscripción</h2>
 
-                    <!-- Tarjeta: clases realizadas este mes -->
-                    <div class="dashboard-grid">
-                        <div class="info-card">
-                            <span class="label">Clases este mes</span>
-                            <h3>12</h3>
-                            <p>+3 respecto al mes pasado</p>
-                        </div>
+                    <!-- Caja con el resumen del plan contratado -->
+                    <div class="subscription-box">
 
-                        <!-- Tarjeta: actividad más frecuente -->
-                        <div class="info-card">
-                            <span class="label">Actividad favorita</span>
-                            <h3>Yoga / Pilates</h3>
-                            <p>La más reservada</p>
-                        </div>
+                        <!-- Datos principales de la suscripción -->
+                        <p><strong>Plan:</strong> ATHENA Premium</p>
+                        <p><strong>Precio:</strong> 79,90 €/mes</p>
+                        <p><strong>Fecha inicio:</strong> 01/02/2026</p>
+                        <p><strong>Renovación:</strong> 01/04/2026</p>
 
-                        <!-- Tarjeta: número de entrenamientos semanales -->
-                        <div class="info-card">
-                            <span class="label">Entrenamientos semanales</span>
-                            <h3>4</h3>
-                            <p>Muy buena regularidad</p>
-                        </div>
-
-                        <!-- Tarjeta: porcentaje de asistencia -->
-                        <div class="info-card">
-                            <span class="label">Asistencia</span>
-                            <h3>87%</h3>
-                            <p>Excelente constancia</p>
-                        </div>
+                        <!-- Descripción de beneficios incluidos -->
+                        <p>
+                            Acceso completo a todas las zonas del club, clases dirigidas ilimitadas,
+                            seguimiento de progreso y zona wellness.
+                        </p>
 
                     </div>
 
@@ -124,7 +110,6 @@
     </main>
 
     <!-- FOOTER / PIE DE PÁGINA -->
-    <!-- Información de contacto y horario del club -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crear usuario | Administración | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Crea un nuevo usuario desde el panel de administración de ATHENA Wellness Club y configura sus datos personales, permisos y suscripción inicial.">
+    <meta name="keywords"
+        content="crear usuario, panel administrador, gestión de usuarios, suscripción inicial, administración gimnasio, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-admin.css">
+</head>
+
+<body>
+
+    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo e identidad visual -->
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Administración</span>
+                </span>
+            </a>
+
+            <!-- Navegación superior -->
+            <nav class="nav nav--socios" aria-label="Navegación del área de administración">
+                <a href="admin-panel.html">Resumen</a>
+                <a class="is-active" href="admin-usuarios.html">Usuarios</a>
+                <a href="admin-suscripciones.html">Suscripciones</a>
+                <a href="admin-reservas.html">Reservas</a>
+                <a href="admin-entrenamientos.html">Entrenamientos</a>
+                <a href="admin-notificaciones.html">Avisos</a>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section section-socios">
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR / MENÚ LATERAL -->
+            <aside class="socios-sidebar">
+                <div class="socios-user">
+                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3>Administrador ATHENA</h3>
+                    <p>Perfil ADMIN</p>
+                </div>
+
+                <nav class="socios-menu" aria-label="Menú lateral de administración">
+                    <a href="admin-panel.html">Resumen general</a>
+                    <a class="is-active" href="admin-usuarios.html">Gestión de usuarios</a>
+                    <a href="admin-suscripciones.html">Gestión de suscripciones</a>
+                    <a href="admin-reservas.html">Gestión de reservas</a>
+                    <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
+                    <a href="admin-notificaciones.html">Gestión de notificaciones</a>
+                </nav>
+            </aside>
+
+            <!-- CONTENIDO CENTRAL -->
+            <div class="socios-content">
+
+                <!-- CABECERA DEL PANEL -->
+                <section class="socios-panel">
+                    <h2 class="h2">Crear nuevo usuario</h2>
+
+                    <div class="info-card">
+                        <span class="label">Alta manual</span>
+                        <h3>Nuevo usuario en ATHENA</h3>
+                        <p>Completa los datos personales, permisos y la suscripción inicial del nuevo socio.</p>
+                    </div>
+                </section>
+
+                <!-- FORMULARIO -->
+                <form action="#" method="post">
+
+                    <!-- DATOS PERSONALES -->
+                    <section class="socios-panel panel-spacing">
+                        <h2 class="h2">Datos personales</h2>
+
+                        <div class="two-cols">
+                            <div class="form-row">
+                                <label for="alias">Alias</label>
+                                <input type="text" id="alias" name="alias" placeholder="Introduce el alias">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="dni">DNI</label>
+                                <input type="text" id="dni" name="dni" placeholder="Introduce el DNI">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="apellidos">Apellidos</label>
+                                <input type="text" id="apellidos" name="apellidos"
+                                    placeholder="Introduce los apellidos">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="correo">Correo electrónico</label>
+                                <input type="email" id="correo" name="correo"
+                                    placeholder="Introduce el correo electrónico">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" id="telefono" name="telefono" placeholder="Introduce el teléfono">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                                <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="sexo">Sexo</label>
+                                <select id="sexo" name="sexo">
+                                    <option value="" selected disabled>Selecciona una opción</option>
+                                    <option value="Mujer">Mujer</option>
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Otro">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ACCESO Y PERMISOS -->
+                    <section class="socios-panel panel-spacing">
+                        <h2 class="h2">Acceso y permisos</h2>
+
+                        <div class="two-cols">
+                            <div class="form-row">
+                                <label for="perfil">Perfil</label>
+                                <select id="perfil" name="perfil">
+                                    <option value="CLIENTE" selected>CLIENTE</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="estado">Estado</label>
+                                <select id="estado" name="estado">
+                                    <option value="Activo" selected>Activo</option>
+                                    <option value="Inactivo">Inactivo</option>
+                                    <option value="Bloqueado">Bloqueado</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="contrasena">Contraseña</label>
+                                <input type="password" id="contrasena" name="contrasena"
+                                    placeholder="Introduce una contraseña">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="confirmarContrasena">Confirmar contraseña</label>
+                                <input type="password" id="confirmarContrasena" name="confirmarContrasena"
+                                    placeholder="Repite la contraseña">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="fotoPerfil">Ruta foto perfil</label>
+                                <input type="text" id="fotoPerfil" name="fotoPerfil" value="../img/perfil.jpg">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SUSCRIPCIÓN INICIAL -->
+                    <section class="socios-panel panel-spacing">
+                        <h2 class="h2">Suscripción inicial</h2>
+
+                        <div class="two-cols">
+                            <div class="info-card">
+                                <span class="label">Membresía</span>
+                                <h3>Asignación inicial</h3>
+                                <p>Selecciona el plan con el que el usuario comenzará en el club.</p>
+                            </div>
+
+                            <div class="info-card">
+                                <span class="label">Configuración</span>
+                                <h3>Activación administrativa</h3>
+                                <p>Puedes dejar preparada la renovación automática desde el alta inicial.</p>
+                            </div>
+                        </div>
+
+                        <div class="two-cols panel-spacing">
+                            <div class="form-row">
+                                <label for="membresia">Membresía</label>
+                                <select id="membresia" name="membresia">
+                                    <option value="Essential Morning">Essential Morning</option>
+                                    <option value="Essential">Essential</option>
+                                    <option value="Premium" selected>Premium</option>
+                                    <option value="Executive">Executive</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="renovacionAutomatica">Renovación automática</label>
+                                <select id="renovacionAutomatica" name="renovacionAutomatica">
+                                    <option value="Si" selected>Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ACCIONES RÁPIDAS -->
+                    <section class="socios-panel panel-spacing">
+                        <h2 class="h2">Acciones rápidas</h2>
+
+                        <div class="two-cols">
+                            <div class="info-card">
+                                <span class="label">Gestión de usuarios</span>
+                                <h3>Volver al listado</h3>
+                                <p>Consulta de nuevo todos los usuarios registrados en el panel de administración.</p>
+                                <div class="card-action">
+                                    <a class="btn btn--ghost btn--small" href="admin-usuarios.html">Ir a usuarios</a>
+                                </div>
+                            </div>
+
+                            <div class="info-card">
+                                <span class="label">Control administrativo</span>
+                                <h3>Revisar suscripciones</h3>
+                                <p>Accede al panel de suscripciones para comprobar planes, renovaciones y estados.</p>
+                                <div class="card-action">
+                                    <a class="btn btn--ghost btn--small" href="admin-suscripciones.html">Ir a
+                                        suscripciones</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="actions actions-top">
+                            <button class="btn btn--primary" type="submit">Crear usuario</button>
+                            <a class="btn btn--ghost" href="admin-usuarios.html">Cancelar</a>
+                        </div>
+                    </section>
+
+                </form>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

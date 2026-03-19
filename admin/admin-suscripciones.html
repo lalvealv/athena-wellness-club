@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de suscripciones | Administración | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Consulta, filtra y gestiona las suscripciones de los usuarios desde el panel de administración de ATHENA Wellness Club.">
+    <meta name="keywords"
+        content="gestión de suscripciones, membresías gimnasio, panel administrador, planes fitness, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-admin.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Administración</span>
+                </span>
+            </a>
+
+            <nav class="nav nav--socios" aria-label="Navegación del área de administración">
+                <a href="admin-panel.html">Resumen</a>
+                <a href="admin-usuarios.html">Usuarios</a>
+                <a class="is-active" href="admin-suscripciones.html">Suscripciones</a>
+                <a href="admin-reservas.html">Reservas</a>
+                <a href="admin-entrenamientos.html">Entrenamientos</a>
+                <a href="admin-notificaciones.html">Avisos</a>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="section section-socios">
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR -->
+            <aside class="socios-sidebar">
+                <div class="socios-user">
+                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3>Administrador ATHENA</h3>
+                    <p>Perfil ADMIN</p>
+                </div>
+
+                <nav class="socios-menu" aria-label="Menú lateral de administración">
+                    <a href="admin-panel.html">Resumen general</a>
+                    <a href="admin-usuarios.html">Gestión de usuarios</a>
+                    <a class="is-active" href="admin-suscripciones.html">Gestión de suscripciones</a>
+                    <a href="admin-reservas.html">Gestión de reservas</a>
+                    <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
+                    <a href="admin-notificaciones.html">Gestión de notificaciones</a>
+                </nav>
+            </aside>
+
+            <!-- CONTENIDO -->
+            <div class="socios-content">
+
+                <!-- FILTROS + TABLA -->
+                <section class="socios-panel">
+                    <h2 class="h2">Gestión de suscripciones</h2>
+
+                    <div class="profile-box box-spacing">
+                        <form action="#" method="get">
+                            <div class="two-cols">
+
+                                <div class="form-row">
+                                    <label for="buscarSuscripcion">Buscar usuario</label>
+                                    <input type="text" id="buscarSuscripcion" name="buscarSuscripcion"
+                                        placeholder="Alias, nombre o correo">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="filtrarPlan">Filtrar por plan</label>
+                                    <select id="filtrarPlan" name="filtrarPlan">
+                                        <option value="">Todos</option>
+                                        <option value="Essential Morning">Essential Morning</option>
+                                        <option value="Essential">Essential</option>
+                                        <option value="Premium">Premium</option>
+                                        <option value="Executive">Executive</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="filtrarEstado">Filtrar por estado</label>
+                                    <select id="filtrarEstado" name="filtrarEstado">
+                                        <option value="">Todos</option>
+                                        <option value="Activa">Activa</option>
+                                        <option value="Pausada">Pausada</option>
+                                        <option value="Cancelada">Cancelada</option>
+                                        <option value="Finalizada">Finalizada</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="actions actions-top">
+                                <button class="btn btn--primary btn--small" type="submit">Buscar</button>
+                                <button class="btn btn--ghost btn--small" type="reset">Limpiar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Plan</th>
+                                    <th>Precio</th>
+                                    <th>Inicio</th>
+                                    <th>Renovación</th>
+                                    <th>Estado</th>
+                                    <th>Renovación automática</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Lorena Alvarez Alves</td>
+                                    <td>Premium</td>
+                                    <td>79,90 €</td>
+                                    <td>01/02/2026</td>
+                                    <td>01/04/2026</td>
+                                    <td class="status-ok">Activa</td>
+                                    <td>Sí</td>
+                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td>2</td>
+                                    <td>Marta Gómez Ruiz</td>
+                                    <td>Essential</td>
+                                    <td>39,90 €</td>
+                                    <td>15/02/2026</td>
+                                    <td>15/03/2026</td>
+                                    <td class="status-ok">Activa</td>
+                                    <td>No</td>
+                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td>3</td>
+                                    <td>Carlos Pérez Soto</td>
+                                    <td>Executive</td>
+                                    <td>119,90 €</td>
+                                    <td>01/01/2026</td>
+                                    <td>01/03/2026</td>
+                                    <td class="status-cancel">Cancelada</td>
+                                    <td>No</td>
+                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- RESUMEN -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Resumen de planes</h2>
+
+                    <div class="dashboard-grid">
+                        <div class="info-card">
+                            <span class="label">Plan Essential</span>
+                            <h3>48 usuarios</h3>
+                            <p>Acceso básico al club</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Plan Premium</span>
+                            <h3>63 usuarios</h3>
+                            <p>Acceso completo y clases</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Plan Executive</span>
+                            <h3>17 usuarios</h3>
+                            <p>Servicios exclusivos</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Suscripciones canceladas</span>
+                            <h3>4</h3>
+                            <p>Revisar incidencias y bajas</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- GESTIÓN -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Gestión administrativa</h2>
+
+                    <div class="two-cols">
+                        <div class="info-card">
+                            <span class="label">Cambio de plan</span>
+                            <h3>Actualizar membresía</h3>
+                            <p>Permite cambiar entre Essential, Premium y Executive.</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Control administrativo</span>
+                            <h3>Modificar renovaciones</h3>
+                            <p>Gestiona fechas, estados y renovación automática.</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

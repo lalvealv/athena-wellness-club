@@ -1,0 +1,108 @@
+/* 14. FORMULARIOS DEL ÁREA SOCIOS / ADMIN*/
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.form-row label {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: rgba(233, 233, 238, 0.88);
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #23242c;
+    color: #f5f5f7;
+    border-radius: 14px;
+    padding: 0.85rem 1rem;
+    font: inherit;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-row select option {
+    background-color: #23242c;
+    color: #f5f5f7;
+}
+
+.form-row select:focus {
+    background: #2b2d36;
+    color: #ffffff;
+}
+
+.form-row select option:checked,
+.form-row select option:selected {
+    background-color: #3a3c46;
+    color: #ffffff;
+}
+
+.form-row input::placeholder,
+.form-row textarea::placeholder {
+    color: rgba(233, 233, 238, 0.46);
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+    border-color: rgba(175, 150, 255, 0.65);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 0 0 3px rgba(175, 150, 255, 0.12);
+}
+
+.form-row textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+
+/* 15. ACCIONES Y BOTONES EN BLOQUES ADMIN */
+.actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+
+/* 16. NAVEGACIÓN ACTIVA SUPERIOR */
+.nav--socios a.is-active {
+    color: rgba(233, 233, 238, 0.98);
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    font-weight: 600;
+}
+
+
+/* 17. TABLAS: CONTENEDOR Y ENLACES DE ACCIÓN */
+.table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 18px;
+}
+
+.table-wrap td a {
+    color: rgba(120, 210, 255, 0.92);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.table-wrap td a:hover {
+    color: rgba(175, 150, 255, 0.98);
+    text-decoration: underline;
+}
+
+
+/* 18. TARJETAS/CAJAS DE ADMIN CON MÁS ALTURA */
+.info-card,
+.profile-box,
+.subscription-box,
+.goal-box,
+.notification-box {
+    height: 100%;
+}

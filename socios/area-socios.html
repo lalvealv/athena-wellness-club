@@ -3,43 +3,41 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Reservas | Área de socios | ATHENA Wellness Club</title>
-    <meta name="description" content="Gestiona tus reservas de clases y consulta tu historial
-         de reservas en el área privada de ATHENA Wellness Club.">
-    <meta name="keywords" content="reservas gimnasio, historial reservas,
-         clases gimnasio, yoga pilates reservas, ATHENA Wellness Club, área socios">
+    <title>Área de socios | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Consulta tu resumen general en el área privada de ATHENA Wellness Club: suscripción, próximas clases, entrenamientos y objetivo fitness.">
+    <meta name="keywords"
+        content="área de socios, panel privado, resumen socio, suscripción gimnasio, entrenamientos, objetivo fitness, ATHENA Wellness Club">
     <meta name="author" content="lavealv">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilo-general.css">
-    <link rel="stylesheet" href="estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
 </head>
 
 <body>
-    <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
-    <!-- Logo del club y navegación superior privada -->
+    <!-- HEADER / CABECERA DEL ÁREA PRIVADA -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo del club -->
-            <a class="brand" href="index.html">
-                <img src="img/athena_logo.png">
+            <!-- Logo de la marca y acceso a la página principal -->
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo de ATHENA Wellness Club">
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Área privada</span>
                 </span>
             </a>
 
-            <!-- Navegación superior del área privada -->
-            <nav class="nav nav--socios">
-                <a href="area-socios.html">Resumen</a>
+            <!-- Menú superior de navegación del área de socios -->
+            <nav class="nav nav--socios" aria-label="Navegación del área privada">
+                <a class="is-active" href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
-                <a class="is-active" href="horarios-reservas.html">Reservas</a>
+                <a href="horarios-reservas.html">Reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
                 <a href="notificaciones.html">Avisos</a>
-                <!-- Botón para cerrar sesión -->
-                <button class="btn btn--ghost btn--small">Cerrar sesión</button>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
             </nav>
 
         </div>
@@ -48,60 +46,63 @@
     <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
     <main class="section section-socios">
 
-        <!-- Layout principal con menú lateral y contenido -->
+        <!-- Layout principal con sidebar y zona de contenido -->
         <div class="container socios-layout">
 
             <!-- SIDEBAR / MENÚ LATERAL DEL SOCIO -->
             <aside class="socios-sidebar">
-                <!-- Información del usuario -->
+
+                <!-- Tarjeta de información rápida del socio -->
                 <div class="socios-user">
-                    <img src="img-socios/socio1.png">
+                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3>Lorena Alvarez Alves</h3>
                     <p>Socia Premium</p>
                 </div>
+
                 <!-- Navegación lateral del área privada -->
-                <nav class="socios-menu">
-                    <a href="area-socios.html">Resumen</a>
+                <nav class="socios-menu" aria-label="Menú lateral del área privada">
+                    <a class="is-active" href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>
-                    <a class="is-active" href="historial-reservas.html">Historial reservas</a>
+                    <a href="historial-reservas.html">Historial reservas</a>
                     <a href="entrenamientos.html">Entrenamientos</a>
                     <a href="estadisticas.html">Estadísticas</a>
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
                     <a href="notificaciones.html">Notificaciones</a>
                 </nav>
-
             </aside>
 
-            <!-- CONTENIDO PRINCIPAL -->
-            <!-- Panel de resumen del socio -->
+            <!-- ZONA CENTRAL DE CONTENIDO -->
             <div class="socios-content">
 
+                <!-- Panel principal con el resumen general del socio -->
                 <section class="socios-panel">
+
                     <!-- Título del panel -->
                     <h2 class="h2">Resumen general</h2>
-                    <!-- Tarjeta: tipo de suscripción -->
+
+                    <!-- Grid de tarjetas con información destacada -->
                     <div class="dashboard-grid">
-                        <!-- Tarjeta: tipo de suscripción -->
+
                         <div class="info-card">
                             <span class="label">Suscripción</span>
                             <h3>Premium</h3>
                             <p>Renovación: 01/04/2026</p>
                         </div>
-                        <!-- Tarjeta: próxima clase reservada -->
+
                         <div class="info-card">
                             <span class="label">Próxima clase</span>
                             <h3>Yoga / Pilates</h3>
                             <p>Sábado · 07:30</p>
                         </div>
-                        <!-- Tarjeta: entrenamientos realizados -->
+
                         <div class="info-card">
                             <span class="label">Entrenamientos esta semana</span>
                             <h3>4</h3>
                             <p>Muy buena constancia</p>
                         </div>
-                        <!-- Tarjeta: progreso del objetivo fitness -->
+
                         <div class="info-card">
                             <span class="label">Objetivo fitness</span>
                             <h3>75%</h3>
@@ -119,7 +120,6 @@
     </main>
 
     <!-- FOOTER / PIE DE PÁGINA -->
-    <!-- Información de contacto y horario del club -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>

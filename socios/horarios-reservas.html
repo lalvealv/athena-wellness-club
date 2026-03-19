@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de reservas | Área de socios | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Consulta tu historial de reservas de clases en el área privada de ATHENA Wellness Club. Revisa las clases reservadas, asistidas o canceladas.">
+    <meta name="keywords"
+        content="historial reservas gimnasio, reservas clases gimnasio, yoga pilates reservas, spinning clases, ATHENA Wellness Club área socios">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo -->
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Área privada</span>
+                </span>
+            </a>
+
+            <!-- Navegación superior -->
+            <nav class="nav nav--socios" aria-label="Navegación del área privada">
+                <a href="area-socios.html">Resumen</a>
+                <a href="perfil.html">Mi perfil</a>
+                <a href="suscripcion.html">Suscripción</a>
+                <a class="is-active" href="horarios-reservas.html">Reservas</a>
+                <a href="entrenamientos.html">Entrenamientos</a>
+                <a href="estadisticas.html">Estadísticas</a>
+                <a href="notificaciones.html">Avisos</a>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="section section-socios">
+
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR -->
+            <aside class="socios-sidebar">
+
+                <!-- Usuario -->
+                <div class="socios-user">
+                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
+                    <h3>Lorena Alvarez Alves</h3>
+                    <p>Socia Premium</p>
+                </div>
+
+                <!-- Menú lateral -->
+                <nav class="socios-menu" aria-label="Menú lateral del área privada">
+                    <a href="area-socios.html">Resumen</a>
+                    <a href="perfil.html">Mi perfil</a>
+                    <a href="suscripcion.html">Mi suscripción</a>
+                    <a href="horarios-reservas.html">Horarios y reservas</a>
+                    <a class="is-active" href="historial-reservas.html">Historial reservas</a>
+                    <a href="entrenamientos.html">Entrenamientos</a>
+                    <a href="estadisticas.html">Estadísticas</a>
+                    <a href="objetivo-fitness.html">Objetivo fitness</a>
+                    <a href="notificaciones.html">Notificaciones</a>
+                </nav>
+
+            </aside>
+
+            <!-- CONTENIDO -->
+            <div class="socios-content">
+
+                <section class="socios-panel">
+
+                    <h2 class="h2">Historial de reservas</h2>
+
+                    <!-- Tabla -->
+                    <div class="table-wrap">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>Clase</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Plaza</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Yoga / Pilates</td>
+                                    <td>15/03/2026</td>
+                                    <td>07:30 - 08:20</td>
+                                    <td>06</td>
+                                    <td class="status-ok">Confirmada</td>
+                                </tr>
+                                <tr>
+                                    <td>Strength</td>
+                                    <td>13/03/2026</td>
+                                    <td>18:30 - 19:20</td>
+                                    <td>04</td>
+                                    <td class="status-ok">Asistida</td>
+                                </tr>
+                                <tr>
+                                    <td>Zumba</td>
+                                    <td>10/03/2026</td>
+                                    <td>17:30 - 18:20</td>
+                                    <td>09</td>
+                                    <td class="status-cancel">Cancelada</td>
+                                </tr>
+                                <tr>
+                                    <td>Spinning</td>
+                                    <td>08/03/2026</td>
+                                    <td>08:30 - 09:20</td>
+                                    <td>11</td>
+                                    <td class="status-ok">Asistida</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

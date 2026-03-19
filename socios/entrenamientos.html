@@ -4,25 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Entrenamientos | Área de socios | ATHENA Wellness Club</title>
-    <meta name="description" content="Consulta tu rutina actual, el historial de entrenamientos y los ejercicios
-         realizados en el área privada de ATHENA Wellness Club.">
-    <meta name="keywords" content="entrenamientos gimnasio, rutina fitness,
-         ejercicios gimnasio, entrenamiento personalizado, área socios, ATHENA Wellness Club">
+    <meta name="description"
+        content="Consulta tu rutina actual, el historial de entrenamientos y los ejercicios realizados en el área privada de ATHENA Wellness Club.">
+    <meta name="keywords"
+        content="entrenamientos gimnasio, rutina fitness, ejercicios gimnasio, entrenamiento personalizado, área socios, ATHENA Wellness Club">
     <meta name="author" content="lavealv">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilo-general.css">
-    <link rel="stylesheet" href="estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
 </head>
 
 <body>
     <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
-    <!-- Logo del club y navegación superior privada -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
             <!-- Logo del club -->
-            <a class="brand" href="index.html">
-                <img src="img/athena_logo.png" alt="Logo ATHENA Wellness Club">
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Área privada</span>
@@ -30,7 +29,7 @@
             </a>
 
             <!-- Navegación superior del área privada -->
-            <nav class="nav nav--socios">
+            <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
@@ -38,10 +37,8 @@
                 <a class="is-active" href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
                 <a href="notificaciones.html">Avisos</a>
-                <!-- Botón de cerrar sesión -->
-                <button class="btn btn--ghost btn--small">Cerrar sesión</button>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
             </nav>
-
 
         </div>
     </header>
@@ -49,21 +46,20 @@
     <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
     <main class="section section-socios">
 
-        <!-- Layout principal con sidebar y contenido -->
         <div class="container socios-layout">
 
-            <!-- SIDEBAR / MENÚ LATERAL DEL SOCIO -->
+            <!-- SIDEBAR -->
             <aside class="socios-sidebar">
 
-                <!-- Información del usuario -->
+                <!-- Usuario -->
                 <div class="socios-user">
-                    <img src="img-socios/socio1.png" alt="Foto de perfil del socio">
+                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3>Lorena Alvarez Alves</h3>
                     <p>Socia Premium</p>
                 </div>
 
-                <!-- Menú lateral de navegación -->
-                <nav class="socios-menu">
+                <!-- Menú lateral -->
+                <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
@@ -74,16 +70,17 @@
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
                     <a href="notificaciones.html">Notificaciones</a>
                 </nav>
+
             </aside>
 
-            <!-- CONTENIDO PRINCIPAL -->
-            <!-- Panel con información de entrenamientos -->
+            <!-- CONTENIDO -->
             <div class="socios-content">
 
                 <section class="socios-panel">
-                    <!-- Título del panel -->
+
                     <h2 class="h2">Entrenamientos</h2>
-                    <!-- Tarjetas de información rápida -->
+
+                    <!-- INFO -->
                     <div class="two-cols">
 
                         <div class="info-card">
@@ -100,7 +97,7 @@
 
                     </div>
 
-                    <!-- Tabla con ejercicios de la rutina -->
+                    <!-- TABLA -->
                     <div class="table-wrap" style="margin-top: 1rem;">
                         <table class="mini-table">
                             <thead>
@@ -148,8 +145,7 @@
 
     </main>
 
-    <!-- FOOTER / PIE DE PÁGINA -->
-    <!-- Información básica del club -->
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>

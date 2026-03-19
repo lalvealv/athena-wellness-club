@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>REGISTRO EVENTO</title>
+    <title>Área de socios | ATHENA Wellness Club</title>
     <meta name="description" content="Accede al área de socios de ATHENA Wellness Club para consultar 
         tu cuenta, gestionar tu plan y reservar actividades o clases.">
-    <meta name="keywords" content="evento, registro, registro evento">
+    <meta name="keywords" content="área de socios, login gimnasio, acceso usuarios, cuenta socio,
+     reservas gimnasio, ATHENA Wellness Club">
     <meta name="author" content="lavealv">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilo-general.css">
+    <link rel="stylesheet" href="../estilo-general.css">
 </head>
 
 <body>
@@ -19,7 +20,7 @@
         <div class="container header-inner">
             <!-- Logo e identidad visual de la marca -->
             <a class="brand" href="index.html" aria-label="ATHENA Wellness Club">
-                <img src="img/athena_logo.png" alt="Logo del Club">
+                <img src="../img/athena_logo.png" alt="Logo del Club">
                 <span class="brand-mark" aria-hidden="true"></span>
                 <span class="brand-text">
                     <strong>ATHENA</strong>
@@ -33,7 +34,7 @@
                 <a href="actividades.html">Actividades</a>
                 <a href="horarios.html">Horarios</a>
                 <a href="unete.html">Únete</a>
-                <a href="socios.html">Área socios</a>
+                <a class="is-active" href="socios.html">Área socios</a>
             </nav>
         </div>
     </header>
@@ -53,14 +54,14 @@
                         <!-- Campo: nombre de usuario -->
                         <div class="form-row">
                             <label for="nombreUsuario">Nombre de usuario</label>
-                            <input type="text" id="nombreUsuario" name="nombreUsuario" required
+                            <input type="text" id="nombreUsuario" name="nombreUsuario" required autocomplete="username"
                                 placeholder="Tu usuario">
                         </div>
                         <!-- Campo: contraseña -->
                         <div class="form-row">
                             <label for="password">Contraseña</label>
-                            <input type="password" id="password" name="password" required minlength="8"
-                                placeholder="Tu contraseña">
+                            <input type="password" id="password" name="password" required
+                                autocomplete="current-password" placeholder="Tu contraseña">
                         </div>
                         <!-- Botones de acción del formulario -->
                         <div class="actions">

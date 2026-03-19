@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de entrenamientos | Administración | ATHENA Wellness Club</title>
+    <meta name="description"
+        content="Consulta, filtra y revisa los entrenamientos de los socios desde el panel de administración de ATHENA Wellness Club.">
+    <meta name="keywords"
+        content="gestión de entrenamientos, panel administrador, rutinas gimnasio, seguimiento de socios, administración gimnasio, ATHENA Wellness Club">
+    <meta name="author" content="lavealv">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../estilo-general.css">
+    <link rel="stylesheet" href="../estilo-socios.css">
+    <link rel="stylesheet" href="../estilo-admin.css">
+</head>
+
+<body>
+
+    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
+    <header class="site-header site-header--socios">
+        <div class="container header-inner header-inner--socios">
+
+            <!-- Logo e identidad visual -->
+            <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
+                <img src="../img/athena_logo.png" alt="Logo ATHENA">
+                <span class="brand-text">
+                    <strong>ATHENA</strong>
+                    <span>Wellness Club · Administración</span>
+                </span>
+            </a>
+
+            <!-- Navegación superior -->
+            <nav class="nav nav--socios" aria-label="Navegación del área de administración">
+                <a href="admin-panel.html">Resumen</a>
+                <a href="admin-usuarios.html">Usuarios</a>
+                <a href="admin-suscripciones.html">Suscripciones</a>
+                <a href="admin-reservas.html">Reservas</a>
+                <a class="is-active" href="admin-entrenamientos.html">Entrenamientos</a>
+                <a href="admin-notificaciones.html">Avisos</a>
+                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="section section-socios">
+        <div class="container socios-layout">
+
+            <!-- SIDEBAR / MENÚ LATERAL -->
+            <aside class="socios-sidebar">
+                <div class="socios-user">
+                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3>Administrador ATHENA</h3>
+                    <p>Perfil ADMIN</p>
+                </div>
+
+                <nav class="socios-menu" aria-label="Menú lateral de administración">
+                    <a href="admin-panel.html">Resumen general</a>
+                    <a href="admin-usuarios.html">Gestión de usuarios</a>
+                    <a href="admin-suscripciones.html">Gestión de suscripciones</a>
+                    <a href="admin-reservas.html">Gestión de reservas</a>
+                    <a class="is-active" href="admin-entrenamientos.html">Gestión de entrenamientos</a>
+                    <a href="admin-notificaciones.html">Gestión de notificaciones</a>
+                </nav>
+            </aside>
+
+            <!-- CONTENIDO CENTRAL -->
+            <div class="socios-content">
+
+                <!-- FILTROS Y LISTADO -->
+                <section class="socios-panel">
+                    <h2 class="h2">Gestión de entrenamientos</h2>
+
+                    <div class="profile-box box-spacing">
+                        <form action="#" method="get">
+                            <div class="two-cols">
+                                <div class="form-row">
+                                    <label for="buscarEntrenamiento">Buscar usuario</label>
+                                    <input type="text" id="buscarEntrenamiento" name="buscarEntrenamiento"
+                                        placeholder="Alias o nombre del socio">
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="filtrarRutina">Filtrar por rutina</label>
+                                    <select id="filtrarRutina" name="filtrarRutina">
+                                        <option value="">Todas</option>
+                                        <option value="Full Body">Full Body</option>
+                                        <option value="Pierna">Pierna</option>
+                                        <option value="Tren superior">Tren superior</option>
+                                        <option value="Cardio">Cardio</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-row">
+                                    <label for="fechaEntrenamiento">Fecha</label>
+                                    <input type="date" id="fechaEntrenamiento" name="fechaEntrenamiento">
+                                </div>
+                            </div>
+
+                            <div class="actions actions-top">
+                                <button class="btn btn--primary btn--small" type="submit">Buscar</button>
+                                <button class="btn btn--ghost btn--small" type="reset">Limpiar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Usuario</th>
+                                    <th>Rutina</th>
+                                    <th>Fecha</th>
+                                    <th>Duración</th>
+                                    <th>Observaciones</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>201</td>
+                                    <td>Lorena Alvarez Alves</td>
+                                    <td>Full Body Balance</td>
+                                    <td>12/03/2026</td>
+                                    <td>55 min</td>
+                                    <td>Trabajo global · constancia alta</td>
+                                    <td><a href="admin-editar-usuario.html">Ver usuario</a></td>
+                                </tr>
+                                <tr>
+                                    <td>202</td>
+                                    <td>Marta Gómez Ruiz</td>
+                                    <td>Pierna y glúteo</td>
+                                    <td>11/03/2026</td>
+                                    <td>50 min</td>
+                                    <td>Muy buena progresión</td>
+                                    <td><a href="admin-editar-usuario.html">Ver usuario</a></td>
+                                </tr>
+                                <tr>
+                                    <td>203</td>
+                                    <td>Carlos Pérez Soto</td>
+                                    <td>Cardio + Core</td>
+                                    <td>10/03/2026</td>
+                                    <td>40 min</td>
+                                    <td>Sesión incompleta</td>
+                                    <td><a href="admin-editar-usuario.html">Ver usuario</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- DETALLE DE ENTRENAMIENTO -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Detalle del entrenamiento seleccionado</h2>
+
+                    <div class="two-cols">
+                        <div class="info-card">
+                            <span class="label">Usuario</span>
+                            <h3>Lorena Alvarez Alves</h3>
+                            <p>Último entrenamiento registrado</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Rutina</span>
+                            <h3>Full Body Balance</h3>
+                            <p>4 días por semana</p>
+                        </div>
+                    </div>
+
+                    <div class="table-wrap actions-top">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>Ejercicio</th>
+                                    <th>Series</th>
+                                    <th>Repeticiones</th>
+                                    <th>Peso</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sentadilla</td>
+                                    <td>4</td>
+                                    <td>10</td>
+                                    <td>40 kg</td>
+                                </tr>
+                                <tr>
+                                    <td>Hip thrust</td>
+                                    <td>4</td>
+                                    <td>12</td>
+                                    <td>50 kg</td>
+                                </tr>
+                                <tr>
+                                    <td>Prensa</td>
+                                    <td>3</td>
+                                    <td>12</td>
+                                    <td>70 kg</td>
+                                </tr>
+                                <tr>
+                                    <td>Remo con mancuerna</td>
+                                    <td>3</td>
+                                    <td>10</td>
+                                    <td>14 kg</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- RESUMEN DE ACTIVIDAD -->
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Resumen de actividad</h2>
+
+                    <div class="dashboard-grid">
+                        <div class="info-card">
+                            <span class="label">Entrenamientos esta semana</span>
+                            <h3>46</h3>
+                            <p>Total de sesiones registradas</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Rutina más usada</span>
+                            <h3>Full Body</h3>
+                            <p>La más repetida del club</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Usuarios activos</span>
+                            <h3>31</h3>
+                            <p>Han entrenado en los últimos 7 días</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Seguimiento bajo</span>
+                            <h3>5</h3>
+                            <p>Socios con poca constancia</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <p><strong>Contacto</strong></p>
+                <p>Teléfono: 645 789 123</p>
+                <p>Correo: club@gmail.com</p>
+            </div>
+            <div>
+                <p><strong>Horario</strong></p>
+                <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
