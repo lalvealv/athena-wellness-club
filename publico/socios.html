@@ -15,10 +15,10 @@
 
 <body>
     <!-- HEADER / CABECERA PRINCIPAL -->
-    <!-- Logo del club y menú de navegación -->
+    <!-- Contiene el logo y el menú de navegación -->
     <header class="site-header">
         <div class="container header-inner">
-            <!-- Logo e identidad visual de la marca -->
+            <!-- Logo del club -->
             <a class="brand" href="index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo del Club">
                 <span class="brand-mark" aria-hidden="true"></span>
@@ -27,13 +27,15 @@
                     <span>Wellness Club · Strength with Intelligence</span>
                 </span>
             </a>
-            <!-- Menú principal de navegación -->
+
+            <!-- Menú principal -->
             <nav class="nav" aria-label="Navegación principal">
                 <a href="nosotros.html">Sobre nosotros</a>
                 <a href="tarifas.html">Tarifas</a>
                 <a href="actividades.html">Actividades</a>
                 <a href="horarios.html">Horarios</a>
                 <a href="unete.html">Únete</a>
+                <!-- Página activa -->
                 <a class="is-active" href="socios.html">Área socios</a>
             </nav>
         </div>
@@ -41,41 +43,49 @@
 
     <main>
         <!-- SECCIÓN: ÁREA DE SOCIOS -->
-        <!-- Formulario de acceso para usuarios registrados -->
+        <!-- Formulario de inicio de sesión -->
         <section class="section">
             <div class="container">
-                <!-- Título y descripción de la sección -->
+                <!-- Título -->
                 <h2 class="h2">Área de socios</h2>
                 <p class="lead">Accede a tu cuenta para reservar clases y ver tu plan.</p>
+
                 <!-- Contenedor visual del formulario -->
                 <div class="form-shell" style="max-width: 520px;">
-                    <!-- Formulario de inicio de sesión -->
-                    <form method="post" action="/login">
-                        <!-- Campo: nombre de usuario -->
+
+                    <!-- Formulario de login -->
+                    <!-- Enviará los datos al archivo login.php -->
+                    <form method="post" action="../login.php">
+
+                        <!-- Campo usuario o correo -->
                         <div class="form-row">
-                            <label for="nombreUsuario">Nombre de usuario</label>
-                            <input type="text" id="nombreUsuario" name="nombreUsuario" required autocomplete="username"
-                                placeholder="Tu usuario">
+                            <label for="identificador">Usuario o correo electrónico</label>
+                            <!-- name="identificador" es el nombre que recogerá PHP -->
+                            <input type="text" id="identificador" name="identificador" required autocomplete="username"
+                                placeholder="Tu usuario o tu correo">
                         </div>
-                        <!-- Campo: contraseña -->
+
+                        <!-- Campo contraseña -->
                         <div class="form-row">
                             <label for="password">Contraseña</label>
+                            <!-- name="password" será la contraseña que recibirá login.php -->
                             <input type="password" id="password" name="password" required
                                 autocomplete="current-password" placeholder="Tu contraseña">
                         </div>
-                        <!-- Botones de acción del formulario -->
+
+                        <!-- Botones -->
                         <div class="actions">
                             <button class="btn btn--primary" type="submit">Entrar</button>
                             <a class="btn btn--ghost" href="unete.html">Crear cuenta</a>
                         </div>
                     </form>
+
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- FOOTER / PIE DE PÁGINA -->
-    <!-- Información de contacto y horario -->
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
