@@ -56,58 +56,6 @@ reservas, entrenamientos y notificaciones.
 
 ---
 
-## Estructura del proyecto
-TFG/
-│
-├── admin/
-│ ├── admin-panel.php
-│ ├── admin-crear-usuario.html
-│ ├── admin-editar-usuario.html
-│ ├── admin-entrenamientos.html
-│ ├── admin-notificaciones.html
-│ ├── admin-reservas.html
-│ ├── admin-suscripciones.html
-│ └── admin-usuarios.html
-│
-├── publico/
-│ ├── index.html
-│ ├── nosotros.html
-│ ├── tarifas.html
-│ ├── actividades.html
-│ ├── horarios.html
-│ ├── unete.html
-│ └── socios.html
-│
-├── socios/
-│ ├── area-socios.php
-│ ├── perfil.html
-│ ├── suscripcion.html
-│ ├── horarios-reservas.html
-│ ├── historial-reservas.html
-│ ├── entrenamientos.html
-│ ├── estadisticas.html
-│ ├── objetivo-fitness.html
-│ ├── notificaciones.html
-│ ├── login.php
-│ ├── logout.php
-│ ├── registro.php
-│ ├── conexion.php
-│ ├── comprobar-login.php
-│ ├── comprobar-admin.php
-│ └── crear-admin.php
-│
-├── database/
-│ └── athena.sql
-│
-├── img/
-├── img-socios/
-├── estilo-admin.css
-├── estilo-general.css
-├── estilo-socios.css
-└── README.md
-
----
-
 ## Base de datos
 
 El archivo de la base de datos se encuentra en:
