@@ -62,12 +62,12 @@ try {
     // Redirigir según el tipo de perfil
     // Perfil 1 = ADMIN
     if ((int)$usuario['id_perfil'] === 1) {
-        header("Location: admin/admin-panel.html");
+        header("Location: admin/admin-panel.php");
         exit;
     }
     // Perfil 2 = CLIENTE
     else {
-        header("Location: socios/area-socios.html");
+        header("Location: socios/area-socios.php");
         exit;
     }
 } catch (PDOException $e) {

@@ -1,3 +1,5 @@
+<?php require_once 'comprobar-login.php'; ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -30,7 +32,7 @@
 
             <!-- Menú superior de navegación del área de socios -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
-                <a class="is-active" href="area-socios.html">Resumen</a>
+                <a class="is-active" href="area-socios.php">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
@@ -61,7 +63,7 @@
 
                 <!-- Navegación lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
-                    <a class="is-active" href="area-socios.html">Resumen</a>
+                    <a class="is-active" href="area-socios.php">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>

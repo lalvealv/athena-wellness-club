@@ -1,3 +1,4 @@
+<?php require_once '../comprobar-admin.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -32,7 +33,7 @@
 
             <!-- Navegación superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
-                <a class="is-active" href="admin-panel.html">Resumen</a>
+                <a class="is-active" href="admin-panel.php">Resumen</a>
                 <a href="admin-usuarios.html">Usuarios</a>
                 <a href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
@@ -56,7 +57,7 @@
                 </div>
 
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
-                    <a class="is-active" href="admin-panel.html">Resumen general</a>
+                    <a class="is-active" href="admin-panel.php">Resumen general</a>
                     <a href="admin-usuarios.html">Gestión de usuarios</a>
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
