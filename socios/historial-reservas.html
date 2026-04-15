@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Horarios y reservas | Área de socios | ATHENA Wellness Club</title>
+    <title>Historial de reservas | Área de socios | ATHENA Wellness Club</title>
     <meta name="description"
-        content="Gestiona tus reservas de clases y consulta los horarios disponibles en el área privada de ATHENA Wellness Club.">
+        content="Consulta tu historial de reservas de clases en el área privada de ATHENA Wellness Club. Revisa las clases reservadas, asistidas o canceladas.">
     <meta name="keywords"
-        content="reservas gimnasio, horarios gimnasio, clases gimnasio, yoga pilates reservas, ATHENA Wellness Club, área socios">
+        content="historial reservas gimnasio, reservas clases gimnasio, yoga pilates reservas, spinning clases, ATHENA Wellness Club área socios">
     <meta name="author" content="lavealv">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../estilo-general.css">
@@ -15,11 +15,11 @@
 </head>
 
 <body>
-    <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
+    <!-- HEADER -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo del club -->
+            <!-- Logo -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
@@ -28,44 +28,44 @@
                 </span>
             </a>
 
-            <!-- Navegación superior del área privada -->
+            <!-- Navegación superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
-                <a href="area-socios.php">Resumen</a>
+                <!--<a href="area-socios.html">Resumen</a> -->
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
-                <a class="is-active" href="horarios-reservas.html">Reservas</a>
+                <a href="horarios-reservas.html">Reservas</a>
+                <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
                 <a href="notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
+    <!-- MAIN -->
     <main class="section section-socios">
 
-        <!-- Layout principal con menú lateral y contenido -->
         <div class="container socios-layout">
 
-            <!-- SIDEBAR / MENÚ LATERAL DEL SOCIO -->
+            <!-- SIDEBAR -->
             <aside class="socios-sidebar">
 
-                <!-- Información del usuario -->
+                <!-- Usuario -->
                 <div class="socios-user">
-                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
-                    <h3>Lorena Alvarez Alves</h3>
-                    <p>Socia Premium</p>
+                    <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
+                    <h3 id="sidebar-nombre">Cargando...</h3>
+                    <p id="sidebar-plan">Cargando...</p>
                 </div>
 
-                <!-- Navegación lateral del área privada -->
+                <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
-                    <a href="area-socios.php">Resumen</a>
+                    <!--<a href="area-socios.html">Resumen</a> -->
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
-                    <a class="is-active" href="horarios-reservas.html">Horarios y reservas</a>
-                    <a href="historial-reservas.html">Historial reservas</a>
+                    <a href="horarios-reservas.html">Horarios y reservas</a>
+                    <a class="is-active" href="historial-reservas.html">Historial reservas</a>
                     <a href="entrenamientos.html">Entrenamientos</a>
                     <a href="estadisticas.html">Estadísticas</a>
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
@@ -74,75 +74,27 @@
 
             </aside>
 
-            <!-- CONTENIDO PRINCIPAL -->
+            <!-- CONTENIDO -->
             <div class="socios-content">
 
                 <section class="socios-panel">
-                    <!-- Título del panel -->
-                    <h2 class="h2">Horarios y reservas</h2>
 
-                    <!-- Tarjetas de información rápida -->
-                    <div class="dashboard-grid">
-                        <div class="info-card">
-                            <span class="label">Próxima clase</span>
-                            <h3>Yoga / Pilates</h3>
-                            <p>Sábado · 07:30</p>
-                        </div>
+                    <h2 class="h2">Historial de reservas</h2>
 
-                        <div class="info-card">
-                            <span class="label">Reservas activas</span>
-                            <h3>3</h3>
-                            <p>Esta semana</p>
-                        </div>
-
-                        <div class="info-card">
-                            <span class="label">Última reserva</span>
-                            <h3>Spinning</h3>
-                            <p>Miércoles · 18:30</p>
-                        </div>
-
-                        <div class="info-card">
-                            <span class="label">Asistencia prevista</span>
-                            <h3>87%</h3>
-                            <p>Muy buena constancia</p>
-                        </div>
-                    </div>
-
-                    <!-- Tabla de horarios -->
-                    <div class="table-wrap" style="margin-top: 1rem;">
+                    <div class="table-wrap">
                         <table class="mini-table">
                             <thead>
                                 <tr>
-                                    <th>Actividad</th>
-                                    <th>Día</th>
+                                    <th>Clase</th>
+                                    <th>Fecha</th>
                                     <th>Hora</th>
+                                    <th>Sala</th>
                                     <th>Estado</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tabla-historial-reservas">
                                 <tr>
-                                    <td>Yoga / Pilates</td>
-                                    <td>Sábado</td>
-                                    <td>07:30</td>
-                                    <td>Reservada</td>
-                                </tr>
-                                <tr>
-                                    <td>Spinning</td>
-                                    <td>Miércoles</td>
-                                    <td>18:30</td>
-                                    <td>Reservada</td>
-                                </tr>
-                                <tr>
-                                    <td>HIIT</td>
-                                    <td>Viernes</td>
-                                    <td>19:00</td>
-                                    <td>Disponible</td>
-                                </tr>
-                                <tr>
-                                    <td>Zumba</td>
-                                    <td>Domingo</td>
-                                    <td>11:00</td>
-                                    <td>Disponible</td>
+                                    <td colspan="5">Cargando historial...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -156,7 +108,7 @@
 
     </main>
 
-    <!-- FOOTER / PIE DE PÁGINA -->
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -171,6 +123,7 @@
         </div>
     </footer>
 
+    <script src="../js/historial-reservas.js"></script>
 </body>
 
 </html>

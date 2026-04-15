@@ -17,11 +17,9 @@
 
 <body>
 
-    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo e identidad visual -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
                 <span class="brand-text">
@@ -30,33 +28,30 @@
                 </span>
             </a>
 
-            <!-- Navegación superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
-                <a href="admin-panel.php">Resumen</a>
+                <a href="admin-panel.html">Resumen</a>
                 <a class="is-active" href="admin-usuarios.html">Usuarios</a>
                 <a href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
                 <a href="admin-entrenamientos.html">Entrenamientos</a>
                 <a href="admin-notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
-            <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
                 <div class="socios-user">
-                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
-                    <h3>Administrador ATHENA</h3>
-                    <p>Perfil ADMIN</p>
+                    <img id="admin-foto" src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3 id="admin-nombre">Cargando...</h3>
+                    <p id="admin-perfil">Cargando...</p>
                 </div>
 
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
-                    <a href="admin-panel.php">Resumen general</a>
+                    <a href="admin-panel.html">Resumen general</a>
                     <a class="is-active" href="admin-usuarios.html">Gestión de usuarios</a>
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
@@ -65,91 +60,90 @@
                 </nav>
             </aside>
 
-            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
-                <!-- RESUMEN DEL USUARIO -->
                 <section class="socios-panel">
                     <h2 class="h2">Editar usuario</h2>
 
                     <div class="profile-box">
                         <div class="profile-grid">
                             <div class="profile-photo-wrap">
-                                <img src="../img/perfil.jpg" alt="Foto de perfil del usuario">
+                                <img id="resumen-foto-usuario" src="../img/perfil.jpg" alt="Foto de perfil del usuario">
                             </div>
 
                             <div class="profile-data">
                                 <div class="profile-item">
                                     <span>ID usuario</span>
-                                    <strong>2</strong>
+                                    <strong id="resumen-id-usuario">Cargando...</strong>
                                 </div>
 
                                 <div class="profile-item">
                                     <span>Alias actual</span>
-                                    <strong>lorena01</strong>
+                                    <strong id="resumen-alias-usuario">Cargando...</strong>
                                 </div>
 
                                 <div class="profile-item">
                                     <span>Perfil actual</span>
-                                    <strong>CLIENTE</strong>
+                                    <strong id="resumen-perfil-usuario">Cargando...</strong>
                                 </div>
 
                                 <div class="profile-item">
                                     <span>Estado actual</span>
-                                    <strong>Activo</strong>
+                                    <strong id="resumen-estado-usuario">Cargando...</strong>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <!-- FORMULARIO -->
-                <form action="#" method="post">
+                <form id="form-editar-usuario">
 
-                    <!-- DATOS PERSONALES -->
+                    <input type="hidden" id="idUsuario" name="idUsuario">
+
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Datos personales</h2>
 
                         <div class="two-cols">
                             <div class="form-row">
                                 <label for="alias">Alias</label>
-                                <input type="text" id="alias" name="alias" value="lorena01">
+                                <input type="text" id="alias" name="alias" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="dni">DNI</label>
-                                <input type="text" id="dni" name="dni" value="12345678Z">
+                                <input type="text" id="dni" name="dni" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="nombre">Nombre</label>
-                                <input type="text" id="nombre" name="nombre" value="Lorena">
+                                <input type="text" id="nombre" name="nombre" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="apellidos">Apellidos</label>
-                                <input type="text" id="apellidos" name="apellidos" value="Alvarez Alves">
+                                <input type="text" id="apellidos" name="apellidos" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="correo">Correo electrónico</label>
-                                <input type="email" id="correo" name="correo" value="lorena@email.com">
+                                <input type="email" id="correo" name="correo" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="telefono">Teléfono</label>
-                                <input type="text" id="telefono" name="telefono" value="645789123">
+                                <input type="text" id="telefono" name="telefono" required>
                             </div>
 
                             <div class="form-row form-row--date">
                                 <label for="fechaNacimiento">Fecha de nacimiento</label>
-                                <input type="date" id="fechaNacimiento" name="fechaNacimiento" value="2000-05-10">
+                                <input type="date" id="fechaNacimiento" name="fechaNacimiento">
                             </div>
 
                             <div class="form-row">
                                 <label for="sexo">Sexo</label>
                                 <select id="sexo" name="sexo">
-                                    <option value="Mujer" selected>Mujer</option>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="Mujer">Mujer</option>
                                     <option value="Hombre">Hombre</option>
                                     <option value="Otro">Otro</option>
                                 </select>
@@ -157,23 +151,58 @@
                         </div>
                     </section>
 
-                    <!-- PERMISOS Y ESTADO -->
+                    <section class="socios-panel panel-spacing">
+                        <h2 class="h2">Dirección</h2>
+
+                        <div class="two-cols">
+                            <div class="form-row">
+                                <label for="calle">Calle</label>
+                                <input type="text" id="calle" name="calle" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="portal">Portal</label>
+                                <input type="text" id="portal" name="portal">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="piso">Piso</label>
+                                <input type="text" id="piso" name="piso">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="cp">Código postal</label>
+                                <input type="text" id="cp" name="cp" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="ciudad">Ciudad</label>
+                                <input type="text" id="ciudad" name="ciudad" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="pais">País</label>
+                                <input type="text" id="pais" name="pais" required>
+                            </div>
+                        </div>
+                    </section>
+
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Permisos y estado</h2>
 
                         <div class="two-cols">
                             <div class="form-row">
                                 <label for="perfil">Perfil</label>
-                                <select id="perfil" name="perfil">
-                                    <option value="CLIENTE" selected>CLIENTE</option>
+                                <select id="perfil" name="perfil" required>
+                                    <option value="CLIENTE">CLIENTE</option>
                                     <option value="ADMIN">ADMIN</option>
                                 </select>
                             </div>
 
                             <div class="form-row">
                                 <label for="estado">Estado</label>
-                                <select id="estado" name="estado">
-                                    <option value="Activo" selected>Activo</option>
+                                <select id="estado" name="estado" required>
+                                    <option value="Activo">Activo</option>
                                     <option value="Inactivo">Inactivo</option>
                                     <option value="Bloqueado">Bloqueado</option>
                                 </select>
@@ -181,7 +210,7 @@
 
                             <div class="form-row">
                                 <label for="fotoPerfil">Ruta foto perfil</label>
-                                <input type="text" id="fotoPerfil" name="fotoPerfil" value="../img/perfil.jpg">
+                                <input type="text" id="fotoPerfil" name="fotoPerfil">
                             </div>
 
                             <div class="form-row">
@@ -192,36 +221,45 @@
                         </div>
                     </section>
 
-                    <!-- SUSCRIPCIÓN -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Suscripción actual</h2>
 
                         <div class="two-cols">
                             <div class="info-card">
                                 <span class="label">Plan actual</span>
-                                <h3>ATHENA Premium</h3>
-                                <p>Renovación: 01/04/2026</p>
+                                <h3 id="resumen-plan-actual">Cargando...</h3>
+                                <p id="resumen-renovacion-actual">Cargando...</p>
                             </div>
 
                             <div class="info-card">
                                 <span class="label">Acción administrativa</span>
                                 <h3>Cambiar plan</h3>
-                                <p>Esta acción quedará conectada con base de datos en una fase posterior.</p>
+                                <p>Desde aquí puedes actualizar la membresía del usuario.</p>
                             </div>
                         </div>
 
-                        <div class="form-row actions-top">
-                            <label for="membresia">Nueva membresía</label>
-                            <select id="membresia" name="membresia">
-                                <option value="Essential Morning">Essential Morning</option>
-                                <option value="Essential">Essential</option>
-                                <option value="Premium" selected>Premium</option>
-                                <option value="Executive">Executive</option>
-                            </select>
+                        <div class="two-cols panel-spacing">
+                            <div class="form-row">
+                                <label for="membresia">Nueva membresía</label>
+                                <select id="membresia" name="membresia">
+                                    <option value="">Sin cambios</option>
+                                    <option value="Essential Morning">Essential Morning</option>
+                                    <option value="Essential">Essential</option>
+                                    <option value="Premium">Premium</option>
+                                    <option value="Executive">Executive</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="renovacionAutomatica">Renovación automática</label>
+                                <select id="renovacionAutomatica" name="renovacionAutomatica">
+                                    <option value="Si">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
                         </div>
                     </section>
 
-                    <!-- ACCIONES RÁPIDAS -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Acciones rápidas</h2>
 
@@ -250,6 +288,8 @@
                             <button class="btn btn--primary" type="submit">Guardar cambios</button>
                             <a class="btn btn--ghost" href="admin-usuarios.html">Volver</a>
                         </div>
+
+                        <p id="mensaje-form-editar-usuario" class="muted"></p>
                     </section>
 
                 </form>
@@ -258,7 +298,6 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -273,6 +312,7 @@
         </div>
     </footer>
 
+    <script src="../js/admin-editar-usuario.js"></script>
 </body>
 
 </html>

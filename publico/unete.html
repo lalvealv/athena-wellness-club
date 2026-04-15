@@ -51,7 +51,8 @@
                 <!-- Contenedor visual del formulario -->
                 <div class="form-shell">
                     <!-- Formulario principal de registro -->
-                    <form method="post" action="/enviar-registro">
+                    <!--   <form method="post" action="/enviar-registro">-->
+                    <form method="post" action="../registro.php">
                         <!-- BLOQUE: DATOS PERSONALES -->
                         <!-- Información básica del nuevo usuario -->
                         <fieldset>
@@ -96,7 +97,9 @@
 
                                 <div class="form-row">
                                     <label for="email">Correo electrónico</label>
-                                    <input type="email" id="email" name="email" required autocomplete="email"
+                                    <!-- <input type="email" id="email" name="email" required
+                              autocomplete="email" placeholder="tu@email.com">-->
+                                    <input type="email" id="email" name="correo" required autocomplete="email"
                                         placeholder="tu@email.com">
                                 </div>
 
@@ -153,7 +156,9 @@
 
                                 <div class="form-row">
                                     <label for="codigoPost">Código Postal</label>
-                                    <input type="text" id="codigoPost" name="codigoPost" required pattern="\d{5}"
+                                    <!--<input type="text" id="codigoPost" name="codigoPost" required pattern="\d{5}"
+                                    placeholder="28001">-->
+                                    <input type="text" id="codigoPost" name="cp" required pattern="\d{5}"
                                         placeholder="28001">
                                 </div>
 
@@ -194,12 +199,19 @@
                         <fieldset>
                             <legend>Membresía</legend>
                             <label for="tarifa">Selecciona una membresía</label>
+                            <!-- <select id="tarifa" name="tarifa" required>
+                            <option value="">Selecciona una membresía</option>
+                            <option value="manana">Essential Morning Membership</option>
+                            <option value="esencial">Essential Membership</option>
+                            <option value="premium">Premium Membership</option>
+                            <option value="ejecutiva">Executive Membership</option>
+                        </select>-->
                             <select id="tarifa" name="tarifa" required>
                                 <option value="">Selecciona una membresía</option>
-                                <option value="manana">Essential Morning Membership</option>
-                                <option value="esencial">Essential Membership</option>
-                                <option value="premium">Premium Membership</option>
-                                <option value="ejecutiva">Executive Membership</option>
+                                <option value="Essential Morning">Essential Morning</option>
+                                <option value="Essential">Essential</option>
+                                <option value="Premium">Premium</option>
+                                <option value="Executive">Executive</option>
                             </select>
                         </fieldset>
 

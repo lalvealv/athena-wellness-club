@@ -168,9 +168,14 @@ try {
         ':fecha_renovacion' => $fechaRenovacion
     ]);
 
+    /*  $conn->commit();
+
+    echo "Registro completado correctamente. Ya puedes iniciar sesión.";*/
     $conn->commit();
 
-    echo "Registro completado correctamente. Ya puedes iniciar sesión.";
+    // Redirigir al login con mensaje
+    header("Location: publico/socios.html?registro=ok");
+    exit;
 } catch (PDOException $e) {
     if ($conn->inTransaction()) {
         $conn->rollBack();

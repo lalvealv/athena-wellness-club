@@ -17,11 +17,9 @@
 
 <body>
 
-    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo e identidad visual -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
                 <span class="brand-text">
@@ -30,7 +28,6 @@
                 </span>
             </a>
 
-            <!-- Navegación superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
                 <a href="admin-panel.php">Resumen</a>
                 <a class="is-active" href="admin-usuarios.html">Usuarios</a>
@@ -38,21 +35,19 @@
                 <a href="admin-reservas.html">Reservas</a>
                 <a href="admin-entrenamientos.html">Entrenamientos</a>
                 <a href="admin-notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
-            <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
                 <div class="socios-user">
-                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
-                    <h3>Administrador ATHENA</h3>
-                    <p>Perfil ADMIN</p>
+                    <img id="admin-foto" src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3 id="admin-nombre">Cargando...</h3>
+                    <p id="admin-perfil">Cargando...</p>
                 </div>
 
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
@@ -65,15 +60,13 @@
                 </nav>
             </aside>
 
-            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
-                <!-- BUSCADOR Y TABLA -->
                 <section class="socios-panel">
                     <h2 class="h2">Gestión de usuarios</h2>
 
                     <div class="profile-box box-spacing">
-                        <form action="#" method="get">
+                        <form id="form-buscar-usuarios">
                             <div class="form-row">
                                 <label for="buscarUsuario">Buscar usuario</label>
                                 <input type="text" id="buscarUsuario" name="buscarUsuario"
@@ -82,7 +75,8 @@
 
                             <div class="actions actions-top">
                                 <button class="btn btn--primary btn--small" type="submit">Buscar</button>
-                                <button class="btn btn--ghost btn--small" type="reset">Limpiar</button>
+                                <button class="btn btn--ghost btn--small" type="reset"
+                                    id="btn-limpiar-busqueda">Limpiar</button>
                                 <a class="btn btn--primary btn--small" href="admin-crear-usuario.html">Nuevo usuario</a>
                             </div>
                         </form>
@@ -102,53 +96,15 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tabla-usuarios">
                                 <tr>
-                                    <td>1</td>
-                                    <td>adminathena</td>
-                                    <td>Administrador ATHENA</td>
-                                    <td>admin@athena.com</td>
-                                    <td>600000000</td>
-                                    <td>ADMIN</td>
-                                    <td class="status-ok">Activo</td>
-                                    <td><a href="admin-editar-usuario.html">Editar</a></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>lorena01</td>
-                                    <td>Lorena Alvarez Alves</td>
-                                    <td>lorena@email.com</td>
-                                    <td>645789123</td>
-                                    <td>CLIENTE</td>
-                                    <td class="status-ok">Activo</td>
-                                    <td><a href="admin-editar-usuario.html">Editar</a></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>marta_fit</td>
-                                    <td>Marta Gómez Ruiz</td>
-                                    <td>marta@email.com</td>
-                                    <td>611223344</td>
-                                    <td>CLIENTE</td>
-                                    <td class="status-ok">Activo</td>
-                                    <td><a href="admin-editar-usuario.html">Editar</a></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>carlosgym</td>
-                                    <td>Carlos Pérez Soto</td>
-                                    <td>carlos@email.com</td>
-                                    <td>622334455</td>
-                                    <td>CLIENTE</td>
-                                    <td class="status-cancel">Bloqueado</td>
-                                    <td><a href="admin-editar-usuario.html">Editar</a></td>
+                                    <td colspan="8">Cargando usuarios...</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </section>
 
-                <!-- ACCIONES RÁPIDAS -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Acciones rápidas</h2>
 
@@ -183,7 +139,6 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -198,6 +153,7 @@
         </div>
     </footer>
 
+    <script src="../js/admin-usuarios.js"></script>
 </body>
 
 </html>

@@ -30,14 +30,15 @@
 
             <!-- Navegación superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
-                <a href="area-socios.php">Resumen</a>
+                <!--<a href="area-socios.html">Resumen</a> -->
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
+                <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a class="is-active" href="estadisticas.html">Estadísticas</a>
                 <a href="notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
@@ -46,7 +47,6 @@
     <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
     <main class="section section-socios">
 
-        <!-- Estructura principal con menú lateral y contenido -->
         <div class="container socios-layout">
 
             <!-- SIDEBAR / MENÚ LATERAL DEL SOCIO -->
@@ -54,14 +54,14 @@
 
                 <!-- Información resumida del usuario -->
                 <div class="socios-user">
-                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
-                    <h3>Lorena Alvarez Alves</h3>
-                    <p>Socia Premium</p>
+                    <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
+                    <h3 id="sidebar-nombre">Cargando...</h3>
+                    <p id="sidebar-plan">Cargando...</p>
                 </div>
 
                 <!-- Navegación lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
-                    <a href="area-socios.php">Resumen</a>
+                    <!--<a href="area-socios.html">Resumen</a> -->
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>
@@ -77,36 +77,33 @@
             <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
-                <!-- Panel principal de estadísticas del socio -->
                 <section class="socios-panel">
 
-                    <!-- Título del panel -->
                     <h2 class="h2">Estadísticas</h2>
 
-                    <!-- Tarjetas de estadísticas -->
                     <div class="dashboard-grid">
                         <div class="info-card">
                             <span class="label">Clases este mes</span>
-                            <h3>12</h3>
-                            <p>+3 respecto al mes pasado</p>
+                            <h3 id="estadistica-clases-mes">Cargando...</h3>
+                            <p id="estadistica-clases-mes-detalle">Cargando...</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Actividad favorita</span>
-                            <h3>Yoga / Pilates</h3>
-                            <p>La más reservada</p>
+                            <h3 id="estadistica-actividad-favorita">Cargando...</h3>
+                            <p id="estadistica-actividad-favorita-detalle">Cargando...</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Entrenamientos semanales</span>
-                            <h3>4</h3>
-                            <p>Muy buena regularidad</p>
+                            <h3 id="estadistica-entrenamientos-semanales">Cargando...</h3>
+                            <p id="estadistica-entrenamientos-semanales-detalle">Cargando...</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Asistencia</span>
-                            <h3>87%</h3>
-                            <p>Excelente constancia</p>
+                            <h3 id="estadistica-asistencia">Cargando...</h3>
+                            <p id="estadistica-asistencia-detalle">Cargando...</p>
                         </div>
                     </div>
 
@@ -133,6 +130,7 @@
         </div>
     </footer>
 
+    <script src="../js/estadisticas.js"></script>
 </body>
 
 </html>

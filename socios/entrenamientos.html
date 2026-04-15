@@ -15,11 +15,9 @@
 </head>
 
 <body>
-    <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
@@ -28,39 +26,35 @@
                 </span>
             </a>
 
-            <!-- Navegación superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
-                <a href="area-socios.php">Resumen</a>
+                <!-- <a href="area-socios.html">Resumen</a> -->
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
+                <a href="historial-reservas.html">Historial reservas</a>
                 <a class="is-active" href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
                 <a href="notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
     <main class="section section-socios">
 
         <div class="container socios-layout">
 
-            <!-- SIDEBAR -->
             <aside class="socios-sidebar">
 
-                <!-- Usuario -->
                 <div class="socios-user">
-                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
-                    <h3>Lorena Alvarez Alves</h3>
-                    <p>Socia Premium</p>
+                    <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
+                    <h3 id="sidebar-nombre">Cargando...</h3>
+                    <p id="sidebar-plan">Cargando...</p>
                 </div>
 
-                <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
-                    <a href="area-socios.php">Resumen</a>
+                    <!-- <a href="area-socios.html">Resumen</a> -->
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>
@@ -73,31 +67,28 @@
 
             </aside>
 
-            <!-- CONTENIDO -->
             <div class="socios-content">
 
                 <section class="socios-panel">
 
                     <h2 class="h2">Entrenamientos</h2>
 
-                    <!-- INFO -->
                     <div class="two-cols">
 
                         <div class="info-card">
                             <span class="label">Rutina actual</span>
-                            <h3>Full Body Balance</h3>
-                            <p>4 días por semana · trabajo global</p>
+                            <h3 id="rutina-actual-nombre">Cargando...</h3>
+                            <p id="rutina-actual-detalle">Cargando...</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Último entrenamiento</span>
-                            <h3>12/03/2026</h3>
-                            <p>Pierna y glúteo · 55 min</p>
+                            <h3 id="ultimo-entrenamiento-fecha">Cargando...</h3>
+                            <p id="ultimo-entrenamiento-detalle">Cargando...</p>
                         </div>
 
                     </div>
 
-                    <!-- TABLA -->
                     <div class="table-wrap" style="margin-top: 1rem;">
                         <table class="mini-table">
                             <thead>
@@ -108,30 +99,9 @@
                                     <th>Peso</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tabla-detalle-entrenamiento">
                                 <tr>
-                                    <td>Sentadilla</td>
-                                    <td>4</td>
-                                    <td>10</td>
-                                    <td>40 kg</td>
-                                </tr>
-                                <tr>
-                                    <td>Hip thrust</td>
-                                    <td>4</td>
-                                    <td>12</td>
-                                    <td>50 kg</td>
-                                </tr>
-                                <tr>
-                                    <td>Prensa</td>
-                                    <td>3</td>
-                                    <td>12</td>
-                                    <td>70 kg</td>
-                                </tr>
-                                <tr>
-                                    <td>Remo con mancuerna</td>
-                                    <td>3</td>
-                                    <td>10</td>
-                                    <td>14 kg</td>
+                                    <td colspan="4">Cargando ejercicios...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -145,7 +115,6 @@
 
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -160,6 +129,7 @@
         </div>
     </footer>
 
+    <script src="../js/entrenamientos.js"></script>
 </body>
 
 </html>

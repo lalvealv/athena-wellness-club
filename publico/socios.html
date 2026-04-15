@@ -46,6 +46,15 @@
         <!-- Formulario de inicio de sesión -->
         <section class="section">
             <div class="container">
+                <div id="mensaje-registro" class="alert-success" style="display: none;">
+                    <strong>Registro completado</strong>
+                    <p>Tu cuenta se ha creado correctamente. Ya puedes iniciar sesión.</p>
+                </div>
+
+                <div id="mensaje-password" class="alert-success" style="display: none;">
+                    <strong>Contraseña actualizada</strong>
+                    <p>Tu contraseña se ha cambiado correctamente. Ya puedes iniciar sesión.</p>
+                </div>
                 <!-- Título -->
                 <h2 class="h2">Área de socios</h2>
                 <p class="lead">Accede a tu cuenta para reservar clases y ver tu plan.</p>
@@ -78,6 +87,11 @@
                             <button class="btn btn--primary" type="submit">Entrar</button>
                             <a class="btn btn--ghost" href="unete.html">Crear cuenta</a>
                         </div>
+
+                        <p class="muted" style="margin-top: 0.75rem;">
+                            <a href="recuperar-password.html">¿Has olvidado tu contraseña?</a>
+                        </p>
+
                     </form>
 
                 </div>
@@ -99,6 +113,48 @@
             </div>
         </div>
     </footer>
+    <!-- <script>
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("registro") === "ok") {
+            alert("Registro completado correctamente. Ya puedes iniciar sesión.");
+        }
+    </script>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get("registro") === "ok") {
+            const mensaje = document.getElementById("mensaje-registro");
+            mensaje.style.display = "block";
+
+            // Ocultarlo automáticamente después de 4 segundos
+            setTimeout(() => {
+                mensaje.style.display = "none";
+            }, 4000);
+        }
+    </script>-->
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get("registro") === "ok") {
+            const mensajeRegistro = document.getElementById("mensaje-registro");
+            mensajeRegistro.style.display = "block";
+
+            setTimeout(() => {
+                mensajeRegistro.style.display = "none";
+            }, 4000);
+        }
+
+        if (params.get("password") === "ok") {
+            const mensajePassword = document.getElementById("mensaje-password");
+            mensajePassword.style.display = "block";
+
+            setTimeout(() => {
+                mensajePassword.style.display = "none";
+            }, 4000);
+        }
+    </script>
 </body>
 
 </html>

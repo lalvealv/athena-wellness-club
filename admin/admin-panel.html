@@ -1,4 +1,3 @@
-<?php require_once '../comprobar-admin.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -18,11 +17,9 @@
 
 <body>
 
-    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo e identidad visual -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
                 <span class="brand-text">
@@ -31,33 +28,30 @@
                 </span>
             </a>
 
-            <!-- Navegación superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
-                <a class="is-active" href="admin-panel.php">Resumen</a>
+                <a class="is-active" href="admin-panel.html">Resumen</a>
                 <a href="admin-usuarios.html">Usuarios</a>
                 <a href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
                 <a href="admin-entrenamientos.html">Entrenamientos</a>
                 <a href="admin-notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost" href="../logout.php">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
-            <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
                 <div class="socios-user">
-                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
-                    <h3>Administrador ATHENA</h3>
-                    <p>Perfil ADMIN</p>
+                    <img id="admin-foto" src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <h3 id="admin-nombre">Cargando...</h3>
+                    <p id="admin-perfil">Cargando...</p>
                 </div>
 
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
-                    <a class="is-active" href="admin-panel.php">Resumen general</a>
+                    <a class="is-active" href="admin-panel.html">Resumen general</a>
                     <a href="admin-usuarios.html">Gestión de usuarios</a>
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
@@ -66,41 +60,38 @@
                 </nav>
             </aside>
 
-            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
-                <!-- RESUMEN GENERAL -->
                 <section class="socios-panel">
                     <h2 class="h2">Panel de administración</h2>
 
                     <div class="dashboard-grid">
                         <div class="info-card">
                             <span class="label">Usuarios activos</span>
-                            <h3>128</h3>
+                            <h3 id="panel-usuarios-activos">Cargando...</h3>
                             <p>Socios con acceso activo</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Usuarios bloqueados</span>
-                            <h3>4</h3>
+                            <h3 id="panel-usuarios-bloqueados">Cargando...</h3>
                             <p>Requieren revisión</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Reservas hoy</span>
-                            <h3>37</h3>
-                            <p>Sesiones confirmadas</p>
+                            <h3 id="panel-reservas-hoy">Cargando...</h3>
+                            <p>Sesiones confirmadas hoy</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Nuevas altas</span>
-                            <h3>6</h3>
+                            <h3 id="panel-nuevas-altas">Cargando...</h3>
                             <p>Últimos 7 días</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- ACCESOS RÁPIDOS -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Accesos rápidos</h2>
 
@@ -144,7 +135,6 @@
                     </div>
                 </section>
 
-                <!-- ÚLTIMOS USUARIOS -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Últimos usuarios registrados</h2>
 
@@ -160,30 +150,9 @@
                                     <th>Acción</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tabla-ultimos-usuarios">
                                 <tr>
-                                    <td>lorena01</td>
-                                    <td>Lorena Alvarez Alves</td>
-                                    <td>lorena@email.com</td>
-                                    <td>10/03/2026</td>
-                                    <td class="status-ok">Activo</td>
-                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
-                                </tr>
-                                <tr>
-                                    <td>marta_fit</td>
-                                    <td>Marta Gómez Ruiz</td>
-                                    <td>marta@email.com</td>
-                                    <td>11/03/2026</td>
-                                    <td class="status-ok">Activo</td>
-                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
-                                </tr>
-                                <tr>
-                                    <td>carlosgym</td>
-                                    <td>Carlos Pérez Soto</td>
-                                    <td>carlos@email.com</td>
-                                    <td>12/03/2026</td>
-                                    <td class="status-cancel">Bloqueado</td>
-                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
+                                    <td colspan="6">Cargando usuarios...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -195,7 +164,6 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -210,6 +178,7 @@
         </div>
     </footer>
 
+    <script src="../js/admin-panel.js"></script>
 </body>
 
 </html>

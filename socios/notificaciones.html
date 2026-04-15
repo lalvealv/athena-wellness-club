@@ -30,14 +30,15 @@
 
             <!-- Navegación superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
-                <a href="area-socios.php">Resumen</a>
+                <!--<a href="area-socios.html">Resumen</a> -->
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
+                <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
                 <a class="is-active" href="notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
@@ -53,14 +54,14 @@
 
                 <!-- Usuario -->
                 <div class="socios-user">
-                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
-                    <h3>Lorena Alvarez Alves</h3>
-                    <p>Socia Premium</p>
+                    <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
+                    <h3 id="sidebar-nombre">Cargando...</h3>
+                    <p id="sidebar-plan">Cargando...</p>
                 </div>
 
                 <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
-                    <a href="area-socios.php">Resumen</a>
+                    <!--<a href="area-socios.html">Resumen</a> -->
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>
@@ -80,30 +81,12 @@
 
                     <h2 class="h2">Notificaciones</h2>
 
-                    <!-- Lista de notificaciones -->
                     <div class="notification-box">
-                        <div class="notifications-list">
-
+                        <div class="notifications-list" id="lista-notificaciones">
                             <div class="notification-item">
-                                <strong>Reserva confirmada</strong>
-                                <p>Tu plaza para Yoga / Pilates del sábado a las 07:30 ha sido confirmada.</p>
+                                <strong>Cargando...</strong>
+                                <p>Obteniendo notificaciones del usuario.</p>
                             </div>
-
-                            <div class="notification-item">
-                                <strong>Recordatorio</strong>
-                                <p>Tienes una clase mañana a las 18:30. Llega con 10 minutos de antelación.</p>
-                            </div>
-
-                            <div class="notification-item">
-                                <strong>Progreso</strong>
-                                <p>Has completado 4 entrenamientos esta semana. Sigue así.</p>
-                            </div>
-
-                            <div class="notification-item">
-                                <strong>Renovación</strong>
-                                <p>Tu suscripción Premium se renovará automáticamente el 01/04/2026.</p>
-                            </div>
-
                         </div>
                     </div>
 
@@ -130,6 +113,7 @@
         </div>
     </footer>
 
+    <script src="../js/notificaciones.js"></script>
 </body>
 
 </html>

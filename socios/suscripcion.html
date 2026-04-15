@@ -31,14 +31,15 @@
 
             <!-- Navegación superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
-                <a href="area-socios.php">Resumen</a>
+                <!--<a href="area-socios.php">Resumen</a> -->
                 <a href="perfil.html">Mi perfil</a>
                 <a class="is-active" href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
+                <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
                 <a href="notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
@@ -55,14 +56,14 @@
 
                 <!-- Información resumida del usuario -->
                 <div class="socios-user">
-                    <img src="../img-socios/socio1.png" alt="Foto de perfil del socio">
-                    <h3>Lorena Alvarez Alves</h3>
-                    <p>Socia Premium</p>
+                    <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
+                    <h3 id="sidebar-nombre">Cargando...</h3>
+                    <p id="sidebar-plan">Cargando...</p>
                 </div>
 
                 <!-- Navegación lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
-                    <a href="area-socios.php">Resumen</a>
+                    <!--<a href="area-socios.php">Resumen</a> -->
                     <a href="perfil.html">Mi perfil</a>
                     <a class="is-active" href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>
@@ -88,15 +89,19 @@
                     <div class="subscription-box">
 
                         <!-- Datos principales de la suscripción -->
-                        <p><strong>Plan:</strong> ATHENA Premium</p>
-                        <p><strong>Precio:</strong> 79,90 €/mes</p>
-                        <p><strong>Fecha inicio:</strong> 01/02/2026</p>
-                        <p><strong>Renovación:</strong> 01/04/2026</p>
+                        <p><strong>Plan:</strong> <span id="plan">Cargando...</span></p>
+                        <p><strong>Precio:</strong> <span id="precio">Cargando...</span></p>
+                        <p><strong>Periodo:</strong> <span id="periodo">Cargando...</span></p>
+                        <p><strong>Horario:</strong> <span id="horario">Cargando...</span></p>
+                        <p><strong>Fecha inicio:</strong> <span id="fecha-inicio">Cargando...</span></p>
+                        <p><strong>Renovación:</strong> <span id="fecha-renovacion">Cargando...</span></p>
+                        <p><strong>Estado:</strong> <span id="estado">Cargando...</span></p>
+                        <p><strong>Renovación automática:</strong> <span id="renovacion-automatica">Cargando...</span>
+                        </p>
 
                         <!-- Descripción de beneficios incluidos -->
-                        <p>
-                            Acceso completo a todas las zonas del club, clases dirigidas ilimitadas,
-                            seguimiento de progreso y zona wellness.
+                        <p id="descripcion">
+                            Cargando descripción...
                         </p>
 
                     </div>
@@ -124,6 +129,7 @@
         </div>
     </footer>
 
+    <script src="../js/suscripcion.js"></script>
 </body>
 
 </html>
