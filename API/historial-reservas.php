@@ -104,11 +104,20 @@ function obtenerHistorial(PDO $conn, int $idUsuario): array
     $filas = [];
 
     foreach ($historial as $item) {
-        $fechaHoraClase = strtotime($item['fecha'] . ' ' . $item['hora_inicio']);
-        $puedeCancelar = ($item['estado'] === 'Confirmada' && $fechaHoraClase > time());
+        $timestampClase = strtotime($item['fecha'] . ' ' . $item['hora_inicio']);
+        $timestampAhora = time();
+
+        $puedeCancelar = false;
+
+        if (
+            $item['estado'] === 'Confirmada' &&
+            ($timestampClase - $timestampAhora) > 3600
+        ) {
+            $puedeCancelar = true;
+        }
 
         $filas[] = [
-            'id_reserva' => (int)$item['id_reserva'],
+            'id_reserva' => (int) $item['id_reserva'],
             'actividad' => $item['actividad'],
             'fecha' => formatearFecha($item['fecha']),
             'hora' => substr($item['hora_inicio'], 0, 5) . ' - ' . substr($item['hora_fin'], 0, 5),
@@ -165,13 +174,14 @@ function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
             ];
         }
 
-        $fechaHoraClase = strtotime($reserva['fecha'] . ' ' . $reserva['hora_inicio']);
+        $timestampClase = strtotime($reserva['fecha'] . ' ' . $reserva['hora_inicio']);
+        $timestampAhora = time();
 
-        if ($fechaHoraClase <= time()) {
+        if (($timestampClase - $timestampAhora) <= 3600) {
             $conn->rollBack();
             return [
                 'ok' => false,
-                'mensaje' => 'No puedes cancelar una clase que ya ha pasado.'
+                'mensaje' => 'No puedes cancelar la reserva con menos de 1 hora de antelación.'
             ];
         }
 
@@ -197,7 +207,7 @@ function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
 
         return [
             'ok' => false,
-            'mensaje' => 'Error al cancelar la reserva.'
+            'mensaje' => 'Error al cancelar la reserva: ' . $e->getMessage()
         ];
     }
 }
@@ -244,6 +254,6 @@ try {
 } catch (PDOException $e) {
     responderJSON([
         'ok' => false,
-        'mensaje' => 'Error al obtener el historial de reservas.'
+        'mensaje' => 'Error al obtener el historial de reservas: ' . $e->getMessage()
     ]);
 }
