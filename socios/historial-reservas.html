@@ -15,11 +15,9 @@
 </head>
 
 <body>
-    <!-- HEADER -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
@@ -28,13 +26,11 @@
                 </span>
             </a>
 
-            <!-- Navegación superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
-                <!--<a href="area-socios.html">Resumen</a> -->
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
-                <a href="historial-reservas.html">Historial reservas</a>
+                <a class="is-active" href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
                 <a href="notificaciones.html">Avisos</a>
@@ -44,24 +40,18 @@
         </div>
     </header>
 
-    <!-- MAIN -->
     <main class="section section-socios">
 
         <div class="container socios-layout">
 
-            <!-- SIDEBAR -->
             <aside class="socios-sidebar">
-
-                <!-- Usuario -->
                 <div class="socios-user">
                     <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="sidebar-nombre">Cargando...</h3>
                     <p id="sidebar-plan">Cargando...</p>
                 </div>
 
-                <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
-                    <!--<a href="area-socios.html">Resumen</a> -->
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>
@@ -71,12 +61,9 @@
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
                     <a href="notificaciones.html">Notificaciones</a>
                 </nav>
-
             </aside>
 
-            <!-- CONTENIDO -->
             <div class="socios-content">
-
                 <section class="socios-panel">
 
                     <h2 class="h2">Historial de reservas</h2>
@@ -90,25 +77,26 @@
                                     <th>Hora</th>
                                     <th>Sala</th>
                                     <th>Estado</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-historial-reservas">
                                 <tr>
-                                    <td colspan="5">Cargando historial...</td>
+                                    <td colspan="6">Cargando historial...</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
-                </section>
+                    <p id="mensaje-historial-reservas" class="muted" style="margin-top: 1rem;"></p>
 
+                </section>
             </div>
 
         </div>
 
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>

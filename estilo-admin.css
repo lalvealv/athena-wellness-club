@@ -1,5 +1,4 @@
-/* 14. FORMULARIOS DEL ÁREA SOCIOS / ADMIN*/
-
+/* 14. FORMULARIOS DEL ÁREA SOCIOS / ADMIN */
 .form-row {
     display: flex;
     flex-direction: column;
@@ -60,7 +59,6 @@
     min-height: 120px;
 }
 
-
 /* 15. ACCIONES Y BOTONES EN BLOQUES ADMIN */
 .actions {
     display: flex;
@@ -69,7 +67,6 @@
     align-items: center;
 }
 
-
 /* 16. NAVEGACIÓN ACTIVA SUPERIOR */
 .nav--socios a.is-active {
     color: rgba(233, 233, 238, 0.98);
@@ -77,7 +74,6 @@
     background: rgba(255, 255, 255, 0.08);
     font-weight: 600;
 }
-
 
 /* 17. TABLAS: CONTENEDOR Y ENLACES DE ACCIÓN */
 .table-wrap {
@@ -96,7 +92,6 @@
     color: rgba(175, 150, 255, 0.98);
     text-decoration: underline;
 }
-
 
 /* 18. TARJETAS/CAJAS DE ADMIN CON MÁS ALTURA */
 .info-card,

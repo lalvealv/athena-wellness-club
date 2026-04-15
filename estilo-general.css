@@ -1,7 +1,7 @@
 /* ATHENA Wellness Club — ESTILO GENERAL
-   Base global, header, hero, cards, tablas, formularios, footer*/
+   Base global, header, hero, cards, tablas, formularios, footer */
 
-/*  1. RESET Y BASE GLOBAL */
+/* 1. RESET Y BASE GLOBAL */
 *,
 *::before,
 *::after {
@@ -34,7 +34,6 @@ a:hover {
     opacity: 0.9;
 }
 
-
 /* 2. CONTENEDORES Y UTILIDADES */
 .container {
     width: min(1120px, calc(100% - 2rem));
@@ -65,7 +64,6 @@ a:hover {
     max-width: 70ch;
 }
 
-
 /* 3. HEADER / CABECERA GENERAL */
 .site-header {
     position: sticky;
@@ -83,7 +81,6 @@ a:hover {
     gap: 1rem;
     padding: 1rem 0;
 }
-
 
 /* 4. MARCA / LOGO */
 .brand {
@@ -116,7 +113,6 @@ a:hover {
     margin-top: 0.1rem;
 }
 
-
 /* 5. NAVEGACIÓN GENERAL */
 .nav {
     display: flex;
@@ -141,8 +137,7 @@ a:hover {
     border-color: rgba(255, 255, 255, 0.16);
 }
 
-
-/* 6. BOTONES*/
+/* 6. BOTONES */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -178,8 +173,7 @@ a:hover {
     background: transparent;
 }
 
-
-/* 7. HERO GENERAL*/
+/* 7. HERO GENERAL */
 .hero {
     padding: 4.5rem 0 3.5rem;
     position: relative;
@@ -257,7 +251,6 @@ a:hover {
     margin-top: 0.2rem;
 }
 
-
 /* 8. GRID Y TARJETAS GENERALES */
 .grid {
     display: grid;
@@ -322,12 +315,10 @@ a:hover {
     justify-content: space-between;
 }
 
-
 /* 9. TABLAS GENERALES */
 .table-wrap {
     border-radius: 18px;
     overflow-x: auto;
-    overflow-y: hidden;
     border: 1px solid rgba(255, 255, 255, 0.10);
     background: rgba(255, 255, 255, 0.02);
     max-width: 100%;
@@ -360,7 +351,6 @@ thead th {
 tbody tr:hover td {
     background: rgba(255, 255, 255, 0.03);
 }
-
 
 /* 10. FORMULARIOS GENERALES */
 .form-shell {
@@ -448,7 +438,6 @@ textarea:focus {
     flex-wrap: wrap;
 }
 
-
 /* 11. FOOTER / PIE DE PÁGINA */
 .site-footer {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -468,7 +457,6 @@ textarea:focus {
     margin: 0.15rem 0;
     color: rgba(233, 233, 238, 0.70);
 }
-
 
 /* 12. RESPONSIVE GENERAL */
 @media (max-width: 920px) {
@@ -499,13 +487,7 @@ textarea:focus {
     }
 }
 
-@media (max-width: 520px) {
-    .grid--4 {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* 13. INPUT DATE CON ICONO VISIBLE EN MODO OSCURO*/
+/* 13. INPUT DATE CON ICONO VISIBLE EN MODO OSCURO */
 .form-row--date {
     position: relative;
 }
@@ -515,7 +497,6 @@ textarea:focus {
     color-scheme: dark;
 }
 
-/* Oculta el icono nativo de Chrome */
 .form-row--date input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0;
     position: absolute;
@@ -525,7 +506,6 @@ textarea:focus {
     cursor: pointer;
 }
 
-/* Icono blanco personalizado */
 .form-row--date::after {
     content: "";
     position: absolute;

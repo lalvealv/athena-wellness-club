@@ -4,9 +4,6 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../conexion.php';
 
-/* =========================================================
-   1. COMPROBAR SESIÓN
-========================================================= */
 if (!isset($_SESSION['id_usuario'])) {
     echo json_encode([
         'ok' => false,
@@ -16,10 +13,8 @@ if (!isset($_SESSION['id_usuario'])) {
 }
 
 $idUsuario = (int) $_SESSION['id_usuario'];
+$diasMostrados = 28;
 
-/* =========================================================
-   2. FUNCIONES AUXILIARES
-========================================================= */
 function responderJSON(array $datos): void
 {
     echo json_encode($datos, JSON_UNESCAPED_UNICODE);
@@ -38,6 +33,44 @@ function formatearFecha(?string $fecha): string
     }
 
     return date('d/m/Y', $timestamp);
+}
+
+function diaSemanaDesdeFecha(string $fecha): string
+{
+    $mapa = [
+        1 => 'Lunes',
+        2 => 'Martes',
+        3 => 'Miercoles',
+        4 => 'Jueves',
+        5 => 'Viernes',
+        6 => 'Sabado',
+        7 => 'Domingo'
+    ];
+
+    $numero = (int) date('N', strtotime($fecha));
+    return $mapa[$numero] ?? '';
+}
+
+function diaCortoDesdeFecha(string $fecha): string
+{
+    $mapa = [
+        1 => 'Lun',
+        2 => 'Mar',
+        3 => 'Mié',
+        4 => 'Jue',
+        5 => 'Vie',
+        6 => 'Sáb',
+        7 => 'Dom'
+    ];
+
+    $numero = (int) date('N', strtotime($fecha));
+    return $mapa[$numero] ?? '';
+}
+
+function esFechaHoraReservable(string $fecha, string $horaInicio): bool
+{
+    $timestampClase = strtotime($fecha . ' ' . $horaInicio);
+    return $timestampClase > time();
 }
 
 function obtenerUsuarioSidebar(PDO $conn, int $idUsuario): array
@@ -103,8 +136,8 @@ function obtenerResumen(PDO $conn, int $idUsuario): array
                    INNER JOIN actividad a ON h.id_actividad = a.id_actividad
                    WHERE r.id_usuario = :id_usuario
                      AND r.estado = 'Confirmada'
-                     AND sa.fecha >= CURDATE()
                      AND sa.estado = 'Programada'
+                     AND TIMESTAMP(sa.fecha, h.hora_inicio) > NOW()
                    ORDER BY sa.fecha ASC, h.hora_inicio ASC
                    LIMIT 1";
 
@@ -123,10 +156,11 @@ function obtenerResumen(PDO $conn, int $idUsuario): array
     $sqlActivas = "SELECT COUNT(*)
                    FROM reserva r
                    INNER JOIN sesion_actividad sa ON r.id_sesion = sa.id_sesion
+                   INNER JOIN horario_actividad h ON sa.id_horario = h.id_horario
                    WHERE r.id_usuario = :id_usuario
                      AND r.estado = 'Confirmada'
-                     AND sa.fecha >= CURDATE()
-                     AND sa.estado = 'Programada'";
+                     AND sa.estado = 'Programada'
+                     AND TIMESTAMP(sa.fecha, h.hora_inicio) > NOW()";
 
     $stmtActivas = $conn->prepare($sqlActivas);
     $stmtActivas->execute([
@@ -158,45 +192,44 @@ function obtenerResumen(PDO $conn, int $idUsuario): array
         $resumen['ultima_fecha'] = formatearFecha($ultima['fecha_reserva']);
     }
 
-    $sqlDisponibles = "SELECT COUNT(*)
-                       FROM sesion_actividad sa
-                       INNER JOIN horario_actividad h ON sa.id_horario = h.id_horario
-                       INNER JOIN sala s ON h.id_sala = s.id_sala
-                       LEFT JOIN (
-                            SELECT id_sesion, COUNT(*) AS ocupadas
-                            FROM reserva
-                            WHERE estado = 'Confirmada'
-                            GROUP BY id_sesion
-                       ) r ON sa.id_sesion = r.id_sesion
-                       WHERE sa.fecha >= CURDATE()
-                         AND sa.estado = 'Programada'
-                         AND COALESCE(r.ocupadas, 0) < COALESCE(s.capacidad, sa.plazas_totales)";
-
-    $stmtDisponibles = $conn->query($sqlDisponibles);
-    $resumen['sesiones_disponibles'] = (int) $stmtDisponibles->fetchColumn();
-
     return $resumen;
 }
 
-function obtenerTablaHorarios(PDO $conn, int $idUsuario): array
+function obtenerHorariosBase(PDO $conn): array
 {
     $sql = "SELECT
-                sa.id_sesion,
-                sa.fecha,
-                sa.instructor,
-                sa.plazas_totales,
-                sa.estado AS estado_sesion,
+                h.id_horario,
                 h.dia_semana,
                 h.hora_inicio,
                 h.hora_fin,
                 a.nombre AS actividad,
-                s.nombre AS sala,
-                s.capacidad,
-                r.estado AS estado_reserva,
-                COALESCE(rc.ocupadas, 0) AS plazas_ocupadas
+                COALESCE(s.nombre, 'Por asignar') AS sala,
+                COALESCE(s.capacidad, 20) AS capacidad
+            FROM horario_actividad h
+            INNER JOIN actividad a ON h.id_actividad = a.id_actividad
+            LEFT JOIN sala s ON h.id_sala = s.id_sala
+            WHERE h.activo = 1
+              AND a.activa = 1
+            ORDER BY h.hora_inicio ASC, h.hora_fin ASC, h.id_horario ASC";
+
+    $stmt = $conn->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function obtenerSesionesRango(PDO $conn, int $idUsuario, string $fechaInicio, string $fechaFin): array
+{
+    $sql = "SELECT
+                sa.id_sesion,
+                sa.id_horario,
+                sa.fecha,
+                COALESCE(sa.instructor, 'Por confirmar') AS instructor,
+                sa.plazas_totales,
+                sa.estado AS estado_sesion,
+                COALESCE(r.estado, '') AS estado_reserva,
+                COALESCE(oc.ocupadas, 0) AS ocupadas,
+                COALESCE(s.capacidad, sa.plazas_totales, 20) AS capacidad_real
             FROM sesion_actividad sa
             INNER JOIN horario_actividad h ON sa.id_horario = h.id_horario
-            INNER JOIN actividad a ON h.id_actividad = a.id_actividad
             LEFT JOIN sala s ON h.id_sala = s.id_sala
             LEFT JOIN reserva r
                 ON r.id_sesion = sa.id_sesion
@@ -206,98 +239,267 @@ function obtenerTablaHorarios(PDO $conn, int $idUsuario): array
                 FROM reserva
                 WHERE estado = 'Confirmada'
                 GROUP BY id_sesion
-            ) rc ON rc.id_sesion = sa.id_sesion
-            WHERE sa.fecha >= CURDATE()
-              AND sa.estado = 'Programada'
-            ORDER BY h.hora_inicio ASC, sa.fecha ASC";
+            ) oc ON oc.id_sesion = sa.id_sesion
+            WHERE sa.fecha BETWEEN :fecha_inicio AND :fecha_fin";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute([
-        ':id_usuario' => $idUsuario
+        ':id_usuario' => $idUsuario,
+        ':fecha_inicio' => $fechaInicio,
+        ':fecha_fin' => $fechaFin
     ]);
 
-    $sesiones = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $filas = [];
+    $resultado = [];
+    foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $fila) {
+        $clave = $fila['id_horario'] . '|' . $fila['fecha'];
+        $resultado[$clave] = $fila;
+    }
 
-    foreach ($sesiones as $sesion) {
-        $franja = substr($sesion['hora_inicio'], 0, 5) . ' - ' . substr($sesion['hora_fin'], 0, 5);
-        $dia = $sesion['dia_semana'];
+    return $resultado;
+}
 
-        if (!isset($filas[$franja])) {
-            $filas[$franja] = [
+function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): array
+{
+    $horarios = obtenerHorariosBase($conn);
+    $fechaInicio = date('Y-m-d');
+    $fechaFin = date('Y-m-d', strtotime('+' . ($diasMostrados - 1) . ' days'));
+    $sesiones = obtenerSesionesRango($conn, $idUsuario, $fechaInicio, $fechaFin);
+
+    $horariosPorDiaFranja = [];
+    $franjas = [];
+    $franjasVista = [];
+
+    foreach ($horarios as $horario) {
+        $franja = substr($horario['hora_inicio'], 0, 5) . ' - ' . substr($horario['hora_fin'], 0, 5);
+        $claveDiaFranja = $horario['dia_semana'] . '|' . $franja;
+
+        if (!isset($horariosPorDiaFranja[$claveDiaFranja])) {
+            $horariosPorDiaFranja[$claveDiaFranja] = $horario;
+        }
+
+        if (!isset($franjas[$franja])) {
+            $franjas[$franja] = [
                 'franja' => $franja,
-                'dias' => []
+                'hora_inicio' => $horario['hora_inicio']
             ];
         }
+    }
 
-        $capacidadBase = !empty($sesion['capacidad']) ? (int)$sesion['capacidad'] : (int)$sesion['plazas_totales'];
-        $ocupadas = (int)$sesion['plazas_ocupadas'];
-        $libres = $capacidadBase - $ocupadas;
+    usort($franjas, function ($a, $b) {
+        return strcmp($a['hora_inicio'], $b['hora_inicio']);
+    });
 
-        if ($libres < 0) {
-            $libres = 0;
-        }
+    foreach ($franjas as $item) {
+        $franjasVista[] = $item['franja'];
+    }
 
-        $estado = 'Disponible';
-        $puedeReservar = true;
-
-        if ($sesion['estado_reserva'] === 'Confirmada') {
-            $estado = 'Confirmada';
-            $puedeReservar = false;
-        } elseif ($libres <= 0) {
-            $estado = 'Completa';
-            $puedeReservar = false;
-        }
-
-        $filas[$franja]['dias'][$dia] = [
-            'id_sesion' => (int)$sesion['id_sesion'],
-            'actividad' => $sesion['actividad'],
-            'sala' => $sesion['sala'] ?? 'Por asignar',
-            'monitor' => !empty($sesion['instructor']) ? $sesion['instructor'] : 'Por confirmar',
-            'fecha' => formatearFecha($sesion['fecha']),
-            'plazas' => 'Plazas libres: ' . $libres,
-            'estado' => $estado,
-            'puede_reservar' => $puedeReservar
+    $columnas = [];
+    for ($i = 0; $i < $diasMostrados; $i++) {
+        $fechaIso = date('Y-m-d', strtotime('+' . $i . ' days'));
+        $columnas[] = [
+            'fecha_iso' => $fechaIso,
+            'dia' => diaCortoDesdeFecha($fechaIso),
+            'fecha' => formatearFecha($fechaIso)
         ];
     }
 
-    return array_values($filas);
+    $filas = [];
+    $sesionesDisponibles = 0;
+
+    foreach ($franjasVista as $franja) {
+        $fila = [
+            'franja' => $franja,
+            'celdas' => []
+        ];
+
+        foreach ($columnas as $columna) {
+            $fechaIso = $columna['fecha_iso'];
+            $diaSemana = diaSemanaDesdeFecha($fechaIso);
+            $claveHorario = $diaSemana . '|' . $franja;
+
+            if (!isset($horariosPorDiaFranja[$claveHorario])) {
+                $fila['celdas'][] = [
+                    'vacia' => true
+                ];
+                continue;
+            }
+
+            $horario = $horariosPorDiaFranja[$claveHorario];
+            $claveSesion = $horario['id_horario'] . '|' . $fechaIso;
+            $sesion = $sesiones[$claveSesion] ?? null;
+
+            $capacidad = (int) ($horario['capacidad'] ?? 20);
+            $ocupadas = 0;
+            $monitor = 'Por confirmar';
+            $estado = 'Disponible';
+            $puedeReservar = esFechaHoraReservable($fechaIso, $horario['hora_inicio']);
+
+            if ($sesion) {
+                $capacidad = (int) ($sesion['capacidad_real'] ?? $capacidad);
+                $ocupadas = (int) ($sesion['ocupadas'] ?? 0);
+                $monitor = !empty($sesion['instructor']) ? $sesion['instructor'] : 'Por confirmar';
+
+                if ($sesion['estado_sesion'] === 'Cancelada') {
+                    $estado = 'Cancelada';
+                    $puedeReservar = false;
+                } elseif ($sesion['estado_sesion'] === 'Completada') {
+                    $estado = 'Completada';
+                    $puedeReservar = false;
+                } elseif ($sesion['estado_reserva'] === 'Confirmada') {
+                    $estado = 'Confirmada';
+                    $puedeReservar = false;
+                }
+            }
+
+            $libres = $capacidad - $ocupadas;
+            if ($libres < 0) {
+                $libres = 0;
+            }
+
+            if ($estado === 'Disponible' && $libres <= 0) {
+                $estado = 'Completa';
+                $puedeReservar = false;
+            }
+
+            if ($puedeReservar) {
+                $sesionesDisponibles++;
+            }
+
+            $fila['celdas'][] = [
+                'vacia' => false,
+                'id_horario' => (int) $horario['id_horario'],
+                'fecha_iso' => $fechaIso,
+                'actividad' => $horario['actividad'],
+                'sala' => $horario['sala'],
+                'monitor' => $monitor,
+                'fecha' => formatearFecha($fechaIso),
+                'plazas' => 'Plazas libres: ' . $libres,
+                'estado' => $estado,
+                'puede_reservar' => $puedeReservar
+            ];
+        }
+
+        $filas[] = $fila;
+    }
+
+    return [
+        'columnas' => $columnas,
+        'filas' => $filas,
+        'sesiones_disponibles' => $sesionesDisponibles
+    ];
 }
 
-function reservarSesion(PDO $conn, int $idUsuario, int $idSesion): array
+function obtenerHorarioParaReserva(PDO $conn, int $idHorario): ?array
+{
+    $sql = "SELECT
+                h.id_horario,
+                h.dia_semana,
+                h.hora_inicio,
+                h.hora_fin,
+                COALESCE(s.capacidad, 20) AS capacidad
+            FROM horario_actividad h
+            LEFT JOIN sala s ON h.id_sala = s.id_sala
+            WHERE h.id_horario = :id_horario
+              AND h.activo = 1
+            LIMIT 1";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':id_horario' => $idHorario
+    ]);
+
+    $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $fila ?: null;
+}
+
+function obtenerOCrearSesion(PDO $conn, int $idHorario, string $fecha): ?array
+{
+    $horario = obtenerHorarioParaReserva($conn, $idHorario);
+
+    if (!$horario) {
+        return null;
+    }
+
+    if (diaSemanaDesdeFecha($fecha) !== $horario['dia_semana']) {
+        return null;
+    }
+
+    $sqlSesion = "SELECT
+                    sa.id_sesion,
+                    sa.id_horario,
+                    sa.fecha,
+                    sa.instructor,
+                    sa.plazas_totales,
+                    sa.estado
+                  FROM sesion_actividad sa
+                  WHERE sa.id_horario = :id_horario
+                    AND sa.fecha = :fecha
+                  LIMIT 1
+                  FOR UPDATE";
+
+    $stmtSesion = $conn->prepare($sqlSesion);
+    $stmtSesion->execute([
+        ':id_horario' => $idHorario,
+        ':fecha' => $fecha
+    ]);
+
+    $sesion = $stmtSesion->fetch(PDO::FETCH_ASSOC);
+
+    if ($sesion) {
+        return [
+            'id_sesion' => (int) $sesion['id_sesion'],
+            'fecha' => $sesion['fecha'],
+            'hora_inicio' => $horario['hora_inicio'],
+            'capacidad' => (int) ($horario['capacidad'] ?? $sesion['plazas_totales'] ?? 20),
+            'estado' => $sesion['estado']
+        ];
+    }
+
+    $capacidad = (int) ($horario['capacidad'] ?? 20);
+
+    $sqlInsertar = "INSERT INTO sesion_actividad (id_horario, fecha, instructor, plazas_totales, estado)
+                    VALUES (:id_horario, :fecha, NULL, :plazas_totales, 'Programada')";
+
+    $stmtInsertar = $conn->prepare($sqlInsertar);
+    $stmtInsertar->execute([
+        ':id_horario' => $idHorario,
+        ':fecha' => $fecha,
+        ':plazas_totales' => $capacidad
+    ]);
+
+    return [
+        'id_sesion' => (int) $conn->lastInsertId(),
+        'fecha' => $fecha,
+        'hora_inicio' => $horario['hora_inicio'],
+        'capacidad' => $capacidad,
+        'estado' => 'Programada'
+    ];
+}
+
+function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fecha): array
 {
     try {
         $conn->beginTransaction();
 
-        $sqlSesion = "SELECT
-                        sa.id_sesion,
-                        sa.fecha,
-                        sa.plazas_totales,
-                        sa.estado,
-                        s.capacidad
-                      FROM sesion_actividad sa
-                      INNER JOIN horario_actividad h ON sa.id_horario = h.id_horario
-                      LEFT JOIN sala s ON h.id_sala = s.id_sala
-                      WHERE sa.id_sesion = :id_sesion
-                      LIMIT 1
-                      FOR UPDATE";
+        $datosSesion = obtenerOCrearSesion($conn, $idHorario, $fecha);
 
-        $stmtSesion = $conn->prepare($sqlSesion);
-        $stmtSesion->execute([
-            ':id_sesion' => $idSesion
-        ]);
-
-        $sesion = $stmtSesion->fetch(PDO::FETCH_ASSOC);
-
-        if (!$sesion) {
+        if (!$datosSesion) {
             $conn->rollBack();
             return [
                 'ok' => false,
-                'mensaje' => 'La sesión no existe.'
+                'mensaje' => 'No existe un horario válido para esa fecha.'
             ];
         }
 
-        if ($sesion['estado'] !== 'Programada') {
+        if (!esFechaHoraReservable($datosSesion['fecha'], $datosSesion['hora_inicio'])) {
+            $conn->rollBack();
+            return [
+                'ok' => false,
+                'mensaje' => 'No puedes reservar una clase pasada.'
+            ];
+        }
+
+        if ($datosSesion['estado'] !== 'Programada') {
             $conn->rollBack();
             return [
                 'ok' => false,
@@ -305,15 +507,9 @@ function reservarSesion(PDO $conn, int $idUsuario, int $idSesion): array
             ];
         }
 
-        if ($sesion['fecha'] < date('Y-m-d')) {
-            $conn->rollBack();
-            return [
-                'ok' => false,
-                'mensaje' => 'No puedes reservar una sesión pasada.'
-            ];
-        }
+        $idSesion = (int) $datosSesion['id_sesion'];
 
-        $sqlOcupadas = "SELECT COUNT(*) 
+        $sqlOcupadas = "SELECT COUNT(*)
                         FROM reserva
                         WHERE id_sesion = :id_sesion
                           AND estado = 'Confirmada'";
@@ -323,8 +519,8 @@ function reservarSesion(PDO $conn, int $idUsuario, int $idSesion): array
             ':id_sesion' => $idSesion
         ]);
 
-        $ocupadas = (int)$stmtOcupadas->fetchColumn();
-        $capacidad = !empty($sesion['capacidad']) ? (int)$sesion['capacidad'] : (int)$sesion['plazas_totales'];
+        $ocupadas = (int) $stmtOcupadas->fetchColumn();
+        $capacidad = (int) ($datosSesion['capacidad'] ?? 20);
 
         if ($ocupadas >= $capacidad) {
             $conn->rollBack();
@@ -396,34 +592,34 @@ function reservarSesion(PDO $conn, int $idUsuario, int $idSesion): array
     }
 }
 
-/* =========================================================
-   3. PETICIONES GET Y POST
-========================================================= */
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $usuario = obtenerUsuarioSidebar($conn, $idUsuario);
         $resumen = obtenerResumen($conn, $idUsuario);
-        $tabla = obtenerTablaHorarios($conn, $idUsuario);
+        $tablaData = obtenerTablaHorarios($conn, $idUsuario, $diasMostrados);
+        $resumen['sesiones_disponibles'] = $tablaData['sesiones_disponibles'];
 
         responderJSON([
             'ok' => true,
             'usuario' => $usuario,
             'resumen' => $resumen,
-            'tabla' => $tabla
+            'columnas' => $tablaData['columnas'],
+            'filas' => $tablaData['filas']
         ]);
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $idSesion = isset($_POST['id_sesion']) ? (int) $_POST['id_sesion'] : 0;
+        $idHorario = isset($_POST['id_horario']) ? (int) $_POST['id_horario'] : 0;
+        $fecha = trim($_POST['fecha'] ?? '');
 
-        if ($idSesion <= 0) {
+        if ($idHorario <= 0 || $fecha === '') {
             responderJSON([
                 'ok' => false,
-                'mensaje' => 'Sesión no válida.'
+                'mensaje' => 'Datos de reserva no válidos.'
             ]);
         }
 
-        $resultado = reservarSesion($conn, $idUsuario, $idSesion);
+        $resultado = reservarHorario($conn, $idUsuario, $idHorario, $fecha);
         responderJSON($resultado);
     }
 

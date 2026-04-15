@@ -27,7 +27,6 @@
             </a>
 
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
-                <!--<a href="area-socios.html">Resumen</a>-->
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
                 <a class="is-active" href="horarios-reservas.html">Reservas</a>
@@ -65,12 +64,11 @@
             </aside>
 
             <div class="socios-content">
-
                 <section class="socios-panel">
                     <h2 class="h2">Horarios y reservas</h2>
 
                     <p class="lead">
-                        Consulta el horario semanal, revisa la sala, el monitor y las plazas libres de cada clase y
+                        Consulta el horario fijo del club con fechas reales, revisa sala, monitor y plazas libres, y
                         reserva tu próxima sesión.
                     </p>
 
@@ -98,34 +96,27 @@
                         <div class="info-card">
                             <span class="label">Sesiones con plazas</span>
                             <h3 id="resumen-sesiones-disponibles">0</h3>
-                            <p>Clases abiertas para reservar</p>
+                            <p>Huecos abiertos en las próximas fechas</p>
                         </div>
                     </div>
 
-                    <div class="table-wrap" style="margin-top: 1rem;">
-                        <table>
-                            <thead>
+                    <div class="table-wrap reservas-wrap" style="margin-top: 1rem;">
+                        <table class="reservas-table">
+                            <thead id="cabecera-horario-semanal">
                                 <tr>
                                     <th>Horario</th>
-                                    <th>Lunes</th>
-                                    <th>Martes</th>
-                                    <th>Miércoles</th>
-                                    <th>Jueves</th>
-                                    <th>Viernes</th>
-                                    <th>Sábado</th>
-                                    <th>Domingo</th>
+                                    <th>Cargando calendario...</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-horario-semanal-socios">
                                 <tr>
-                                    <td colspan="8">Cargando horario semanal...</td>
+                                    <td colspan="2">Cargando horario semanal...</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                 </section>
-
             </div>
 
         </div>
@@ -146,6 +137,7 @@
     </footer>
 
     <script src="../js/horarios-reservas.js"></script>
+    <!-- <script src="../js/horarios-reservas.js?v=2"></script> -->
 </body>
 
 </html>

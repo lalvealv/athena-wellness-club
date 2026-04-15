@@ -12,6 +12,7 @@ async function cargarHorariosReservas() {
         });
 
         const data = await response.json();
+        console.log("DATOS API RESERVAS:", data);
 
         if (!data.ok) {
             if (data.mensaje && data.mensaje.toLowerCase().includes("sesión")) {
@@ -34,57 +35,8 @@ async function cargarHorariosReservas() {
         document.getElementById("resumen-ultima-fecha").textContent = data.resumen.ultima_fecha;
         document.getElementById("resumen-sesiones-disponibles").textContent = data.resumen.sesiones_disponibles;
 
-        const tbody = document.getElementById("tabla-horario-semanal-socios");
-        tbody.innerHTML = "";
-
-        if (!data.tabla || data.tabla.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="8">No hay horarios disponibles.</td></tr>`;
-            return;
-        }
-
-        const ordenDias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
-
-        data.tabla.forEach(fila => {
-            const tr = document.createElement("tr");
-            let html = `<td>${fila.franja}</td>`;
-
-            ordenDias.forEach(dia => {
-                const celda = fila.dias[dia];
-
-                if (!celda) {
-                    html += `<td>—</td>`;
-                    return;
-                }
-
-                let claseEstado = "";
-                if (celda.estado === "Confirmada") claseEstado = "status-ok";
-                if (celda.estado === "Completa" || celda.estado === "Cancelada") claseEstado = "status-cancel";
-                if (celda.estado === "Disponible") claseEstado = "status-wait";
-
-                let accion = "";
-                if (celda.puede_reservar) {
-                    accion = `<button class="reserve-btn" onclick="reservarSesion(${celda.id_sesion})">Reservar</button>`;
-                } else {
-                    accion = `<span class="${claseEstado}">${celda.estado}</span>`;
-                }
-
-                html += `
-                    <td>
-                        <div class="class-slot">
-                            <div class="class-name">${celda.actividad}</div>
-                            <span><strong>Sala:</strong> ${celda.sala}</span>
-                            <span><strong>Monitor:</strong> ${celda.monitor}</span>
-                            <span><strong>Fecha:</strong> ${celda.fecha}</span>
-                            <span><strong>${celda.plazas}</strong></span>
-                            ${accion}
-                        </div>
-                    </td>
-                `;
-            });
-
-            tr.innerHTML = html;
-            tbody.appendChild(tr);
-        });
+        renderCabecera(data.columnas || []);
+        renderTabla(data.filas || []);
 
     } catch (error) {
         console.error(error);
@@ -92,13 +44,93 @@ async function cargarHorariosReservas() {
     }
 }
 
-async function reservarSesion(idSesion) {
+function renderCabecera(columnas) {
+    const thead = document.getElementById("cabecera-horario-semanal");
+
+    if (!columnas || columnas.length === 0) {
+        thead.innerHTML = `
+            <tr>
+                <th>Horario</th>
+                <th>Sin fechas disponibles</th>
+            </tr>
+        `;
+        return;
+    }
+
+    let html = `<tr><th>Horario</th>`;
+
+    columnas.forEach(col => {
+        html += `
+            <th>
+                <div class="table-day">${col.dia}</div>
+                <div class="table-date">${col.fecha}</div>
+            </th>
+        `;
+    });
+
+    html += `</tr>`;
+    thead.innerHTML = html;
+}
+
+function renderTabla(filas) {
+    const tbody = document.getElementById("tabla-horario-semanal-socios");
+
+    if (!filas || filas.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="30">No hay horarios disponibles.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = "";
+
+    filas.forEach(fila => {
+        const tr = document.createElement("tr");
+        let html = `<td class="time-col">${fila.franja}</td>`;
+
+        fila.celdas.forEach(celda => {
+            if (celda.vacia) {
+                html += `<td class="empty-slot">—</td>`;
+                return;
+            }
+
+            let claseEstado = "";
+            if (celda.estado === "Confirmada") claseEstado = "status-ok";
+            if (celda.estado === "Completa" || celda.estado === "Cancelada" || celda.estado === "Completada") claseEstado = "status-cancel";
+            if (celda.estado === "Disponible" || celda.estado === "Pendiente") claseEstado = "status-wait";
+
+            let accion = "";
+            if (celda.puede_reservar) {
+                accion = `<button class="reserve-btn" onclick="reservarSesion(${celda.id_horario}, '${celda.fecha_iso}')">Reservar</button>`;
+            } else {
+                accion = `<span class="${claseEstado}">${celda.estado}</span>`;
+            }
+
+            html += `
+                <td>
+                    <div class="class-slot">
+                        <div class="class-name">${celda.actividad}</div>
+                        <span><strong>Sala:</strong> ${celda.sala}</span>
+                        <span><strong>Monitor:</strong> ${celda.monitor}</span>
+                        <span><strong>Fecha:</strong> ${celda.fecha}</span>
+                        <span><strong>${celda.plazas}</strong></span>
+                        ${accion}
+                    </div>
+                </td>
+            `;
+        });
+
+        tr.innerHTML = html;
+        tbody.appendChild(tr);
+    });
+}
+
+async function reservarSesion(idHorario, fechaIso) {
     const mensaje = document.getElementById("mensaje-reserva");
     mensaje.textContent = "Realizando reserva...";
 
     try {
         const formData = new FormData();
-        formData.append("id_sesion", idSesion);
+        formData.append("id_horario", idHorario);
+        formData.append("fecha", fechaIso);
 
         const response = await fetch("../api/horarios-reservas.php", {
             method: "POST",
