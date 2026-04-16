@@ -62,20 +62,38 @@ async function cargarUsuarios(busqueda = "") {
                 claseEstado = "status-wait";
             }
 
-            const selectorPerfil = `
-                <select class="select-perfil" onchange="cambiarPerfilUsuario(${usuario.id_usuario}, this.value)">
-                    <option value="CLIENTE" ${usuario.perfil === "CLIENTE" ? "selected" : ""}>CLIENTE</option>
-                    <option value="ADMIN" ${usuario.perfil === "ADMIN" ? "selected" : ""}>ADMIN</option>
-                </select>
-            `;
+            let selectorPerfil = "";
 
-            const selectorEstado = `
-                <select class="state-select" onchange="cambiarEstadoUsuario(${usuario.id_usuario}, this.value)">
-                    <option value="Activo" ${usuario.estado === "Activo" ? "selected" : ""}>Activo</option>
-                    <option value="Inactivo" ${usuario.estado === "Inactivo" ? "selected" : ""}>Inactivo</option>
-                    <option value="Bloqueado" ${usuario.estado === "Bloqueado" ? "selected" : ""}>Bloqueado</option>
-                </select>
-            `;
+            if (usuario.es_admin_original) {
+                selectorPerfil = `
+                    <div class="admin-lock-badge">Admin original</div>
+                `;
+            } else {
+                const puedeAsignarAdmin = data.admin_logueado_es_original;
+
+                selectorPerfil = `
+                    <select class="select-perfil" onchange="cambiarPerfilUsuario(${usuario.id_usuario}, this.value)">
+                        <option value="CLIENTE" ${usuario.perfil === "CLIENTE" ? "selected" : ""}>CLIENTE</option>
+                        <option value="ADMIN" ${usuario.perfil === "ADMIN" ? "selected" : ""} ${!puedeAsignarAdmin ? "disabled" : ""}>ADMIN</option>
+                    </select>
+                `;
+            }
+
+            let selectorEstado = "";
+
+            if (usuario.es_admin_original) {
+                selectorEstado = `
+                    <div class="admin-lock-badge">Protegido</div>
+                `;
+            } else {
+                selectorEstado = `
+                    <select class="state-select" onchange="cambiarEstadoUsuario(${usuario.id_usuario}, this.value)">
+                        <option value="Activo" ${usuario.estado === "Activo" ? "selected" : ""}>Activo</option>
+                        <option value="Inactivo" ${usuario.estado === "Inactivo" ? "selected" : ""}>Inactivo</option>
+                        <option value="Bloqueado" ${usuario.estado === "Bloqueado" ? "selected" : ""}>Bloqueado</option>
+                    </select>
+                `;
+            }
 
             const fila = document.createElement("tr");
             fila.innerHTML = `
@@ -121,10 +139,9 @@ async function cambiarEstadoUsuario(idUsuario, nuevoEstado) {
         const data = await response.json();
         mensaje.textContent = data.mensaje;
 
-        if (data.ok) {
-            const inputBusqueda = document.getElementById("buscarUsuario");
-            await cargarUsuarios(inputBusqueda.value.trim());
-        }
+        const inputBusqueda = document.getElementById("buscarUsuario");
+        await cargarUsuarios(inputBusqueda.value.trim());
+
     } catch (error) {
         console.error(error);
         mensaje.textContent = "Ha ocurrido un error al actualizar el estado.";

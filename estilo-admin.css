@@ -139,3 +139,14 @@
     background: rgba(255, 255, 255, 0.06);
     box-shadow: 0 14px 32px rgba(0, 0, 0, 0.18);
 }
+
+.admin-lock-badge {
+    display: inline-block;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(255, 220, 140, 0.12);
+    border: 1px solid rgba(255, 220, 140, 0.28);
+    color: #ffd27d;
+    font-weight: 700;
+    font-size: 0.86rem;
+}

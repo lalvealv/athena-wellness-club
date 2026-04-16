@@ -6,6 +6,9 @@ require_once __DIR__ . '/../conexion.php';
 
 $busqueda = trim($_GET['buscar'] ?? '');
 
+// ID del admin original e intocable
+define('ADMIN_ORIGINAL_ID', 1);
+
 if (!isset($_SESSION['id_usuario'])) {
     echo json_encode([
         'ok' => false,
@@ -28,6 +31,16 @@ function responderJSON(array $datos): void
 {
     echo json_encode($datos, JSON_UNESCAPED_UNICODE);
     exit;
+}
+
+function esAdminOriginal(int $idUsuario): bool
+{
+    return $idUsuario === ADMIN_ORIGINAL_ID;
+}
+
+function adminLogueadoEsOriginal(int $idAdmin): bool
+{
+    return $idAdmin === ADMIN_ORIGINAL_ID;
 }
 
 function obtenerAdmin(PDO $conn, int $idAdmin): array
@@ -94,15 +107,18 @@ function obtenerUsuarios(PDO $conn, string $busqueda): array
 
     $listaUsuarios = [];
     foreach ($usuarios as $usuario) {
+        $idUsuario = (int)$usuario['id_usuario'];
+
         $listaUsuarios[] = [
-            'id_usuario' => (int)$usuario['id_usuario'],
+            'id_usuario' => $idUsuario,
             'alias' => $usuario['alias'] ?? '',
             'nombre_completo' => trim(($usuario['nombre'] ?? '') . ' ' . ($usuario['apellidos'] ?? '')),
             'correo' => $usuario['correo'] ?? '',
             'telefono' => !empty($usuario['telefono']) ? $usuario['telefono'] : 'No disponible',
             'perfil' => strtoupper($usuario['nombre_perfil'] ?? 'No disponible'),
             'id_perfil' => (int)$usuario['id_perfil'],
-            'estado' => $usuario['estado'] ?? 'No disponible'
+            'estado' => $usuario['estado'] ?? 'No disponible',
+            'es_admin_original' => esAdminOriginal($idUsuario)
         ];
     }
 
@@ -124,6 +140,13 @@ function actualizarEstadoUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
         return [
             'ok' => false,
             'mensaje' => 'No puedes cambiar tu propio estado desde esta pantalla.'
+        ];
+    }
+
+    if (esAdminOriginal($idUsuarioObjetivo)) {
+        return [
+            'ok' => false,
+            'mensaje' => 'El administrador original no puede cambiar de estado.'
         ];
     }
 
@@ -184,6 +207,21 @@ function actualizarPerfilUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
         return [
             'ok' => false,
             'mensaje' => 'No puedes cambiar tu propio perfil desde esta pantalla.'
+        ];
+    }
+
+    if (esAdminOriginal($idUsuarioObjetivo)) {
+        return [
+            'ok' => false,
+            'mensaje' => 'El administrador original siempre debe seguir siendo ADMIN.'
+        ];
+    }
+
+    // Solo el admin original puede ascender usuarios a ADMIN
+    if ($nuevoPerfil === 'ADMIN' && !adminLogueadoEsOriginal($idAdmin)) {
+        return [
+            'ok' => false,
+            'mensaje' => 'Solo el administrador original puede asignar el perfil ADMIN.'
         ];
     }
 
@@ -253,7 +291,8 @@ try {
         responderJSON([
             'ok' => true,
             'admin' => obtenerAdmin($conn, $idAdmin),
-            'usuarios' => obtenerUsuarios($conn, $busqueda)
+            'usuarios' => obtenerUsuarios($conn, $busqueda),
+            'admin_logueado_es_original' => adminLogueadoEsOriginal($idAdmin)
         ]);
     }
 
