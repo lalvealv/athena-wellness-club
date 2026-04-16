@@ -25,28 +25,21 @@ try {
             WHERE alias = :identificador OR correo = :identificador
             LIMIT 1";
 
-    // Preparar consulta
     $stmt = $conn->prepare($sql);
-
-    // Ejecutar consulta
     $stmt->execute([
         ':identificador' => $identificador
     ]);
 
-    // Obtener datos del usuario
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Si no existe el usuario
     if (!$usuario) {
         die("Usuario o contraseña incorrectos.");
     }
 
-    // Comprobar que el usuario esté activo
     if ($usuario['estado'] !== 'Activo') {
         die("Tu cuenta no está activa. Contacta con el club.");
     }
 
-    // Verificar contraseña cifrada
     if (!password_verify($password, $usuario['contrasena'])) {
         die("Usuario o contraseña incorrectos.");
     }
@@ -60,17 +53,13 @@ try {
     $_SESSION['id_perfil'] = $usuario['id_perfil'];
 
     // Redirigir según el tipo de perfil
-    // Perfil 1 = ADMIN
     if ((int)$usuario['id_perfil'] === 1) {
         header("Location: admin/admin-panel.html");
         exit;
-    }
-    // Perfil 2 = CLIENTE
-    else {
-        header("Location: socios/area-socios.html");
+    } else {
+        header("Location: socios/area-socios.php");
         exit;
     }
 } catch (PDOException $e) {
-    // Mostrar error si falla la consulta
     die("Error en el inicio de sesión: " . $e->getMessage());
 }

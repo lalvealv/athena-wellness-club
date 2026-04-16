@@ -1,17 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("JS ADMIN PANEL CARGADO");
     cargarPanelAdmin();
 });
 
 async function cargarPanelAdmin() {
     try {
-        const response = await fetch("../api/admin-panel.php", {
+        const response = await fetch("../API/admin-panel.php", {
             method: "GET",
             credentials: "same-origin"
         });
 
         const data = await response.json();
+        console.log("DATA ADMIN PANEL:", data);
 
         if (!response.ok || !data.ok) {
+            console.error("Error API:", data.mensaje);
             window.location.href = "../publico/socios.html";
             return;
         }
@@ -40,6 +43,8 @@ async function cargarPanelAdmin() {
                 claseEstado = "status-ok";
             } else if (usuario.estado === "Bloqueado" || usuario.estado === "Inactivo") {
                 claseEstado = "status-cancel";
+            } else {
+                claseEstado = "status-wait";
             }
 
             const fila = document.createElement("tr");
@@ -55,7 +60,7 @@ async function cargarPanelAdmin() {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("Error cargarPanelAdmin:", error);
         window.location.href = "../publico/socios.html";
     }
 }

@@ -1,13 +1,28 @@
 <?php
-require_once __DIR__ . '/../comprobar-admin.php';
-require_once __DIR__ . '/../conexion.php';
-
+session_start();
 header('Content-Type: application/json; charset=utf-8');
 
-$idAdmin = $_SESSION['id_usuario'];
+require_once __DIR__ . '/../conexion.php';
+
+if (!isset($_SESSION['id_usuario'])) {
+    echo json_encode([
+        'ok' => false,
+        'mensaje' => 'Sesión no válida.'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
+    echo json_encode([
+        'ok' => false,
+        'mensaje' => 'Acceso no autorizado.'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+$idAdmin = (int) $_SESSION['id_usuario'];
 
 try {
-    // Datos del admin logueado
     $sqlAdmin = "SELECT nombre, apellidos, foto_perfil
                  FROM usuario
                  WHERE id_usuario = :id_usuario
@@ -20,37 +35,31 @@ try {
     $admin = $stmtAdmin->fetch(PDO::FETCH_ASSOC);
 
     if (!$admin) {
-        http_response_code(404);
         echo json_encode([
             'ok' => false,
             'mensaje' => 'No se encontró el administrador logueado.'
-        ]);
+        ], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
-    // Usuarios activos
     $sqlActivos = "SELECT COUNT(*) FROM usuario WHERE estado = 'Activo'";
-    $usuariosActivos = (int) $conn->query($sqlActivos)->fetchColumn();
+    $usuariosActivos = (int)$conn->query($sqlActivos)->fetchColumn();
 
-    // Usuarios bloqueados
     $sqlBloqueados = "SELECT COUNT(*) FROM usuario WHERE estado = 'Bloqueado'";
-    $usuariosBloqueados = (int) $conn->query($sqlBloqueados)->fetchColumn();
+    $usuariosBloqueados = (int)$conn->query($sqlBloqueados)->fetchColumn();
 
-    // Reservas hoy
     $sqlReservasHoy = "SELECT COUNT(*)
                        FROM reserva r
                        INNER JOIN sesion_actividad sa ON r.id_sesion = sa.id_sesion
                        WHERE sa.fecha = CURDATE()
                          AND r.estado = 'Confirmada'";
-    $reservasHoy = (int) $conn->query($sqlReservasHoy)->fetchColumn();
+    $reservasHoy = (int)$conn->query($sqlReservasHoy)->fetchColumn();
 
-    // Nuevas altas últimos 7 días
     $sqlAltas = "SELECT COUNT(*)
                  FROM usuario
                  WHERE fecha_registro >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
-    $nuevasAltas = (int) $conn->query($sqlAltas)->fetchColumn();
+    $nuevasAltas = (int)$conn->query($sqlAltas)->fetchColumn();
 
-    // Últimos usuarios registrados
     $sqlUltimos = "SELECT 
                         id_usuario,
                         alias,
@@ -68,7 +77,7 @@ try {
     $listaUltimos = [];
     foreach ($ultimosUsuarios as $usuario) {
         $listaUltimos[] = [
-            'id_usuario' => $usuario['id_usuario'],
+            'id_usuario' => (int)$usuario['id_usuario'],
             'alias' => $usuario['alias'] ?? '',
             'nombre_completo' => $usuario['nombre_completo'] ?? '',
             'correo' => $usuario['correo'] ?? '',
@@ -79,7 +88,7 @@ try {
         ];
     }
 
-    $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/admin.jpg';
+    $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
     $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
 
     echo json_encode([
@@ -98,10 +107,9 @@ try {
         'ultimos_usuarios' => $listaUltimos
     ], JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
-    http_response_code(500);
     echo json_encode([
         'ok' => false,
         'mensaje' => 'Error al obtener el panel de administración.',
         'error' => $e->getMessage()
-    ]);
+    ], JSON_UNESCAPED_UNICODE);
 }
