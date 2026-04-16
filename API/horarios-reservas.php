@@ -365,6 +365,16 @@ function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): ar
                 $sesionesDisponibles++;
             }
 
+            $nivelOcupacion = 'alta';
+
+            if ($libres <= 0) {
+                $nivelOcupacion = 'completa';
+            } elseif ($libres <= 3) {
+                $nivelOcupacion = 'baja';
+            } elseif ($libres <= 6) {
+                $nivelOcupacion = 'media';
+            }
+
             $fila['celdas'][] = [
                 'vacia' => false,
                 'id_horario' => (int) $horario['id_horario'],
@@ -374,6 +384,8 @@ function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): ar
                 'monitor' => $monitor,
                 'fecha' => formatearFecha($fechaIso),
                 'plazas' => 'Plazas libres: ' . $libres,
+                'plazas_libres' => $libres,
+                'nivel_ocupacion' => $nivelOcupacion,
                 'estado' => $estado,
                 'puede_reservar' => $puedeReservar
             ];

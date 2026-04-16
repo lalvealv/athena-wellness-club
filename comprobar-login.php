@@ -1,19 +1,14 @@
 <?php
-// Iniciar sesión para poder comprobar si el usuario ha iniciado sesión
 session_start();
 
-// Si no existe un usuario logueado, redirigir al login
+// 1. Si no hay sesión → fuera
 if (!isset($_SESSION['id_usuario'])) {
     header("Location: ../publico/socios.html");
     exit;
 }
 
-/*
-<?php
-session_start();
-
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: ../publico/socios.html");
+// 2. Si es administrador → fuera del área de socios
+if (isset($_SESSION['id_perfil']) && (int)$_SESSION['id_perfil'] === 1) {
+    header("Location: ../admin/admin-panel.php");
     exit;
 }
-?>*/

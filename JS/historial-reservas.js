@@ -48,8 +48,10 @@ async function cargarHistorialReservas() {
 
             let accion = "—";
 
-            if (item.puede_cancelar) {
+            if (item.puede_cancelar === true) {
                 accion = `<button class="cancel-btn" onclick="cancelarReserva(${item.id_reserva})">Cancelar</button>`;
+            } else if (item.estado === "Confirmada") {
+                accion = `<span class="status-lock">No cancelable<br><small>(menos de 1h)</small></span>`;
             }
 
             const fila = document.createElement("tr");

@@ -29,7 +29,7 @@
             </a>
 
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
-                <a href="admin-panel.php">Resumen</a>
+                <!-- <a href="admin-panel.php">Resumen</a>-->
                 <a class="is-active" href="admin-usuarios.html">Usuarios</a>
                 <a href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
@@ -45,13 +45,13 @@
 
             <aside class="socios-sidebar">
                 <div class="socios-user">
-                    <img id="admin-foto" src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
                     <h3 id="admin-nombre">Cargando...</h3>
                     <p id="admin-perfil">Cargando...</p>
                 </div>
 
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
-                    <a href="admin-panel.php">Resumen general</a>
+                    <!--   <a href="admin-panel.php">Resumen general</a>-->
                     <a class="is-active" href="admin-usuarios.html">Gestión de usuarios</a>
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
@@ -82,7 +82,9 @@
                         </form>
                     </div>
 
-                    <div class="table-wrap">
+                    <p id="mensaje-admin-usuarios" class="muted"></p>
+
+                    <div class="table-wrap" id="tabla-usuarios">
                         <table class="mini-table">
                             <thead>
                                 <tr>
@@ -96,7 +98,7 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody id="tabla-usuarios">
+                            <tbody id="tabla-usuarios-body">
                                 <tr>
                                     <td colspan="8">Cargando usuarios...</td>
                                 </tr>
@@ -109,29 +111,37 @@
                     <h2 class="h2">Acciones rápidas</h2>
 
                     <div class="two-cols">
-                        <div class="info-card">
-                            <span class="label">Cambios frecuentes</span>
-                            <h3>Editar estado</h3>
-                            <p>Activa, bloquea o desactiva usuarios cuando sea necesario.</p>
-                        </div>
+                        <a class="quick-card-link" href="#tabla-usuarios">
+                            <div class="info-card quick-card">
+                                <span class="label">Cambios frecuentes</span>
+                                <h3>Editar estado</h3>
+                                <p>Activa, bloquea o desactiva usuarios cuando sea necesario.</p>
+                            </div>
+                        </a>
 
-                        <div class="info-card">
-                            <span class="label">Permisos</span>
-                            <h3>Cambiar perfil</h3>
-                            <p>Convierte usuarios en administradores o clientes.</p>
-                        </div>
+                        <a class="quick-card-link" href="#tabla-usuarios">
+                            <div class="info-card quick-card">
+                                <span class="label">Permisos</span>
+                                <h3>Cambiar perfil</h3>
+                                <p>Convierte usuarios en administradores o clientes.</p>
+                            </div>
+                        </a>
 
-                        <div class="info-card">
-                            <span class="label">Gestión comercial</span>
-                            <h3>Actualizar suscripción</h3>
-                            <p>Modifica el plan asignado al usuario.</p>
-                        </div>
+                        <a class="quick-card-link" href="admin-suscripciones.html">
+                            <div class="info-card quick-card">
+                                <span class="label">Gestión comercial</span>
+                                <h3>Actualizar suscripción</h3>
+                                <p>Modifica el plan asignado al usuario.</p>
+                            </div>
+                        </a>
 
-                        <div class="info-card">
-                            <span class="label">Seguimiento</span>
-                            <h3>Consultar actividad</h3>
-                            <p>Revisa reservas, entrenamientos y evolución del socio.</p>
-                        </div>
+                        <a class="quick-card-link" href="admin-reservas.html">
+                            <div class="info-card quick-card">
+                                <span class="label">Seguimiento</span>
+                                <h3>Consultar actividad</h3>
+                                <p>Revisa reservas, entrenamientos y evolución del socio.</p>
+                            </div>
+                        </a>
                     </div>
                 </section>
             </div>

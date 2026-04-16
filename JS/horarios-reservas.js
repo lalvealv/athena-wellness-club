@@ -97,6 +97,12 @@ function renderTabla(filas) {
             if (celda.estado === "Completa" || celda.estado === "Cancelada" || celda.estado === "Completada") claseEstado = "status-cancel";
             if (celda.estado === "Disponible" || celda.estado === "Pendiente") claseEstado = "status-wait";
 
+            let clasePlazas = "availability-high";
+
+            if (celda.nivel_ocupacion === "baja") clasePlazas = "availability-low";
+            if (celda.nivel_ocupacion === "media") clasePlazas = "availability-medium";
+            if (celda.nivel_ocupacion === "completa") clasePlazas = "availability-full";
+
             let accion = "";
             if (celda.puede_reservar) {
                 accion = `<button class="reserve-btn" onclick="reservarSesion(${celda.id_horario}, '${celda.fecha_iso}')">Reservar</button>`;
@@ -111,7 +117,7 @@ function renderTabla(filas) {
                         <span><strong>Sala:</strong> ${celda.sala}</span>
                         <span><strong>Monitor:</strong> ${celda.monitor}</span>
                         <span><strong>Fecha:</strong> ${celda.fecha}</span>
-                        <span><strong>${celda.plazas}</strong></span>
+                       <span class="${clasePlazas}"><strong>${celda.plazas}</strong></span>
                         ${accion}
                     </div>
                 </td>

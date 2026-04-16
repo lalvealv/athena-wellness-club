@@ -18,7 +18,7 @@ async function cargarAdminCrearUsuario() {
         const data = await response.json();
 
         if (!response.ok || !data.ok) {
-            window.location.href = "../publico/socios.html";
+            window.location.href = "../admin/admin-panel.php";
             return;
         }
 
@@ -28,7 +28,7 @@ async function cargarAdminCrearUsuario() {
 
     } catch (error) {
         console.error(error);
-        window.location.href = "../publico/socios.html";
+        window.location.href = "../admin/admin-panel.php";
     }
 }
 
@@ -55,6 +55,10 @@ async function enviarFormularioCrearUsuario() {
 
         mensaje.textContent = data.mensaje;
         form.reset();
+
+        setTimeout(() => {
+            window.location.href = "admin-usuarios.html";
+        }, 1200);
 
     } catch (error) {
         console.error(error);

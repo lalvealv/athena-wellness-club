@@ -1,10 +1,26 @@
 <?php
-require_once __DIR__ . '/../comprobar-admin.php';
-require_once __DIR__ . '/../conexion.php';
-
+session_start();
 header('Content-Type: application/json; charset=utf-8');
 
-$idAdmin = $_SESSION['id_usuario'];
+require_once __DIR__ . '/../conexion.php';
+
+if (!isset($_SESSION['id_usuario'])) {
+    echo json_encode([
+        'ok' => false,
+        'mensaje' => 'Sesión no válida.'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
+    echo json_encode([
+        'ok' => false,
+        'mensaje' => 'Acceso no autorizado.'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+$idAdmin = (int) $_SESSION['id_usuario'];
 $busqueda = trim($_GET['buscar'] ?? '');
 $plan = trim($_GET['plan'] ?? '');
 $estado = trim($_GET['estado'] ?? '');
@@ -22,11 +38,10 @@ try {
     $admin = $stmtAdmin->fetch(PDO::FETCH_ASSOC);
 
     if (!$admin) {
-        http_response_code(404);
         echo json_encode([
             'ok' => false,
             'mensaje' => 'No se encontró el administrador logueado.'
-        ]);
+        ], JSON_UNESCAPED_UNICODE);
         exit;
     }
 
@@ -70,8 +85,8 @@ try {
     $listaSuscripciones = [];
     foreach ($suscripciones as $item) {
         $listaSuscripciones[] = [
-            'id_suscripcion' => $item['id_suscripcion'],
-            'id_usuario' => $item['id_usuario'],
+            'id_suscripcion' => (int)$item['id_suscripcion'],
+            'id_usuario' => (int)$item['id_usuario'],
             'usuario' => $item['usuario'] ?? '',
             'plan' => $item['plan'] ?? '',
             'precio' => isset($item['cuota']) ? number_format((float)$item['cuota'], 2, ',', '.') . ' €' : 'No disponible',
@@ -111,7 +126,7 @@ try {
     $sqlCanceladas = "SELECT COUNT(*) FROM suscripcion WHERE estado = 'Cancelada'";
     $totalCanceladas = (int) $conn->query($sqlCanceladas)->fetchColumn();
 
-    $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/admin.jpg';
+    $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
     $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
 
     echo json_encode([
@@ -130,10 +145,8 @@ try {
         ]
     ], JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
-    http_response_code(500);
     echo json_encode([
         'ok' => false,
-        'mensaje' => 'Error al obtener las suscripciones.',
-        'error' => $e->getMessage()
-    ]);
+        'mensaje' => 'Error al obtener las suscripciones: ' . $e->getMessage()
+    ], JSON_UNESCAPED_UNICODE);
 }

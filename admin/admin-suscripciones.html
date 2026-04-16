@@ -17,7 +17,6 @@
 
 <body>
 
-    <!-- HEADER -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
@@ -30,32 +29,30 @@
             </a>
 
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
-                <a href="admin-panel.php">Resumen</a>
+                <!--  <a href="admin-panel.php">Resumen</a> -->
                 <a href="admin-usuarios.html">Usuarios</a>
                 <a class="is-active" href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
                 <a href="admin-entrenamientos.html">Entrenamientos</a>
                 <a href="admin-notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
-    <!-- MAIN -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
-            <!-- SIDEBAR -->
             <aside class="socios-sidebar">
                 <div class="socios-user">
-                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
-                    <h3>Administrador ATHENA</h3>
-                    <p>Perfil ADMIN</p>
+                    <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
+                    <h3 id="admin-nombre">Cargando...</h3>
+                    <p id="admin-perfil">Cargando...</p>
                 </div>
 
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
-                    <a href="admin-panel.php">Resumen general</a>
+                    <!-- <a href="admin-panel.php">Resumen general</a> -->
                     <a href="admin-usuarios.html">Gestión de usuarios</a>
                     <a class="is-active" href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
@@ -64,15 +61,13 @@
                 </nav>
             </aside>
 
-            <!-- CONTENIDO -->
             <div class="socios-content">
 
-                <!-- FILTROS + TABLA -->
                 <section class="socios-panel">
                     <h2 class="h2">Gestión de suscripciones</h2>
 
                     <div class="profile-box box-spacing">
-                        <form action="#" method="get">
+                        <form id="form-filtro-suscripciones">
                             <div class="two-cols">
 
                                 <div class="form-row">
@@ -107,10 +102,13 @@
 
                             <div class="actions actions-top">
                                 <button class="btn btn--primary btn--small" type="submit">Buscar</button>
-                                <button class="btn btn--ghost btn--small" type="reset">Limpiar</button>
+                                <button class="btn btn--ghost btn--small" type="reset"
+                                    id="btn-limpiar-filtros-suscripciones">Limpiar</button>
                             </div>
                         </form>
                     </div>
+
+                    <p id="mensaje-admin-suscripciones" class="muted"></p>
 
                     <div class="table-wrap">
                         <table class="mini-table">
@@ -127,79 +125,45 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="tabla-suscripciones">
                                 <tr>
-                                    <td>1</td>
-                                    <td>Lorena Alvarez Alves</td>
-                                    <td>Premium</td>
-                                    <td>79,90 €</td>
-                                    <td>01/02/2026</td>
-                                    <td>01/04/2026</td>
-                                    <td class="status-ok">Activa</td>
-                                    <td>Sí</td>
-                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
-                                </tr>
-
-                                <tr>
-                                    <td>2</td>
-                                    <td>Marta Gómez Ruiz</td>
-                                    <td>Essential</td>
-                                    <td>39,90 €</td>
-                                    <td>15/02/2026</td>
-                                    <td>15/03/2026</td>
-                                    <td class="status-ok">Activa</td>
-                                    <td>No</td>
-                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
-                                </tr>
-
-                                <tr>
-                                    <td>3</td>
-                                    <td>Carlos Pérez Soto</td>
-                                    <td>Executive</td>
-                                    <td>119,90 €</td>
-                                    <td>01/01/2026</td>
-                                    <td>01/03/2026</td>
-                                    <td class="status-cancel">Cancelada</td>
-                                    <td>No</td>
-                                    <td><a href="admin-editar-usuario.html">Ver ficha</a></td>
+                                    <td colspan="9">Cargando suscripciones...</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </section>
 
-                <!-- RESUMEN -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Resumen de planes</h2>
 
                     <div class="dashboard-grid">
                         <div class="info-card">
                             <span class="label">Plan Essential</span>
-                            <h3>48 usuarios</h3>
+                            <h3 id="resumen-essential">Cargando...</h3>
                             <p>Acceso básico al club</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Plan Premium</span>
-                            <h3>63 usuarios</h3>
+                            <h3 id="resumen-premium">Cargando...</h3>
                             <p>Acceso completo y clases</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Plan Executive</span>
-                            <h3>17 usuarios</h3>
+                            <h3 id="resumen-executive">Cargando...</h3>
                             <p>Servicios exclusivos</p>
                         </div>
 
                         <div class="info-card">
                             <span class="label">Suscripciones canceladas</span>
-                            <h3>4</h3>
+                            <h3 id="resumen-canceladas">Cargando...</h3>
                             <p>Revisar incidencias y bajas</p>
                         </div>
                     </div>
                 </section>
 
-                <!-- GESTIÓN -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Gestión administrativa</h2>
 
@@ -223,7 +187,6 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -238,6 +201,8 @@
         </div>
     </footer>
 
-</body>
+
+    <script src="../js/admin-suscripciones.js"></script>
+
 
 </html>

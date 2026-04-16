@@ -1,3 +1,5 @@
+console.log("ADMIN SUSCRIPCIONES NUEVO CARGADO");
+
 document.addEventListener("DOMContentLoaded", () => {
     cargarSuscripciones();
 
@@ -24,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function cargarSuscripciones(busqueda = "", plan = "", estado = "") {
+    const mensaje = document.getElementById("mensaje-admin-suscripciones");
+
     try {
         const url = new URL("../api/admin-suscripciones.php", window.location.href);
 
@@ -43,9 +47,10 @@ async function cargarSuscripciones(busqueda = "", plan = "", estado = "") {
         });
 
         const data = await response.json();
+        console.log("ADMIN SUSCRIPCIONES:", data);
 
         if (!response.ok || !data.ok) {
-            window.location.href = "../publico/socios.html";
+            mensaje.textContent = data.mensaje || "No se han podido cargar las suscripciones.";
             return;
         }
 
@@ -85,7 +90,7 @@ async function cargarSuscripciones(busqueda = "", plan = "", estado = "") {
                 <td>${item.precio}</td>
                 <td>${item.fecha_inicio}</td>
                 <td>${item.fecha_renovacion}</td>
-                <td class="${claseEstado}">${item.estado}</td>
+                <td><span class="${claseEstado}">${item.estado}</span></td>
                 <td>${item.renovacion_automatica}</td>
                 <td><a href="admin-editar-usuario.html?id=${item.id_usuario}">Ver ficha</a></td>
             `;
@@ -94,6 +99,6 @@ async function cargarSuscripciones(busqueda = "", plan = "", estado = "") {
 
     } catch (error) {
         console.error(error);
-        window.location.href = "../publico/socios.html";
+        mensaje.textContent = "Ha ocurrido un error al cargar las suscripciones.";
     }
 }

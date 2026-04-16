@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../comprobar-admin.php';
-require_once __DIR__ . '/../conexion.php';
-
+session_start();
 header('Content-Type: application/json; charset=utf-8');
+
+require_once __DIR__ . '/../conexion.php';
 
 function responderJSON(bool $ok, string $mensaje, int $codigo = 200, array $extra = []): void
 {
@@ -14,9 +14,17 @@ function responderJSON(bool $ok, string $mensaje, int $codigo = 200, array $extr
     exit;
 }
 
+if (!isset($_SESSION['id_usuario'])) {
+    responderJSON(false, 'Sesión no válida.', 401);
+}
+
+if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
+    responderJSON(false, 'Acceso no autorizado.', 403);
+}
+
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $idAdmin = $_SESSION['id_usuario'];
+        $idAdmin = (int)$_SESSION['id_usuario'];
 
         $sqlAdmin = "SELECT nombre, apellidos, foto_perfil
                      FROM usuario
@@ -33,7 +41,7 @@ try {
             responderJSON(false, 'No se encontró el administrador logueado.', 404);
         }
 
-        $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/admin.jpg';
+        $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
         $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
 
         responderJSON(true, 'Datos cargados correctamente.', 200, [
@@ -136,6 +144,8 @@ try {
 
     $idDireccion = (int)$conn->lastInsertId();
 
+    $nombrePerfilBD = strtoupper($perfil);
+
     $sqlPerfil = "SELECT id_perfil
                   FROM perfil
                   WHERE nombre_perfil = :perfil
@@ -143,7 +153,7 @@ try {
 
     $stmtPerfil = $conn->prepare($sqlPerfil);
     $stmtPerfil->execute([
-        ':perfil' => $perfil
+        ':perfil' => $nombrePerfilBD
     ]);
     $idPerfil = $stmtPerfil->fetchColumn();
 

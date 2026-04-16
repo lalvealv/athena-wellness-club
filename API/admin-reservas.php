@@ -1,15 +1,36 @@
 <?php
-require_once __DIR__ . '/../comprobar-admin.php';
-require_once __DIR__ . '/../conexion.php';
-
+session_start();
 header('Content-Type: application/json; charset=utf-8');
 
-$idAdmin = $_SESSION['id_usuario'];
-$busqueda = trim($_GET['buscar'] ?? '');
-$estado = trim($_GET['estado'] ?? '');
-$fecha = trim($_GET['fecha'] ?? '');
+require_once __DIR__ . '/../conexion.php';
 
-try {
+/* 1. COMPROBAR SESIÓN ADMIN EN JSON */
+if (!isset($_SESSION['id_usuario'])) {
+    echo json_encode([
+        'ok' => false,
+        'mensaje' => 'Sesión no válida.'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
+    echo json_encode([
+        'ok' => false,
+        'mensaje' => 'Acceso no autorizado.'
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+$idAdmin = (int) $_SESSION['id_usuario'];
+
+function responderJSON(array $datos): void
+{
+    echo json_encode($datos, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+function obtenerAdmin(PDO $conn, int $idAdmin): array
+{
     $sqlAdmin = "SELECT nombre, apellidos, foto_perfil
                  FROM usuario
                  WHERE id_usuario = :id_usuario
@@ -19,17 +40,52 @@ try {
     $stmtAdmin->execute([
         ':id_usuario' => $idAdmin
     ]);
+
     $admin = $stmtAdmin->fetch(PDO::FETCH_ASSOC);
 
     if (!$admin) {
-        http_response_code(404);
-        echo json_encode([
-            'ok' => false,
-            'mensaje' => 'No se encontró el administrador logueado.'
-        ]);
-        exit;
+        return [
+            /*'foto_perfil' => '../img/admin.jpg',*/
+            'foto_perfil' => '../img/athena_logo.png',
+            'nombre_completo' => 'Administrador ATHENA',
+            'perfil' => 'Perfil ADMIN'
+        ];
     }
 
+    /* $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/admin.jpg';*/
+    $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
+    $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
+
+    return [
+        'foto_perfil' => $fotoAdmin,
+        'nombre_completo' => $nombreAdmin !== '' ? $nombreAdmin : 'Administrador ATHENA',
+        'perfil' => 'Perfil ADMIN'
+    ];
+}
+
+function obtenerResumen(PDO $conn): array
+{
+    $sqlResumen = "SELECT
+                        SUM(CASE WHEN r.estado = 'Confirmada' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS confirmadas,
+                        SUM(CASE WHEN r.estado = 'Asistida' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS asistidas,
+                        SUM(CASE WHEN r.estado = 'Cancelada' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS canceladas,
+                        SUM(CASE WHEN r.estado = 'No asistida' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS no_asistidas
+                    FROM reserva r
+                    INNER JOIN sesion_actividad sa
+                        ON r.id_sesion = sa.id_sesion";
+
+    $resumen = $conn->query($sqlResumen)->fetch(PDO::FETCH_ASSOC);
+
+    return [
+        'confirmadas' => (int)($resumen['confirmadas'] ?? 0),
+        'asistidas' => (int)($resumen['asistidas'] ?? 0),
+        'canceladas' => (int)($resumen['canceladas'] ?? 0),
+        'no_asistidas' => (int)($resumen['no_asistidas'] ?? 0)
+    ];
+}
+
+function obtenerReservas(PDO $conn, string $busqueda, string $estado, string $fecha): array
+{
     $sqlReservas = "SELECT
                         r.id_reserva,
                         u.id_usuario,
@@ -69,57 +125,105 @@ try {
         ':estado' => $estado,
         ':fecha' => $fecha
     ]);
-    $reservas = $stmtReservas->fetchAll(PDO::FETCH_ASSOC);
 
+    $reservas = $stmtReservas->fetchAll(PDO::FETCH_ASSOC);
     $listaReservas = [];
+
     foreach ($reservas as $item) {
         $listaReservas[] = [
-            'id_reserva' => $item['id_reserva'],
-            'id_usuario' => $item['id_usuario'],
+            'id_reserva' => (int)$item['id_reserva'],
+            'id_usuario' => (int)$item['id_usuario'],
             'usuario' => $item['usuario'] ?? '',
             'actividad' => $item['actividad'] ?? '',
             'fecha' => !empty($item['fecha']) ? date('d/m/Y', strtotime($item['fecha'])) : 'No disponible',
             'horario' => substr($item['hora_inicio'], 0, 5) . ' - ' . substr($item['hora_fin'], 0, 5),
             'sala' => $item['sala'] ?? 'Sin sala',
-            'instructor' => $item['instructor'] ?? 'No asignado',
+            'instructor' => !empty($item['instructor']) ? $item['instructor'] : 'No asignado',
             'estado' => $item['estado'] ?? 'No disponible'
         ];
     }
 
-    $sqlResumen = "SELECT
-                        SUM(CASE WHEN r.estado = 'Confirmada' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS confirmadas,
-                        SUM(CASE WHEN r.estado = 'Asistida' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS asistidas,
-                        SUM(CASE WHEN r.estado = 'Cancelada' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS canceladas,
-                        SUM(CASE WHEN r.estado = 'No asistida' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS no_asistidas
-                    FROM reserva r
-                    INNER JOIN sesion_actividad sa
-                        ON r.id_sesion = sa.id_sesion";
+    return $listaReservas;
+}
 
-    $resumen = $conn->query($sqlResumen)->fetch(PDO::FETCH_ASSOC);
+function eliminarReserva(PDO $conn, int $idReserva): array
+{
+    try {
+        $sqlComprobar = "SELECT id_reserva
+                         FROM reserva
+                         WHERE id_reserva = :id_reserva
+                         LIMIT 1";
 
-    $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/admin.jpg';
-    $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
+        $stmtComprobar = $conn->prepare($sqlComprobar);
+        $stmtComprobar->execute([
+            ':id_reserva' => $idReserva
+        ]);
 
-    echo json_encode([
-        'ok' => true,
-        'admin' => [
-            'foto_perfil' => $fotoAdmin,
-            'nombre_completo' => $nombreAdmin !== '' ? $nombreAdmin : 'Administrador ATHENA',
-            'perfil' => 'Perfil ADMIN'
-        ],
-        'reservas' => $listaReservas,
-        'resumen' => [
-            'confirmadas' => (int)($resumen['confirmadas'] ?? 0),
-            'asistidas' => (int)($resumen['asistidas'] ?? 0),
-            'canceladas' => (int)($resumen['canceladas'] ?? 0),
-            'no_asistidas' => (int)($resumen['no_asistidas'] ?? 0)
-        ]
-    ], JSON_UNESCAPED_UNICODE);
-} catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode([
+        $reserva = $stmtComprobar->fetch(PDO::FETCH_ASSOC);
+
+        if (!$reserva) {
+            return [
+                'ok' => false,
+                'mensaje' => 'La reserva no existe.'
+            ];
+        }
+
+        $sqlEliminar = "DELETE FROM reserva
+                        WHERE id_reserva = :id_reserva
+                        LIMIT 1";
+
+        $stmtEliminar = $conn->prepare($sqlEliminar);
+        $stmtEliminar->execute([
+            ':id_reserva' => $idReserva
+        ]);
+
+        return [
+            'ok' => true,
+            'mensaje' => 'Reserva eliminada correctamente.'
+        ];
+    } catch (PDOException $e) {
+        return [
+            'ok' => false,
+            'mensaje' => 'Error al eliminar la reserva: ' . $e->getMessage()
+        ];
+    }
+}
+
+try {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $busqueda = trim($_GET['buscar'] ?? '');
+        $estado = trim($_GET['estado'] ?? '');
+        $fecha = trim($_GET['fecha'] ?? '');
+
+        responderJSON([
+            'ok' => true,
+            'admin' => obtenerAdmin($conn, $idAdmin),
+            'reservas' => obtenerReservas($conn, $busqueda, $estado, $fecha),
+            'resumen' => obtenerResumen($conn)
+        ]);
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $accion = $_POST['accion'] ?? '';
+        $idReserva = isset($_POST['id_reserva']) ? (int)$_POST['id_reserva'] : 0;
+
+        if ($accion !== 'eliminar' || $idReserva <= 0) {
+            responderJSON([
+                'ok' => false,
+                'mensaje' => 'Datos no válidos.'
+            ]);
+        }
+
+        responderJSON(eliminarReserva($conn, $idReserva));
+    }
+
+    responderJSON([
         'ok' => false,
-        'mensaje' => 'Error al obtener las reservas.',
-        'error' => $e->getMessage()
+        'mensaje' => 'Método no permitido.'
+    ]);
+} catch (PDOException $e) {
+    responderJSON([
+        'ok' => false,
+        'mensaje' => 'Error al obtener las reservas: ' . $e->getMessage()
     ]);
 }

@@ -17,11 +17,9 @@
 
 <body>
 
-    <!-- HEADER / CABECERA DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo e identidad visual -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
                 <span class="brand-text">
@@ -30,34 +28,31 @@
                 </span>
             </a>
 
-            <!-- Navegación superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
-                <a href="admin-panel.php">Resumen</a>
+                <!-- <a href="admin-panel.php">Resumen</a>-->
                 <a class="is-active" href="admin-usuarios.html">Usuarios</a>
                 <a href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
                 <a href="admin-entrenamientos.html">Entrenamientos</a>
                 <a href="admin-notificaciones.html">Avisos</a>
-                <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
+                <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
-            <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
                 <div class="socios-user">
-                    <img src="../img/admin.jpg" alt="Administrador ATHENA">
-                    <h3>Administrador ATHENA</h3>
-                    <p>Perfil ADMIN</p>
+                    <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
+                    <h3 id="admin-nombre">Cargando...</h3>
+                    <p id="admin-perfil">Cargando...</p>
                 </div>
 
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
-                    <a href="admin-panel.php">Resumen general</a>
+                    <!--  <a href="admin-panel.php">Resumen general</a>-->
                     <a class="is-active" href="admin-usuarios.html">Gestión de usuarios</a>
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
@@ -66,10 +61,8 @@
                 </nav>
             </aside>
 
-            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
-                <!-- CABECERA DEL PANEL -->
                 <section class="socios-panel">
                     <h2 class="h2">Crear nuevo usuario</h2>
 
@@ -80,55 +73,53 @@
                     </div>
                 </section>
 
-                <!-- FORMULARIO -->
-                <!--<form action="#" method="post">-->
                 <form id="form-crear-usuario">
 
-                    <!-- DATOS PERSONALES -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Datos personales</h2>
 
                         <div class="two-cols">
                             <div class="form-row">
                                 <label for="alias">Alias</label>
-                                <input type="text" id="alias" name="alias" placeholder="Introduce el alias">
+                                <input type="text" id="alias" name="alias" placeholder="Introduce el alias" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="dni">DNI</label>
-                                <input type="text" id="dni" name="dni" placeholder="Introduce el DNI">
+                                <input type="text" id="dni" name="dni" placeholder="Introduce el DNI" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="nombre">Nombre</label>
-                                <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre">
+                                <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="apellidos">Apellidos</label>
-                                <input type="text" id="apellidos" name="apellidos"
-                                    placeholder="Introduce los apellidos">
+                                <input type="text" id="apellidos" name="apellidos" placeholder="Introduce los apellidos"
+                                    required>
                             </div>
 
                             <div class="form-row">
                                 <label for="correo">Correo electrónico</label>
                                 <input type="email" id="correo" name="correo"
-                                    placeholder="Introduce el correo electrónico">
+                                    placeholder="Introduce el correo electrónico" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="telefono">Teléfono</label>
-                                <input type="text" id="telefono" name="telefono" placeholder="Introduce el teléfono">
+                                <input type="text" id="telefono" name="telefono" placeholder="Introduce el teléfono"
+                                    required>
                             </div>
 
-                            <div class="form-row">
+                            <div class="form-row form-row--date">
                                 <label for="fechaNacimiento">Fecha de nacimiento</label>
-                                <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+                                <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="sexo">Sexo</label>
-                                <select id="sexo" name="sexo">
+                                <select id="sexo" name="sexo" required>
                                     <option value="" selected disabled>Selecciona una opción</option>
                                     <option value="Mujer">Mujer</option>
                                     <option value="Hombre">Hombre</option>
@@ -138,14 +129,49 @@
                         </div>
                     </section>
 
-                    <!-- ACCESO Y PERMISOS -->
+                    <section class="socios-panel panel-spacing">
+                        <h2 class="h2">Dirección</h2>
+
+                        <div class="two-cols">
+                            <div class="form-row">
+                                <label for="calle">Calle</label>
+                                <input type="text" id="calle" name="calle" placeholder="Introduce la calle" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="portal">Portal</label>
+                                <input type="text" id="portal" name="portal" placeholder="Introduce el portal">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="piso">Piso</label>
+                                <input type="text" id="piso" name="piso" placeholder="Introduce el piso">
+                            </div>
+
+                            <div class="form-row">
+                                <label for="cp">Código postal</label>
+                                <input type="text" id="cp" name="cp" placeholder="Introduce el código postal" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="ciudad">Ciudad</label>
+                                <input type="text" id="ciudad" name="ciudad" placeholder="Introduce la ciudad" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="pais">País</label>
+                                <input type="text" id="pais" name="pais" placeholder="Introduce el país" required>
+                            </div>
+                        </div>
+                    </section>
+
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Acceso y permisos</h2>
 
                         <div class="two-cols">
                             <div class="form-row">
                                 <label for="perfil">Perfil</label>
-                                <select id="perfil" name="perfil">
+                                <select id="perfil" name="perfil" required>
                                     <option value="CLIENTE" selected>CLIENTE</option>
                                     <option value="ADMIN">ADMIN</option>
                                 </select>
@@ -153,7 +179,7 @@
 
                             <div class="form-row">
                                 <label for="estado">Estado</label>
-                                <select id="estado" name="estado">
+                                <select id="estado" name="estado" required>
                                     <option value="Activo" selected>Activo</option>
                                     <option value="Inactivo">Inactivo</option>
                                     <option value="Bloqueado">Bloqueado</option>
@@ -163,23 +189,22 @@
                             <div class="form-row">
                                 <label for="contrasena">Contraseña</label>
                                 <input type="password" id="contrasena" name="contrasena"
-                                    placeholder="Introduce una contraseña">
+                                    placeholder="Introduce una contraseña" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="confirmarContrasena">Confirmar contraseña</label>
                                 <input type="password" id="confirmarContrasena" name="confirmarContrasena"
-                                    placeholder="Repite la contraseña">
+                                    placeholder="Repite la contraseña" required>
                             </div>
 
                             <div class="form-row">
                                 <label for="fotoPerfil">Ruta foto perfil</label>
-                                <input type="text" id="fotoPerfil" name="fotoPerfil" value="../img/perfil.jpg">
+                                <input type="text" id="fotoPerfil" name="fotoPerfil" value="../img/athena_logo.png">
                             </div>
                         </div>
                     </section>
 
-                    <!-- SUSCRIPCIÓN INICIAL -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Suscripción inicial</h2>
 
@@ -218,7 +243,6 @@
                         </div>
                     </section>
 
-                    <!-- ACCIONES RÁPIDAS -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Acciones rápidas</h2>
 
@@ -243,6 +267,8 @@
                             </div>
                         </div>
 
+                        <p id="mensaje-form-crear-usuario" class="muted" style="margin: 1rem 0 0;"></p>
+
                         <div class="actions actions-top">
                             <button class="btn btn--primary" type="submit">Crear usuario</button>
                             <a class="btn btn--ghost" href="admin-usuarios.html">Cancelar</a>
@@ -256,7 +282,6 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
