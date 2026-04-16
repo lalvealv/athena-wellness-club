@@ -18,8 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function cargarUsuarios(busqueda = "") {
+    const mensaje = document.getElementById("mensaje-admin-usuarios");
+
     try {
-        const url = new URL("../api/admin-usuarios.php", window.location.href);
+        const url = new URL("../API/admin-usuarios.php", window.location.href);
 
         if (busqueda !== "") {
             url.searchParams.set("buscar", busqueda);
@@ -33,7 +35,7 @@ async function cargarUsuarios(busqueda = "") {
         const data = await response.json();
 
         if (!response.ok || !data.ok) {
-            window.location.href = "../publico/socios.html";
+            mensaje.textContent = data.mensaje || "No se han podido cargar los usuarios.";
             return;
         }
 
@@ -41,7 +43,7 @@ async function cargarUsuarios(busqueda = "") {
         document.getElementById("admin-nombre").textContent = data.admin.nombre_completo;
         document.getElementById("admin-perfil").textContent = data.admin.perfil;
 
-        const tbody = document.getElementById("tabla-usuarios");
+        const tbody = document.getElementById("tabla-usuarios-body");
         tbody.innerHTML = "";
 
         if (!data.usuarios || data.usuarios.length === 0) {
@@ -56,7 +58,24 @@ async function cargarUsuarios(busqueda = "") {
                 claseEstado = "status-ok";
             } else if (usuario.estado === "Bloqueado" || usuario.estado === "Inactivo") {
                 claseEstado = "status-cancel";
+            } else {
+                claseEstado = "status-wait";
             }
+
+            const selectorPerfil = `
+                <select class="select-perfil" onchange="cambiarPerfilUsuario(${usuario.id_usuario}, this.value)">
+                    <option value="CLIENTE" ${usuario.perfil === "CLIENTE" ? "selected" : ""}>CLIENTE</option>
+                    <option value="ADMIN" ${usuario.perfil === "ADMIN" ? "selected" : ""}>ADMIN</option>
+                </select>
+            `;
+
+            const selectorEstado = `
+                <select class="state-select" onchange="cambiarEstadoUsuario(${usuario.id_usuario}, this.value)">
+                    <option value="Activo" ${usuario.estado === "Activo" ? "selected" : ""}>Activo</option>
+                    <option value="Inactivo" ${usuario.estado === "Inactivo" ? "selected" : ""}>Inactivo</option>
+                    <option value="Bloqueado" ${usuario.estado === "Bloqueado" ? "selected" : ""}>Bloqueado</option>
+                </select>
+            `;
 
             const fila = document.createElement("tr");
             fila.innerHTML = `
@@ -65,8 +84,14 @@ async function cargarUsuarios(busqueda = "") {
                 <td>${usuario.nombre_completo}</td>
                 <td>${usuario.correo}</td>
                 <td>${usuario.telefono}</td>
-                <td>${usuario.perfil}</td>
-                <td class="${claseEstado}">${usuario.estado}</td>
+                <td>
+                    <div style="margin-bottom: 0.45rem;">${usuario.perfil}</div>
+                    ${selectorPerfil}
+                </td>
+                <td>
+                    <span class="${claseEstado}">${usuario.estado}</span>
+                    <div style="margin-top: 0.5rem;">${selectorEstado}</div>
+                </td>
                 <td><a href="admin-editar-usuario.html?id=${usuario.id_usuario}">Editar</a></td>
             `;
             tbody.appendChild(fila);
@@ -74,6 +99,67 @@ async function cargarUsuarios(busqueda = "") {
 
     } catch (error) {
         console.error(error);
-        window.location.href = "../publico/socios.html";
+        mensaje.textContent = "Ha ocurrido un error al cargar los usuarios.";
+    }
+}
+
+async function cambiarEstadoUsuario(idUsuario, nuevoEstado) {
+    const mensaje = document.getElementById("mensaje-admin-usuarios");
+
+    try {
+        const formData = new FormData();
+        formData.append("accion", "cambiar_estado");
+        formData.append("id_usuario", idUsuario);
+        formData.append("estado", nuevoEstado);
+
+        const response = await fetch("../API/admin-usuarios.php", {
+            method: "POST",
+            credentials: "same-origin",
+            body: formData
+        });
+
+        const data = await response.json();
+        mensaje.textContent = data.mensaje;
+
+        if (data.ok) {
+            const inputBusqueda = document.getElementById("buscarUsuario");
+            await cargarUsuarios(inputBusqueda.value.trim());
+        }
+    } catch (error) {
+        console.error(error);
+        mensaje.textContent = "Ha ocurrido un error al actualizar el estado.";
+    }
+}
+
+async function cambiarPerfilUsuario(idUsuario, nuevoPerfil) {
+    const mensaje = document.getElementById("mensaje-admin-usuarios");
+
+    if (!confirm("¿Seguro que quieres cambiar el perfil de este usuario?")) {
+        const inputBusqueda = document.getElementById("buscarUsuario");
+        await cargarUsuarios(inputBusqueda.value.trim());
+        return;
+    }
+
+    try {
+        const formData = new FormData();
+        formData.append("accion", "cambiar_perfil");
+        formData.append("id_usuario", idUsuario);
+        formData.append("perfil", nuevoPerfil);
+
+        const response = await fetch("../API/admin-usuarios.php", {
+            method: "POST",
+            credentials: "same-origin",
+            body: formData
+        });
+
+        const data = await response.json();
+        mensaje.textContent = data.mensaje;
+
+        const inputBusqueda = document.getElementById("buscarUsuario");
+        await cargarUsuarios(inputBusqueda.value.trim());
+
+    } catch (error) {
+        console.error(error);
+        mensaje.textContent = "Ha ocurrido un error al actualizar el perfil.";
     }
 }
