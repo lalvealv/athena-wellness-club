@@ -4,6 +4,9 @@ header('Content-Type: application/json; charset=utf-8');
 
 require_once __DIR__ . '/../conexion.php';
 
+require_once __DIR__ . '/../actualizar-suscripciones.php';
+actualizarSuscripcionesAutomaticamente($conn);
+
 $idAdmin = (int)($_SESSION['id_usuario'] ?? 0);
 $busqueda = trim($_GET['buscar'] ?? '');
 $plan = trim($_GET['plan'] ?? '');

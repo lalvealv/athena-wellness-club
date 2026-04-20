@@ -87,6 +87,9 @@ async function cargarEditarUsuario() {
             document.getElementById("membresia").value = "";
         }
 
+        document.getElementById("estadoSuscripcion").value =
+            data.usuario.suscripcion.estado || "Activa";
+
         document.getElementById("renovacionAutomatica").value =
             data.usuario.suscripcion.renovacion_automatica || "Si";
 
@@ -124,6 +127,10 @@ async function guardarCambiosUsuario() {
     const perfilActual = perfilSelect.value;
     const estadoActual = estadoSelect.value;
 
+    const estadoSuscripcionSelect = document.getElementById("estadoSuscripcion");
+    const renovacionAutomaticaSelect = document.getElementById("renovacionAutomatica");
+    const estadoSuscripcionActual = estadoSuscripcionSelect.value;
+
     let cambiosImportantes = [];
 
     if (perfilOriginal !== perfilActual) {
@@ -145,6 +152,19 @@ async function guardarCambiosUsuario() {
             mostrarMensaje("warning", "Guardado cancelado.");
             return;
         }
+    }
+
+    if (estadoSuscripcionActual === "Cancelada") {
+        const confirmarCancelacion = confirm(
+            "Esta suscripción quedará cancelada y no se renovará automáticamente.\n\n¿Deseas continuar?"
+        );
+
+        if (!confirmarCancelacion) {
+            mostrarMensaje("warning", "Cancelación de suscripción anulada.");
+            return;
+        }
+
+        renovacionAutomaticaSelect.value = "No";
     }
 
     mostrarMensaje("loading", "Guardando cambios...");
@@ -170,6 +190,14 @@ async function guardarCambiosUsuario() {
             mostrarMensaje("error", data.mensaje || "No se pudieron guardar los cambios.");
             await cargarEditarUsuario();
             return;
+            const estadoSuscripcion = document.getElementById("estadoSuscripcion");
+            const renovacionAutomatica = document.getElementById("renovacionAutomatica");
+
+            estadoSuscripcion.addEventListener("change", () => {
+                if (estadoSuscripcion.value === "Cancelada") {
+                    renovacionAutomatica.value = "No";
+                }
+            });
         }
 
         mostrarMensaje("success", data.mensaje);

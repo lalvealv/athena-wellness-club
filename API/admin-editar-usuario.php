@@ -89,7 +89,7 @@ try {
                         LEFT JOIN direccion d
                             ON u.id_direccion = d.id_direccion
                         LEFT JOIN suscripcion s
-                            ON u.id_usuario = s.id_usuario AND s.estado IN ('Activa', 'Pausada')
+                            ON u.id_usuario = s.id_usuario AND s.estado IN ('Activa', 'Pausada', 'Cancelada')
                         LEFT JOIN membresia m
                             ON s.id_membresia = m.id_membresia
                         WHERE u.id_usuario = :id_usuario
@@ -139,6 +139,7 @@ try {
                 ],
                 'suscripcion' => [
                     'membresia' => $usuario['membresia'] ?? '',
+                    'estado' => $usuario['estado_suscripcion'] ?? 'Activa',
                     'fecha_renovacion' => !empty($usuario['fecha_renovacion'])
                         ? date('d/m/Y', strtotime($usuario['fecha_renovacion']))
                         : 'No disponible',
@@ -178,6 +179,7 @@ try {
     $contrasena = $_POST['contrasena'] ?? '';
 
     $membresia = trim($_POST['membresia'] ?? '');
+    $estadoSuscripcion = trim($_POST['estadoSuscripcion'] ?? 'Activa');
     $renovacionAutomatica = trim($_POST['renovacionAutomatica'] ?? 'Si');
 
     if ($idUsuario <= 0) {
@@ -225,7 +227,6 @@ try {
         responderJSON(false, 'No se encontró el usuario.');
     }
 
-    // REGLAS DE PROTECCIÓN
     if (esAdminOriginal($idUsuario)) {
         if ($perfil !== 'ADMIN') {
             $conn->rollBack();
@@ -396,26 +397,11 @@ try {
         ]);
     }
 
-    if ($membresia !== '') {
-        $sqlMembresia = "SELECT id_membresia
-                         FROM membresia
-                         WHERE nombre = :nombre
-                         LIMIT 1";
-        $stmtMembresia = $conn->prepare($sqlMembresia);
-        $stmtMembresia->execute([
-            ':nombre' => $membresia
-        ]);
-        $idMembresia = $stmtMembresia->fetchColumn();
-
-        if (!$idMembresia) {
-            $conn->rollBack();
-            responderJSON(false, 'No se encontró la membresía seleccionada.');
-        }
-
+    if ($membresia !== '' || $estadoSuscripcion !== '' || $renovacionAutomatica !== '') {
         $sqlSuscripcionActiva = "SELECT id_suscripcion
                                  FROM suscripcion
                                  WHERE id_usuario = :id_usuario
-                                   AND estado IN ('Activa', 'Pausada')
+                                   AND estado IN ('Activa', 'Pausada', 'Cancelada')
                                  ORDER BY id_suscripcion DESC
                                  LIMIT 1";
         $stmtSuscripcionActiva = $conn->prepare($sqlSuscripcionActiva);
@@ -424,35 +410,79 @@ try {
         ]);
         $idSuscripcion = $stmtSuscripcionActiva->fetchColumn();
 
+        $idMembresia = null;
+
+        if ($membresia !== '') {
+            $sqlMembresia = "SELECT id_membresia
+                             FROM membresia
+                             WHERE nombre = :nombre
+                             LIMIT 1";
+            $stmtMembresia = $conn->prepare($sqlMembresia);
+            $stmtMembresia->execute([
+                ':nombre' => $membresia
+            ]);
+            $idMembresia = $stmtMembresia->fetchColumn();
+
+            if (!$idMembresia) {
+                $conn->rollBack();
+                responderJSON(false, 'No se encontró la membresía seleccionada.');
+            }
+        }
+
         $renovacion = $renovacionAutomatica === 'Si' ? 1 : 0;
+
+        if ($estadoSuscripcion === 'Cancelada') {
+            $renovacion = 0;
+        }
+
         $fechaRenovacion = date('Y-m-d', strtotime('+1 month'));
 
         if ($idSuscripcion) {
+            $campos = [];
+            $params = [':id_suscripcion' => $idSuscripcion];
+
+            if ($idMembresia) {
+                $campos[] = "id_membresia = :id_membresia";
+                $params[':id_membresia'] = $idMembresia;
+            }
+
+            $campos[] = "estado = :estado";
+            $params[':estado'] = $estadoSuscripcion;
+
+            $campos[] = "renovacion_automatica = :renovacion_automatica";
+            $params[':renovacion_automatica'] = $renovacion;
+
+            if ($estadoSuscripcion === 'Finalizada') {
+                $campos[] = "fecha_fin = CURDATE()";
+            } else {
+                $campos[] = "fecha_renovacion = :fecha_renovacion";
+                $params[':fecha_renovacion'] = $fechaRenovacion;
+            }
+
             $sqlActualizarSuscripcion = "UPDATE suscripcion
-                                         SET id_membresia = :id_membresia,
-                                             renovacion_automatica = :renovacion_automatica,
-                                             fecha_renovacion = :fecha_renovacion
+                                         SET " . implode(', ', $campos) . "
                                          WHERE id_suscripcion = :id_suscripcion";
 
             $stmtActualizarSuscripcion = $conn->prepare($sqlActualizarSuscripcion);
-            $stmtActualizarSuscripcion->execute([
-                ':id_membresia' => $idMembresia,
-                ':renovacion_automatica' => $renovacion,
-                ':fecha_renovacion' => $fechaRenovacion,
-                ':id_suscripcion' => $idSuscripcion
-            ]);
+            $stmtActualizarSuscripcion->execute($params);
         } else {
+            if (!$idMembresia) {
+                $conn->rollBack();
+                responderJSON(false, 'Para crear una nueva suscripción debes indicar una membresía.');
+            }
+
             $sqlInsertarSuscripcion = "INSERT INTO suscripcion
                 (id_usuario, id_membresia, fecha_inicio, fecha_renovacion, fecha_fin, renovacion_automatica, estado)
                 VALUES
-                (:id_usuario, :id_membresia, CURDATE(), :fecha_renovacion, NULL, :renovacion_automatica, 'Activa')";
+                (:id_usuario, :id_membresia, CURDATE(), :fecha_renovacion, NULL, :renovacion_automatica, :estado)";
 
             $stmtInsertarSuscripcion = $conn->prepare($sqlInsertarSuscripcion);
             $stmtInsertarSuscripcion->execute([
                 ':id_usuario' => $idUsuario,
                 ':id_membresia' => $idMembresia,
                 ':fecha_renovacion' => $fechaRenovacion,
-                ':renovacion_automatica' => $renovacion
+                ':renovacion_automatica' => $renovacion,
+                ':estado' => $estadoSuscripcion
             ]);
         }
     }

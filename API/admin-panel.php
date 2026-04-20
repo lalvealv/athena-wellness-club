@@ -2,6 +2,9 @@
 require_once __DIR__ . '/../comprobar-admin.php';
 require_once __DIR__ . '/../conexion.php';
 
+require_once __DIR__ . '/../actualizar-suscripciones.php';
+actualizarSuscripcionesAutomaticamente($conn);
+
 header('Content-Type: application/json; charset=utf-8');
 
 $idAdmin = $_SESSION['id_usuario'];

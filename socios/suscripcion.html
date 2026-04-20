@@ -16,11 +16,9 @@
 
 <body>
 
-    <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo e identidad visual del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
@@ -29,9 +27,8 @@
                 </span>
             </a>
 
-            <!-- Navegación superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
-                <!--<a href="area-socios.php">Resumen</a> -->
+                <a href="area-socios.php">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
                 <a class="is-active" href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
@@ -45,25 +42,18 @@
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
     <main class="section section-socios">
-
-        <!-- Estructura principal con sidebar y contenido -->
         <div class="container socios-layout">
 
-            <!-- SIDEBAR / MENÚ LATERAL DEL SOCIO -->
             <aside class="socios-sidebar">
-
-                <!-- Información resumida del usuario -->
                 <div class="socios-user">
                     <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="sidebar-nombre">Cargando...</h3>
                     <p id="sidebar-plan">Cargando...</p>
                 </div>
 
-                <!-- Navegación lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
-                    <!--<a href="area-socios.php">Resumen</a> -->
+                    <a href="area-socios.php">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
                     <a class="is-active" href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>
@@ -73,22 +63,14 @@
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
                     <a href="notificaciones.html">Notificaciones</a>
                 </nav>
-
             </aside>
 
-            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
-                <!-- Panel principal con información de la suscripción -->
                 <section class="socios-panel">
-
-                    <!-- Título del panel -->
                     <h2 class="h2">Mi suscripción</h2>
 
-                    <!-- Caja con el resumen del plan contratado -->
                     <div class="subscription-box">
-
-                        <!-- Datos principales de la suscripción -->
                         <p><strong>Plan:</strong> <span id="plan">Cargando...</span></p>
                         <p><strong>Precio:</strong> <span id="precio">Cargando...</span></p>
                         <p><strong>Periodo:</strong> <span id="periodo">Cargando...</span></p>
@@ -99,22 +81,25 @@
                         <p><strong>Renovación automática:</strong> <span id="renovacion-automatica">Cargando...</span>
                         </p>
 
-                        <!-- Descripción de beneficios incluidos -->
                         <p id="descripcion">
                             Cargando descripción...
                         </p>
 
-                    </div>
+                        <div class="actions actions-top" style="margin-top: 1rem;">
+                            <button id="btn-cancelar-suscripcion" class="btn btn--ghost" type="button">
+                                Cancelar suscripción
+                            </button>
+                        </div>
 
+                        <p id="mensaje-suscripcion" class="muted"></p>
+                    </div>
                 </section>
 
             </div>
 
         </div>
-
     </main>
 
-    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -129,7 +114,7 @@
         </div>
     </footer>
 
-    <script src="../js/suscripcion.js"></script>
+    <script src="../js/suscripcion.js?v=2"></script>
 </body>
 
 </html>
