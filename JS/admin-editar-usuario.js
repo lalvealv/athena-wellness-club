@@ -13,6 +13,12 @@ function obtenerIdUsuarioDesdeURL() {
     return params.get("id");
 }
 
+function mostrarMensaje(tipo, texto) {
+    const mensaje = document.getElementById("mensaje-form-editar-usuario");
+    mensaje.className = `form-message ${tipo}`;
+    mensaje.textContent = texto;
+}
+
 async function cargarEditarUsuario() {
     try {
         const id = obtenerIdUsuarioDesdeURL();
@@ -22,7 +28,7 @@ async function cargarEditarUsuario() {
             return;
         }
 
-        const url = new URL("../api/admin-editar-usuario.php", window.location.href);
+        const url = new URL("../API/admin-editar-usuario.php", window.location.href);
         url.searchParams.set("id", id);
 
         const response = await fetch(url, {
@@ -41,16 +47,21 @@ async function cargarEditarUsuario() {
         document.getElementById("admin-nombre").textContent = data.admin.nombre_completo;
         document.getElementById("admin-perfil").textContent = data.admin.perfil;
 
-        document.getElementById("resumen-foto-usuario").src = data.usuario.foto_perfil || "../img/perfil.jpg";
+        document.getElementById("resumen-foto-usuario").src = data.usuario.foto_perfil || "../img/athena_logo.png";
         document.getElementById("resumen-id-usuario").textContent = data.usuario.id_usuario;
         document.getElementById("resumen-alias-usuario").textContent = data.usuario.alias;
         document.getElementById("resumen-perfil-usuario").textContent = data.usuario.perfil;
         document.getElementById("resumen-estado-usuario").textContent = data.usuario.estado;
 
-        document.getElementById("resumen-plan-actual").textContent = data.usuario.suscripcion.membresia || "Sin suscripción activa";
-        document.getElementById("resumen-renovacion-actual").textContent = "Renovación: " + (data.usuario.suscripcion.fecha_renovacion || "No disponible");
+        document.getElementById("resumen-plan-actual").textContent =
+            data.usuario.suscripcion.membresia || "Sin suscripción activa";
+
+        document.getElementById("resumen-renovacion-actual").textContent =
+            "Renovación: " + (data.usuario.suscripcion.fecha_renovacion || "No disponible");
 
         document.getElementById("idUsuario").value = data.usuario.id_usuario;
+        document.getElementById("esAdminOriginal").value = data.usuario.es_admin_original ? "1" : "0";
+
         document.getElementById("alias").value = data.usuario.alias || "";
         document.getElementById("dni").value = data.usuario.dni || "";
         document.getElementById("nombre").value = data.usuario.nombre || "";
@@ -72,9 +83,30 @@ async function cargarEditarUsuario() {
 
         if (data.usuario.suscripcion.membresia) {
             document.getElementById("membresia").value = data.usuario.suscripcion.membresia;
+        } else {
+            document.getElementById("membresia").value = "";
         }
 
-        document.getElementById("renovacionAutomatica").value = data.usuario.suscripcion.renovacion_automatica || "Si";
+        document.getElementById("renovacionAutomatica").value =
+            data.usuario.suscripcion.renovacion_automatica || "Si";
+
+        // Guardamos valores originales para comparar al guardar
+        document.getElementById("perfil").dataset.original = data.usuario.perfil || "";
+        document.getElementById("estado").dataset.original = data.usuario.estado || "";
+
+        // PROTEGER CAMPOS SI ES EL ADMIN ORIGINAL
+        if (data.usuario.es_admin_original) {
+            document.getElementById("perfil").disabled = true;
+            document.getElementById("estado").disabled = true;
+        }
+
+        // SOLO EL ADMIN ORIGINAL PUEDE ASIGNAR PERFIL ADMIN
+        if (!data.admin_logueado_es_original && document.getElementById("perfil").value !== "ADMIN") {
+            const opcionAdmin = document.querySelector('#perfil option[value="ADMIN"]');
+            if (opcionAdmin) {
+                opcionAdmin.disabled = true;
+            }
+        }
 
     } catch (error) {
         console.error(error);
@@ -83,14 +115,50 @@ async function cargarEditarUsuario() {
 }
 
 async function guardarCambiosUsuario() {
-    const mensaje = document.getElementById("mensaje-form-editar-usuario");
-    mensaje.textContent = "Guardando cambios...";
+    const perfilSelect = document.getElementById("perfil");
+    const estadoSelect = document.getElementById("estado");
+
+    const perfilOriginal = perfilSelect.dataset.original || "";
+    const estadoOriginal = estadoSelect.dataset.original || "";
+
+    const perfilActual = perfilSelect.value;
+    const estadoActual = estadoSelect.value;
+
+    let cambiosImportantes = [];
+
+    if (perfilOriginal !== perfilActual) {
+        cambiosImportantes.push(`Perfil: ${perfilOriginal} → ${perfilActual}`);
+    }
+
+    if (estadoOriginal !== estadoActual) {
+        cambiosImportantes.push(`Estado: ${estadoOriginal} → ${estadoActual}`);
+    }
+
+    if (cambiosImportantes.length > 0) {
+        const confirmar = confirm(
+            "Vas a guardar cambios importantes:\n\n" +
+            cambiosImportantes.join("\n") +
+            "\n\n¿Deseas continuar?"
+        );
+
+        if (!confirmar) {
+            mostrarMensaje("warning", "Guardado cancelado.");
+            return;
+        }
+    }
+
+    mostrarMensaje("loading", "Guardando cambios...");
 
     try {
         const form = document.getElementById("form-editar-usuario");
+
+        // Si estaban deshabilitados, los reactivamos justo antes de enviar
+        perfilSelect.disabled = false;
+        estadoSelect.disabled = false;
+
         const formData = new FormData(form);
 
-        const response = await fetch("../api/admin-editar-usuario.php", {
+        const response = await fetch("../API/admin-editar-usuario.php", {
             method: "POST",
             credentials: "same-origin",
             body: formData
@@ -99,15 +167,16 @@ async function guardarCambiosUsuario() {
         const data = await response.json();
 
         if (!response.ok || !data.ok) {
-            mensaje.textContent = data.mensaje || "No se pudieron guardar los cambios.";
+            mostrarMensaje("error", data.mensaje || "No se pudieron guardar los cambios.");
+            await cargarEditarUsuario();
             return;
         }
 
-        mensaje.textContent = data.mensaje;
+        mostrarMensaje("success", data.mensaje);
         await cargarEditarUsuario();
 
     } catch (error) {
         console.error(error);
-        mensaje.textContent = "Ha ocurrido un error al guardar los cambios.";
+        mostrarMensaje("error", "Ha ocurrido un error al guardar los cambios.");
     }
 }

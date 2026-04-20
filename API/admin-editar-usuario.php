@@ -1,8 +1,10 @@
 <?php
-require_once __DIR__ . '/../comprobar-admin.php';
+session_start();
+header('Content-Type: application/json; charset=utf-8');
+
 require_once __DIR__ . '/../conexion.php';
 
-header('Content-Type: application/json; charset=utf-8');
+define('ADMIN_ORIGINAL_ID', 1);
 
 function responderJSON(bool $ok, string $mensaje, int $codigo = 200, array $extra = []): void
 {
@@ -14,9 +16,27 @@ function responderJSON(bool $ok, string $mensaje, int $codigo = 200, array $extr
     exit;
 }
 
+function esAdminOriginal(int $idUsuario): bool
+{
+    return $idUsuario === ADMIN_ORIGINAL_ID;
+}
+
+function adminLogueadoEsOriginal(int $idAdmin): bool
+{
+    return $idAdmin === ADMIN_ORIGINAL_ID;
+}
+
+if (!isset($_SESSION['id_usuario'])) {
+    responderJSON(false, 'Sesión no válida.', 401);
+}
+
+if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
+    responderJSON(false, 'Acceso no autorizado.', 403);
+}
+
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $idAdmin = $_SESSION['id_usuario'];
+        $idAdmin = (int)$_SESSION['id_usuario'];
         $idUsuario = (int)($_GET['id'] ?? 0);
 
         if ($idUsuario <= 0) {
@@ -50,6 +70,7 @@ try {
                             u.sexo,
                             u.estado,
                             u.foto_perfil,
+                            u.id_perfil,
                             p.nombre_perfil,
                             d.calle,
                             d.portal,
@@ -84,7 +105,7 @@ try {
             responderJSON(false, 'No se encontró el usuario indicado.', 404);
         }
 
-        $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/admin.jpg';
+        $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
         $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
 
         responderJSON(true, 'Datos cargados correctamente.', 200, [
@@ -93,8 +114,9 @@ try {
                 'nombre_completo' => $nombreAdmin !== '' ? $nombreAdmin : 'Administrador ATHENA',
                 'perfil' => 'Perfil ADMIN'
             ],
+            'admin_logueado_es_original' => adminLogueadoEsOriginal($idAdmin),
             'usuario' => [
-                'id_usuario' => $usuario['id_usuario'],
+                'id_usuario' => (int)$usuario['id_usuario'],
                 'alias' => $usuario['alias'] ?? '',
                 'nombre' => $usuario['nombre'] ?? '',
                 'apellidos' => $usuario['apellidos'] ?? '',
@@ -104,8 +126,9 @@ try {
                 'correo' => $usuario['correo'] ?? '',
                 'sexo' => $usuario['sexo'] ?? '',
                 'estado' => $usuario['estado'] ?? '',
-                'foto_perfil' => $usuario['foto_perfil'] ?? '../img/perfil.jpg',
-                'perfil' => $usuario['nombre_perfil'] ?? '',
+                'foto_perfil' => $usuario['foto_perfil'] ?? '../img/athena_logo.png',
+                'perfil' => strtoupper($usuario['nombre_perfil'] ?? ''),
+                'es_admin_original' => esAdminOriginal((int)$usuario['id_usuario']),
                 'direccion' => [
                     'calle' => $usuario['calle'] ?? '',
                     'portal' => $usuario['portal'] ?? '',
@@ -116,7 +139,9 @@ try {
                 ],
                 'suscripcion' => [
                     'membresia' => $usuario['membresia'] ?? '',
-                    'fecha_renovacion' => !empty($usuario['fecha_renovacion']) ? date('d/m/Y', strtotime($usuario['fecha_renovacion'])) : 'No disponible',
+                    'fecha_renovacion' => !empty($usuario['fecha_renovacion'])
+                        ? date('d/m/Y', strtotime($usuario['fecha_renovacion']))
+                        : 'No disponible',
                     'renovacion_automatica' => isset($usuario['renovacion_automatica']) && (int)$usuario['renovacion_automatica'] === 1 ? 'Si' : 'No'
                 ]
             ]
@@ -126,6 +151,8 @@ try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         responderJSON(false, 'Método no permitido.', 405);
     }
+
+    $idAdmin = (int)$_SESSION['id_usuario'];
 
     $idUsuario = (int)($_POST['idUsuario'] ?? 0);
 
@@ -145,7 +172,7 @@ try {
     $ciudad = trim($_POST['ciudad'] ?? '');
     $pais = trim($_POST['pais'] ?? '');
 
-    $perfil = trim($_POST['perfil'] ?? '');
+    $perfil = strtoupper(trim($_POST['perfil'] ?? ''));
     $estado = trim($_POST['estado'] ?? '');
     $fotoPerfil = trim($_POST['fotoPerfil'] ?? '');
     $contrasena = $_POST['contrasena'] ?? '';
@@ -196,6 +223,37 @@ try {
     if (!$usuarioActual) {
         $conn->rollBack();
         responderJSON(false, 'No se encontró el usuario.');
+    }
+
+    // REGLAS DE PROTECCIÓN
+    if (esAdminOriginal($idUsuario)) {
+        if ($perfil !== 'ADMIN') {
+            $conn->rollBack();
+            responderJSON(false, 'El administrador original siempre debe seguir siendo ADMIN.');
+        }
+
+        if ($estado !== 'Activo') {
+            $conn->rollBack();
+            responderJSON(false, 'El administrador original siempre debe permanecer Activo.');
+        }
+    }
+
+    if ($perfil === 'ADMIN' && !adminLogueadoEsOriginal($idAdmin)) {
+        $sqlPerfilActual = "SELECT p.nombre_perfil
+                            FROM usuario u
+                            INNER JOIN perfil p ON u.id_perfil = p.id_perfil
+                            WHERE u.id_usuario = :id_usuario
+                            LIMIT 1";
+        $stmtPerfilActual = $conn->prepare($sqlPerfilActual);
+        $stmtPerfilActual->execute([
+            ':id_usuario' => $idUsuario
+        ]);
+        $perfilActual = strtoupper((string)$stmtPerfilActual->fetchColumn());
+
+        if ($perfilActual !== 'ADMIN') {
+            $conn->rollBack();
+            responderJSON(false, 'Solo el administrador original puede asignar el perfil ADMIN.');
+        }
     }
 
     $sqlDuplicados = "SELECT COUNT(*)

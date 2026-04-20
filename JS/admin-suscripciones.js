@@ -23,9 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+function mostrarMensajeSuscripciones(tipo, texto) {
+    const mensaje = document.getElementById("mensaje-admin-suscripciones");
+    mensaje.className = `form-message ${tipo}`;
+    mensaje.textContent = texto;
+}
+
 async function cargarSuscripciones(busqueda = "", plan = "", estado = "") {
     try {
-        const url = new URL("../api/admin-suscripciones.php", window.location.href);
+        const url = new URL("../API/admin-suscripciones.php", window.location.href);
 
         if (busqueda !== "") {
             url.searchParams.set("buscar", busqueda);
@@ -45,7 +51,7 @@ async function cargarSuscripciones(busqueda = "", plan = "", estado = "") {
         const data = await response.json();
 
         if (!response.ok || !data.ok) {
-            window.location.href = "../publico/socios.html";
+            mostrarMensajeSuscripciones("error", data.mensaje || "No se pudieron cargar las suscripciones.");
             return;
         }
 
@@ -63,6 +69,7 @@ async function cargarSuscripciones(busqueda = "", plan = "", estado = "") {
 
         if (!data.suscripciones || data.suscripciones.length === 0) {
             tbody.innerHTML = `<tr><td colspan="9">No se encontraron suscripciones.</td></tr>`;
+            mostrarMensajeSuscripciones("warning", "No hay resultados para los filtros aplicados.");
             return;
         }
 
@@ -92,8 +99,10 @@ async function cargarSuscripciones(busqueda = "", plan = "", estado = "") {
             tbody.appendChild(fila);
         });
 
+        mostrarMensajeSuscripciones("success", "Suscripciones cargadas correctamente.");
+
     } catch (error) {
         console.error(error);
-        window.location.href = "../publico/socios.html";
+        mostrarMensajeSuscripciones("error", "Ha ocurrido un error al cargar las suscripciones.");
     }
 }
