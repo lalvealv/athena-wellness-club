@@ -781,3 +781,62 @@
     border-color: rgba(120, 210, 255, 0.28);
     color: #78d2ff;
 }
+
+.form-message {
+    margin-top: 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: 0.2s ease;
+}
+
+.form-message.success {
+    background: rgba(138, 230, 162, 0.10);
+    border-color: rgba(138, 230, 162, 0.28);
+    color: #8ae6a2;
+}
+
+.form-message.error {
+    background: rgba(255, 154, 154, 0.10);
+    border-color: rgba(255, 154, 154, 0.28);
+    color: #ff9a9a;
+}
+
+.form-message.warning {
+    background: rgba(255, 210, 125, 0.10);
+    border-color: rgba(255, 210, 125, 0.28);
+    color: #ffd27d;
+}
+
+.form-message.loading {
+    background: rgba(120, 210, 255, 0.10);
+    border-color: rgba(120, 210, 255, 0.28);
+    color: #78d2ff;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.92rem;
+}
+
+.status-badge--ok {
+    background: rgba(138, 230, 162, 0.10);
+    border: 1px solid rgba(138, 230, 162, 0.28);
+    color: #8ae6a2;
+}
+
+.status-badge--wait {
+    background: rgba(255, 210, 125, 0.10);
+    border: 1px solid rgba(255, 210, 125, 0.28);
+    color: #ffd27d;
+}
+
+.status-badge--cancel {
+    background: rgba(255, 154, 154, 0.10);
+    border: 1px solid rgba(255, 154, 154, 0.28);
+    color: #ff9a9a;
+}

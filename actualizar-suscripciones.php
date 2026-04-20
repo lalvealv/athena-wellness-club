@@ -4,7 +4,7 @@ require_once __DIR__ . '/conexion.php';
 function actualizarSuscripcionesAutomaticamente(PDO $conn): void
 {
     try {
-        // 1. Renovar automáticamente las suscripciones activas
+        // Renovar activas con renovación automática
         $sqlRenovar = "SELECT id_suscripcion, fecha_renovacion
                        FROM suscripcion
                        WHERE estado = 'Activa'
@@ -16,8 +16,8 @@ function actualizarSuscripcionesAutomaticamente(PDO $conn): void
         $suscripcionesRenovar = $stmtRenovar->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($suscripcionesRenovar as $suscripcion) {
-            $fechaRenovacionActual = $suscripcion['fecha_renovacion'];
-            $nuevaFechaRenovacion = date('Y-m-d', strtotime($fechaRenovacionActual . ' +1 month'));
+            $fechaActual = $suscripcion['fecha_renovacion'];
+            $nuevaFecha = date('Y-m-d', strtotime($fechaActual . ' +1 month'));
 
             $sqlUpdateRenovar = "UPDATE suscripcion
                                  SET fecha_renovacion = :fecha_renovacion
@@ -25,12 +25,12 @@ function actualizarSuscripcionesAutomaticamente(PDO $conn): void
 
             $stmtUpdateRenovar = $conn->prepare($sqlUpdateRenovar);
             $stmtUpdateRenovar->execute([
-                ':fecha_renovacion' => $nuevaFechaRenovacion,
+                ':fecha_renovacion' => $nuevaFecha,
                 ':id_suscripcion' => $suscripcion['id_suscripcion']
             ]);
         }
 
-        // 2. Finalizar activas sin renovación automática cuando llegue la fecha
+        // Finalizar activas sin renovación automática
         $sqlFinalizarSinAuto = "UPDATE suscripcion
                                 SET estado = 'Finalizada',
                                     fecha_fin = CURDATE()
@@ -41,7 +41,7 @@ function actualizarSuscripcionesAutomaticamente(PDO $conn): void
 
         $conn->exec($sqlFinalizarSinAuto);
 
-        // 3. Finalizar canceladas cuando llegue la fecha de renovación
+        // Finalizar canceladas al llegar la fecha
         $sqlFinalizarCanceladas = "UPDATE suscripcion
                                    SET estado = 'Finalizada',
                                        renovacion_automatica = 0,
@@ -52,7 +52,6 @@ function actualizarSuscripcionesAutomaticamente(PDO $conn): void
 
         $conn->exec($sqlFinalizarCanceladas);
     } catch (PDOException $e) {
-        // Para no romper la web si falla esta parte
         error_log("Error al actualizar suscripciones automáticamente: " . $e->getMessage());
     }
 }

@@ -92,7 +92,7 @@ try {
                 FROM usuario u
                 LEFT JOIN suscripcion s
                     ON u.id_usuario = s.id_usuario
-                    AND s.estado IN ('Activa', 'Pausada', 'Cancelada')
+                    AND s.estado IN ('Activa', 'Pausada', 'Cancelada', 'Finalizada')
                 LEFT JOIN membresia m
                     ON s.id_membresia = m.id_membresia
                 WHERE u.id_usuario = :id_usuario

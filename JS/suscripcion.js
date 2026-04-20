@@ -13,6 +13,20 @@ function mostrarMensaje(tipo, texto) {
     mensaje.textContent = texto;
 }
 
+function aplicarBadgeEstado(estado) {
+    const elementoEstado = document.getElementById("estado");
+    elementoEstado.textContent = estado || "No disponible";
+    elementoEstado.className = "status-badge";
+
+    if (estado === "Activa") {
+        elementoEstado.classList.add("status-badge--ok");
+    } else if (estado === "Pausada") {
+        elementoEstado.classList.add("status-badge--wait");
+    } else if (estado === "Cancelada" || estado === "Finalizada") {
+        elementoEstado.classList.add("status-badge--cancel");
+    }
+}
+
 async function cargarSuscripcion() {
     try {
         const response = await fetch("../API/suscripcion.php", {
@@ -39,9 +53,10 @@ async function cargarSuscripcion() {
         document.getElementById("horario").textContent = data.horario || "No disponible";
         document.getElementById("fecha-inicio").textContent = data.fecha_inicio || "No disponible";
         document.getElementById("fecha-renovacion").textContent = data.fecha_renovacion || "No disponible";
-        document.getElementById("estado").textContent = data.estado || "No disponible";
         document.getElementById("renovacion-automatica").textContent = data.renovacion_automatica || "No disponible";
         document.getElementById("descripcion").textContent = data.descripcion || "Sin descripción disponible.";
+
+        aplicarBadgeEstado(data.estado);
 
         const botonCancelar = document.getElementById("btn-cancelar-suscripcion");
 
@@ -53,7 +68,13 @@ async function cargarSuscripcion() {
             botonCancelar.textContent = "Cancelar suscripción";
         }
 
-        mostrarMensaje("success", "Suscripción cargada correctamente.");
+        if (data.estado === "Cancelada") {
+            mostrarMensaje("warning", "Tu suscripción está cancelada. No se realizará el siguiente cobro automático.");
+        } else if (data.estado === "Finalizada") {
+            mostrarMensaje("error", "Tu suscripción está finalizada.");
+        } else {
+            mostrarMensaje("success", "Suscripción cargada correctamente.");
+        }
 
     } catch (error) {
         mostrarError("Error de conexión al cargar la suscripción.");
@@ -109,9 +130,9 @@ function mostrarError(mensaje) {
     document.getElementById("horario").textContent = mensaje;
     document.getElementById("fecha-inicio").textContent = mensaje;
     document.getElementById("fecha-renovacion").textContent = mensaje;
-    document.getElementById("estado").textContent = mensaje;
     document.getElementById("renovacion-automatica").textContent = mensaje;
     document.getElementById("descripcion").textContent = mensaje;
 
+    aplicarBadgeEstado("Error");
     mostrarMensaje("error", mensaje);
 }
