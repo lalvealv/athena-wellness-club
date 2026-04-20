@@ -45,7 +45,7 @@
 
             <aside class="socios-sidebar">
                 <div class="socios-user">
-                    <img id="admin-foto" src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
                     <h3 id="admin-nombre">Cargando...</h3>
                     <p id="admin-perfil">Cargando...</p>
                 </div>
@@ -99,7 +99,9 @@
                         </form>
                     </div>
 
-                    <div class="table-wrap">
+                    <p id="mensaje-admin-reservas" class="muted"></p>
+
+                    <div class="table-wrap" id="tabla-reservas-wrap">
                         <table class="mini-table">
                             <thead>
                                 <tr>
@@ -157,17 +159,21 @@
                     <h2 class="h2">Gestión operativa</h2>
 
                     <div class="two-cols">
-                        <div class="info-card">
-                            <span class="label">Seguimiento</span>
-                            <h3>Controlar ocupación</h3>
-                            <p>Supervisa el estado de cada clase y la asistencia.</p>
-                        </div>
+                        <a class="quick-card-link" href="#tabla-reservas-wrap">
+                            <div class="info-card quick-card">
+                                <span class="label">Seguimiento</span>
+                                <h3>Controlar ocupación</h3>
+                                <p>Supervisa el estado de cada clase y la asistencia desde la tabla.</p>
+                            </div>
+                        </a>
 
-                        <div class="info-card">
-                            <span class="label">Gestión interna</span>
-                            <h3>Resolver incidencias</h3>
-                            <p>Revisa cancelaciones, cambios de horario y errores de reserva.</p>
-                        </div>
+                        <a class="quick-card-link" href="#tabla-reservas-wrap">
+                            <div class="info-card quick-card">
+                                <span class="label">Gestión interna</span>
+                                <h3>Resolver incidencias</h3>
+                                <p>Elimina reservas o revisa incidencias directamente desde la tabla.</p>
+                            </div>
+                        </a>
                     </div>
                 </section>
 
@@ -190,7 +196,7 @@
         </div>
     </footer>
 
-    <script src="../js/admin-reservas.js"></script>
+    <script src="../js/admin-reservas.js?v=5"></script>
 </body>
 
 </html>

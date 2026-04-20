@@ -67,6 +67,22 @@ function obtenerDetallesMembresia(?string $membresia): array
     }
 }
 
+function calcularDiasParaRenovacion(?string $fechaRenovacion): ?int
+{
+    if (!$fechaRenovacion) {
+        return null;
+    }
+
+    $hoy = strtotime(date('Y-m-d'));
+    $renovacion = strtotime($fechaRenovacion);
+
+    if ($renovacion === false) {
+        return null;
+    }
+
+    return (int)(($renovacion - $hoy) / 86400);
+}
+
 if (!isset($_SESSION['id_usuario'])) {
     responderJSON([
         'ok' => false,
@@ -114,6 +130,7 @@ try {
         }
 
         $detallesMembresia = obtenerDetallesMembresia($datos['membresia'] ?? null);
+        $diasParaRenovacion = calcularDiasParaRenovacion($datos['fecha_renovacion'] ?? null);
 
         responderJSON([
             'ok' => true,
@@ -129,7 +146,8 @@ try {
             'fecha_renovacion' => formatearFecha($datos['fecha_renovacion'] ?? null),
             'estado' => $datos['estado'] ?? 'Sin suscripción activa',
             'renovacion_automatica' => isset($datos['renovacion_automatica']) && (int)$datos['renovacion_automatica'] === 1 ? 'Sí' : 'No',
-            'descripcion' => $detallesMembresia['descripcion']
+            'descripcion' => $detallesMembresia['descripcion'],
+            'dias_para_renovacion' => $diasParaRenovacion
         ]);
     }
 

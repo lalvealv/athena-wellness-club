@@ -23,9 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+function mostrarMensajeReservas(tipo, texto) {
+    const mensaje = document.getElementById("mensaje-admin-reservas");
+    mensaje.className = `form-message ${tipo}`;
+    mensaje.textContent = texto;
+}
+
 async function cargarReservas(busqueda = "", estado = "", fecha = "") {
     try {
-        const url = new URL("../api/admin-reservas.php", window.location.href);
+        const url = new URL("../API/admin-reservas.php", window.location.href);
 
         if (busqueda !== "") {
             url.searchParams.set("buscar", busqueda);
@@ -45,7 +51,7 @@ async function cargarReservas(busqueda = "", estado = "", fecha = "") {
         const data = await response.json();
 
         if (!response.ok || !data.ok) {
-            window.location.href = "../publico/socios.html";
+            mostrarMensajeReservas("error", data.mensaje || "No se pudieron cargar las reservas.");
             return;
         }
 
@@ -63,6 +69,7 @@ async function cargarReservas(busqueda = "", estado = "", fecha = "") {
 
         if (!data.reservas || data.reservas.length === 0) {
             tbody.innerHTML = `<tr><td colspan="9">No se encontraron reservas.</td></tr>`;
+            mostrarMensajeReservas("warning", "No hay reservas para los filtros aplicados.");
             return;
         }
 
@@ -73,6 +80,8 @@ async function cargarReservas(busqueda = "", estado = "", fecha = "") {
                 claseEstado = "status-ok";
             } else if (item.estado === "Cancelada" || item.estado === "No asistida") {
                 claseEstado = "status-cancel";
+            } else {
+                claseEstado = "status-wait";
             }
 
             const fila = document.createElement("tr");
@@ -85,13 +94,69 @@ async function cargarReservas(busqueda = "", estado = "", fecha = "") {
                 <td>${item.sala}</td>
                 <td>${item.instructor}</td>
                 <td class="${claseEstado}">${item.estado}</td>
-                <td><a href="admin-editar-usuario.html?id=${item.id_usuario}">Ver usuario</a></td>
+                <td>
+                    <div class="actions-table">
+                        <a href="admin-editar-usuario.html?id=${item.id_usuario}">Ver usuario</a>
+                        <button class="btn btn--ghost btn--small" type="button"
+                            onclick="eliminarReserva(${item.id_reserva})">
+                            Eliminar
+                        </button>
+                    </div>
+                </td>
             `;
             tbody.appendChild(fila);
         });
 
+        mostrarMensajeReservas("success", "Reservas cargadas correctamente.");
+
     } catch (error) {
         console.error(error);
-        window.location.href = "../publico/socios.html";
+        mostrarMensajeReservas("error", "Ha ocurrido un error al cargar las reservas.");
+    }
+}
+
+async function eliminarReserva(idReserva) {
+    const confirmar = confirm("¿Seguro que quieres eliminar esta reserva? Esta acción no se puede deshacer.");
+
+    if (!confirmar) {
+        mostrarMensajeReservas("warning", "Eliminación cancelada.");
+        return;
+    }
+
+    mostrarMensajeReservas("loading", "Eliminando reserva...");
+
+    try {
+        const formData = new FormData();
+        formData.append("accion", "eliminar");
+        formData.append("id_reserva", idReserva);
+
+        const response = await fetch("../API/admin-reservas.php", {
+            method: "POST",
+            credentials: "same-origin",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.ok) {
+            mostrarMensajeReservas("error", data.mensaje || "No se pudo eliminar la reserva.");
+            return;
+        }
+
+        mostrarMensajeReservas("success", data.mensaje);
+
+        const inputBusqueda = document.getElementById("buscarReserva");
+        const selectEstado = document.getElementById("filtrarEstadoReserva");
+        const inputFecha = document.getElementById("fechaReserva");
+
+        await cargarReservas(
+            inputBusqueda.value.trim(),
+            selectEstado.value,
+            inputFecha.value
+        );
+
+    } catch (error) {
+        console.error(error);
+        mostrarMensajeReservas("error", "Ha ocurrido un error al eliminar la reserva.");
     }
 }

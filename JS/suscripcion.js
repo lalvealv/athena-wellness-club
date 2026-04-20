@@ -27,6 +27,45 @@ function aplicarBadgeEstado(estado) {
     }
 }
 
+function mostrarAvisoSuscripcion(data) {
+    const aviso = document.getElementById("aviso-suscripcion");
+    aviso.style.display = "none";
+    aviso.className = "subscription-alert";
+
+    if (!data || !data.estado) {
+        return;
+    }
+
+    if (data.estado === "Activa" && typeof data.dias_para_renovacion === "number") {
+        if (data.dias_para_renovacion === 0) {
+            aviso.textContent = "Tu suscripción se renueva hoy.";
+            aviso.classList.add("subscription-alert--info");
+            aviso.style.display = "block";
+            return;
+        }
+
+        if (data.dias_para_renovacion > 0 && data.dias_para_renovacion <= 7) {
+            aviso.textContent = `Tu suscripción se renueva en ${data.dias_para_renovacion} día${data.dias_para_renovacion === 1 ? "" : "s"}.`;
+            aviso.classList.add("subscription-alert--info");
+            aviso.style.display = "block";
+            return;
+        }
+    }
+
+    if (data.estado === "Cancelada") {
+        aviso.textContent = `Tu suscripción está cancelada y seguirá activa hasta el ${data.fecha_renovacion}. Después pasará a finalizada.`;
+        aviso.classList.add("subscription-alert--warning");
+        aviso.style.display = "block";
+        return;
+    }
+
+    if (data.estado === "Finalizada") {
+        aviso.textContent = "Tu suscripción está finalizada. Si lo deseas, puedes volver a contratar un plan.";
+        aviso.classList.add("subscription-alert--error");
+        aviso.style.display = "block";
+    }
+}
+
 async function cargarSuscripcion() {
     try {
         const response = await fetch("../API/suscripcion.php", {
@@ -57,6 +96,7 @@ async function cargarSuscripcion() {
         document.getElementById("descripcion").textContent = data.descripcion || "Sin descripción disponible.";
 
         aplicarBadgeEstado(data.estado);
+        mostrarAvisoSuscripcion(data);
 
         const botonCancelar = document.getElementById("btn-cancelar-suscripcion");
 
