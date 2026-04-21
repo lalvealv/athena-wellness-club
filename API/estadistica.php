@@ -4,27 +4,17 @@ require_once __DIR__ . '/../conexion.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-$idUsuario = $_SESSION['id_usuario'];
+$idUsuario = (int)$_SESSION['id_usuario'];
 
 function mensajeEntrenamientosSemanales(int $total): string
 {
-    if ($total <= 0) {
-        return 'Aún no has entrenado esta semana';
-    }
-
-    if ($total <= 2) {
-        return 'Buen comienzo';
-    }
-
-    if ($total <= 4) {
-        return 'Muy buena regularidad';
-    }
-
+    if ($total <= 0) return 'Aún no has entrenado esta semana';
+    if ($total <= 2) return 'Buen comienzo';
+    if ($total <= 4) return 'Muy buena regularidad';
     return 'Ritmo excelente';
 }
 
 try {
-    // Sidebar
     $sqlUsuario = "SELECT 
                         u.nombre,
                         u.apellidos,
@@ -39,101 +29,87 @@ try {
                    LIMIT 1";
 
     $stmtUsuario = $conn->prepare($sqlUsuario);
-    $stmtUsuario->execute([
-        ':id_usuario' => $idUsuario
-    ]);
+    $stmtUsuario->execute([':id_usuario' => $idUsuario]);
     $usuario = $stmtUsuario->fetch(PDO::FETCH_ASSOC);
 
     if (!$usuario) {
-        http_response_code(404);
-        echo json_encode([
-            'ok' => false,
-            'mensaje' => 'No se encontró la información del usuario.'
-        ]);
+        echo json_encode(['ok' => false, 'mensaje' => 'Usuario no encontrado']);
         exit;
     }
 
-    // Clases este mes (reservas asistidas o confirmadas del mes actual)
     $sqlClasesMes = "SELECT COUNT(*)
                      FROM reserva r
-                     INNER JOIN sesion_actividad sa
-                        ON r.id_sesion = sa.id_sesion
+                     INNER JOIN sesion_actividad sa ON r.id_sesion = sa.id_sesion
                      WHERE r.id_usuario = :id_usuario
                        AND MONTH(sa.fecha) = MONTH(CURDATE())
                        AND YEAR(sa.fecha) = YEAR(CURDATE())
                        AND r.estado IN ('Confirmada', 'Asistida')";
 
-    $stmtClasesMes = $conn->prepare($sqlClasesMes);
-    $stmtClasesMes->execute([
-        ':id_usuario' => $idUsuario
-    ]);
-    $clasesMes = (int) $stmtClasesMes->fetchColumn();
+    $stmt = $conn->prepare($sqlClasesMes);
+    $stmt->execute([':id_usuario' => $idUsuario]);
+    $clasesMes = (int)$stmt->fetchColumn();
 
-    // Actividad favorita
-    $sqlActividadFavorita = "SELECT
-                                a.nombre,
-                                COUNT(*) AS total
-                             FROM reserva r
-                             INNER JOIN sesion_actividad sa
-                                ON r.id_sesion = sa.id_sesion
-                             INNER JOIN horario_actividad ha
-                                ON sa.id_horario = ha.id_horario
-                             INNER JOIN actividad a
-                                ON ha.id_actividad = a.id_actividad
-                             WHERE r.id_usuario = :id_usuario
-                             GROUP BY a.id_actividad, a.nombre
-                             ORDER BY total DESC, a.nombre ASC
-                             LIMIT 1";
+    $sqlFav = "SELECT a.nombre, COUNT(*) total
+               FROM reserva r
+               INNER JOIN sesion_actividad sa ON r.id_sesion = sa.id_sesion
+               INNER JOIN horario_actividad ha ON sa.id_horario = ha.id_horario
+               INNER JOIN actividad a ON ha.id_actividad = a.id_actividad
+               WHERE r.id_usuario = :id_usuario
+               GROUP BY a.id_actividad, a.nombre
+               ORDER BY total DESC, a.nombre ASC
+               LIMIT 1";
 
-    $stmtActividadFavorita = $conn->prepare($sqlActividadFavorita);
-    $stmtActividadFavorita->execute([
-        ':id_usuario' => $idUsuario
-    ]);
-    $actividadFavorita = $stmtActividadFavorita->fetch(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare($sqlFav);
+    $stmt->execute([':id_usuario' => $idUsuario]);
+    $fav = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Entrenamientos esta semana
-    $sqlEntrenamientosSemana = "SELECT COUNT(*)
-                                FROM entrenamiento
-                                WHERE id_usuario = :id_usuario
-                                  AND YEARWEEK(fecha, 1) = YEARWEEK(CURDATE(), 1)";
+    $sqlRanking = "SELECT a.nombre AS actividad, COUNT(*) AS total
+                   FROM reserva r
+                   INNER JOIN sesion_actividad sa ON r.id_sesion = sa.id_sesion
+                   INNER JOIN horario_actividad ha ON sa.id_horario = ha.id_horario
+                   INNER JOIN actividad a ON ha.id_actividad = a.id_actividad
+                   WHERE r.id_usuario = :id_usuario
+                   GROUP BY a.id_actividad, a.nombre
+                   ORDER BY total DESC, a.nombre ASC
+                   LIMIT 5";
 
-    $stmtEntrenamientosSemana = $conn->prepare($sqlEntrenamientosSemana);
-    $stmtEntrenamientosSemana->execute([
-        ':id_usuario' => $idUsuario
-    ]);
-    $entrenamientosSemana = (int) $stmtEntrenamientosSemana->fetchColumn();
+    $stmt = $conn->prepare($sqlRanking);
+    $stmt->execute([':id_usuario' => $idUsuario]);
+    $ranking = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Asistencia
-    $sqlAsistencia = "SELECT
-                        COUNT(*) AS total,
-                        SUM(CASE WHEN estado = 'Asistida' THEN 1 ELSE 0 END) AS asistidas
+    $sqlSemana = "SELECT COUNT(*)
+                  FROM entrenamiento
+                  WHERE id_usuario = :id_usuario
+                  AND YEARWEEK(fecha,1)=YEARWEEK(CURDATE(),1)";
+
+    $stmt = $conn->prepare($sqlSemana);
+    $stmt->execute([':id_usuario' => $idUsuario]);
+    $entrenamientosSemana = (int)$stmt->fetchColumn();
+
+    $sqlAsistencia = "SELECT COUNT(*) total,
+                      SUM(CASE WHEN estado='Asistida' THEN 1 ELSE 0 END) asistidas
                       FROM reserva
                       WHERE id_usuario = :id_usuario";
 
-    $stmtAsistencia = $conn->prepare($sqlAsistencia);
-    $stmtAsistencia->execute([
-        ':id_usuario' => $idUsuario
-    ]);
-    $asistencia = $stmtAsistencia->fetch(PDO::FETCH_ASSOC);
+    $stmt = $conn->prepare($sqlAsistencia);
+    $stmt->execute([':id_usuario' => $idUsuario]);
+    $asistencia = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $totalReservas = (int) ($asistencia['total'] ?? 0);
-    $totalAsistidas = (int) ($asistencia['asistidas'] ?? 0);
+    $totalReservas = (int)($asistencia['total'] ?? 0);
+    $asistidas = (int)($asistencia['asistidas'] ?? 0);
 
-    $porcentajeAsistencia = $totalReservas > 0
-        ? round(($totalAsistidas / $totalReservas) * 100) . '%'
-        : '—';
+    $porcentajeNumero = $totalReservas > 0 ? (int)round(($asistidas / $totalReservas) * 100) : 0;
+    $porcentajeTexto = $totalReservas > 0 ? $porcentajeNumero . '%' : '—';
 
     $fotoPerfil = !empty($usuario['foto_perfil'])
         ? $usuario['foto_perfil']
         : '../img-socios/socio1.png';
 
     $nombreCompleto = trim(($usuario['nombre'] ?? '') . ' ' . ($usuario['apellidos'] ?? ''));
-    $membresia = $usuario['membresia'] ?? 'Sin suscripción activa';
+    $membresia = $usuario['membresia'] ?? 'Sin suscripción';
 
-    $nombreActividadFavorita = $actividadFavorita['nombre'] ?? 'Sin datos';
-    $detalleActividadFavorita = $actividadFavorita
-        ? 'Reservada ' . $actividadFavorita['total'] . ' vez/veces'
-        : 'Aún no hay actividad favorita';
+    $nombreActividadFavorita = $fav['nombre'] ?? 'Sin datos';
+    $detalleActividadFavorita = $fav ? 'Reservada ' . $fav['total'] . ' veces' : 'Sin actividad';
 
     echo json_encode([
         'ok' => true,
@@ -145,21 +121,31 @@ try {
         'estadisticas' => [
             'clases_mes' => $clasesMes,
             'clases_mes_detalle' => 'Clases confirmadas o asistidas este mes',
+            'clases_mes_numero' => $clasesMes,
+
             'actividad_favorita' => $nombreActividadFavorita,
             'actividad_favorita_detalle' => $detalleActividadFavorita,
+
             'entrenamientos_semanales' => $entrenamientosSemana,
             'entrenamientos_semanales_detalle' => mensajeEntrenamientosSemanales($entrenamientosSemana),
-            'asistencia' => $porcentajeAsistencia,
-            'asistencia_detalle' => $totalReservas > 0
-                ? $totalAsistidas . ' asistencia(s) de ' . $totalReservas . ' reserva(s)'
-                : 'Aún no hay reservas registradas'
-        ]
+            'entrenamientos_semanales_numero' => $entrenamientosSemana,
+
+            'asistencia' => $porcentajeTexto,
+            'asistencia_detalle' => $totalReservas > 0 ? "$asistidas de $totalReservas reservas" : 'Sin datos',
+            'asistencia_porcentaje_numero' => $porcentajeNumero,
+            'asistencias_totales_numero' => $asistidas
+        ],
+        'ranking_actividad' => array_map(function ($item) {
+            return [
+                'actividad' => $item['actividad'],
+                'total' => (int)$item['total']
+            ];
+        }, $ranking)
     ], JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
-    http_response_code(500);
     echo json_encode([
         'ok' => false,
-        'mensaje' => 'Error al obtener las estadísticas.',
+        'mensaje' => 'Error en estadísticas',
         'error' => $e->getMessage()
     ]);
 }

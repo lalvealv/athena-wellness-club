@@ -97,6 +97,17 @@ async function cargarReservas(busqueda = "", estado = "", fecha = "") {
                 <td>
                     <div class="actions-table">
                         <a href="admin-editar-usuario.html?id=${item.id_usuario}">Ver usuario</a>
+
+                        <button class="btn btn--ghost btn--small" type="button"
+                            onclick="cambiarEstadoReserva(${item.id_reserva}, 'Asistida')">
+                            Marcar asistida
+                        </button>
+
+                        <button class="btn btn--ghost btn--small" type="button"
+                            onclick="cambiarEstadoReserva(${item.id_reserva}, 'No asistida')">
+                            Marcar no asistida
+                        </button>
+
                         <button class="btn btn--ghost btn--small" type="button"
                             onclick="eliminarReserva(${item.id_reserva})">
                             Eliminar
@@ -112,6 +123,53 @@ async function cargarReservas(busqueda = "", estado = "", fecha = "") {
     } catch (error) {
         console.error(error);
         mostrarMensajeReservas("error", "Ha ocurrido un error al cargar las reservas.");
+    }
+}
+
+async function cambiarEstadoReserva(idReserva, nuevoEstado) {
+    const confirmar = confirm(`¿Seguro que quieres cambiar el estado de esta reserva a "${nuevoEstado}"?`);
+
+    if (!confirmar) {
+        mostrarMensajeReservas("warning", "Cambio de estado cancelado.");
+        return;
+    }
+
+    mostrarMensajeReservas("loading", "Actualizando estado de la reserva...");
+
+    try {
+        const formData = new FormData();
+        formData.append("accion", "cambiar_estado");
+        formData.append("id_reserva", idReserva);
+        formData.append("estado", nuevoEstado);
+
+        const response = await fetch("../API/admin-reservas.php", {
+            method: "POST",
+            credentials: "same-origin",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.ok) {
+            mostrarMensajeReservas("error", data.mensaje || "No se pudo actualizar el estado.");
+            return;
+        }
+
+        mostrarMensajeReservas("success", data.mensaje);
+
+        const inputBusqueda = document.getElementById("buscarReserva");
+        const selectEstado = document.getElementById("filtrarEstadoReserva");
+        const inputFecha = document.getElementById("fechaReserva");
+
+        await cargarReservas(
+            inputBusqueda.value.trim(),
+            selectEstado.value,
+            inputFecha.value
+        );
+
+    } catch (error) {
+        console.error(error);
+        mostrarMensajeReservas("error", "Ha ocurrido un error al actualizar la reserva.");
     }
 }
 

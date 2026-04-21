@@ -54,10 +54,10 @@ try {
         $accion = $_POST['accion'] ?? '';
         $idReserva = isset($_POST['id_reserva']) ? (int)$_POST['id_reserva'] : 0;
 
-        if ($accion !== 'eliminar' || $idReserva <= 0) {
+        if ($idReserva <= 0) {
             responderJSON([
                 'ok' => false,
-                'mensaje' => 'Datos no válidos.'
+                'mensaje' => 'ID de reserva no válido.'
             ]);
         }
 
@@ -80,18 +80,52 @@ try {
             ]);
         }
 
-        $sqlEliminar = "DELETE FROM reserva
-                        WHERE id_reserva = :id_reserva
-                        LIMIT 1";
+        if ($accion === 'eliminar') {
+            $sqlEliminar = "DELETE FROM reserva
+                            WHERE id_reserva = :id_reserva
+                            LIMIT 1";
 
-        $stmtEliminar = $conn->prepare($sqlEliminar);
-        $stmtEliminar->execute([
-            ':id_reserva' => $idReserva
-        ]);
+            $stmtEliminar = $conn->prepare($sqlEliminar);
+            $stmtEliminar->execute([
+                ':id_reserva' => $idReserva
+            ]);
+
+            responderJSON([
+                'ok' => true,
+                'mensaje' => 'Reserva eliminada correctamente.'
+            ]);
+        }
+
+        if ($accion === 'cambiar_estado') {
+            $nuevoEstado = trim($_POST['estado'] ?? '');
+            $estadosPermitidos = ['Asistida', 'No asistida'];
+
+            if (!in_array($nuevoEstado, $estadosPermitidos, true)) {
+                responderJSON([
+                    'ok' => false,
+                    'mensaje' => 'Estado no válido.'
+                ]);
+            }
+
+            $sqlActualizar = "UPDATE reserva
+                              SET estado = :estado
+                              WHERE id_reserva = :id_reserva";
+
+            $stmtActualizar = $conn->prepare($sqlActualizar);
+            $stmtActualizar->execute([
+                ':estado' => $nuevoEstado,
+                ':id_reserva' => $idReserva
+            ]);
+
+            responderJSON([
+                'ok' => true,
+                'mensaje' => 'Estado de la reserva actualizado correctamente.'
+            ]);
+        }
 
         responderJSON([
-            'ok' => true,
-            'mensaje' => 'Reserva eliminada correctamente.'
+            'ok' => false,
+            'mensaje' => 'Acción no válida.'
         ]);
     }
 

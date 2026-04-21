@@ -42,7 +42,6 @@
     </header>
 
     <main class="section section-socios">
-
         <div class="container socios-layout">
 
             <aside class="socios-sidebar">
@@ -70,7 +69,6 @@
             <div class="socios-content">
 
                 <section class="socios-panel">
-
                     <h2 class="h2">Entrenamientos</h2>
 
                     <div class="two-cols">
@@ -87,6 +85,88 @@
                             <p id="ultimo-entrenamiento-detalle">Cargando...</p>
                         </div>
 
+                    </div>
+                </section>
+
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Objetivo semanal</h2>
+
+                    <div class="two-cols">
+                        <div class="info-card">
+                            <span class="label">Progreso semanal</span>
+                            <h3 id="objetivo-progreso-texto">Cargando...</h3>
+                            <p id="objetivo-progreso-subtexto">Cargando...</p>
+
+
+                            <!-- mirar si quitar esto <div class="progress-bar">
+        <div id="barra-progreso" class="progress-bar-fill"></div>
+    </div>-->
+                            <div class="progress-bar">
+                                <div id="barra-progreso" class="progress-bar-fill"></div>
+                            </div>
+
+
+                            <div id="objetivo-checks" class="weekly-checks"></div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Configurar objetivo</span>
+                            <h3>Entrenos por semana</h3>
+                            <div class="form-row" style="margin-top: 0.8rem;">
+                                <label for="objetivoSemanalInput">Objetivo semanal</label>
+                                <input type="number" id="objetivoSemanalInput" min="1" max="14" value="4">
+                            </div>
+
+                            <div class="actions actions-top">
+                                <button type="button" class="btn btn--primary btn--small"
+                                    id="btn-guardar-objetivo-semanal">
+                                    Guardar objetivo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Mis entrenamientos</h2>
+
+                    <p id="mensaje-entrenamientos-socio" class="muted"></p>
+
+                    <div class="table-wrap">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Rutina / tipo</th>
+                                    <th>Duración</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-entrenamientos-socio">
+                                <tr>
+                                    <td colspan="5">Cargando entrenamientos...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Detalle del entrenamiento</h2>
+
+                    <div class="two-cols">
+                        <div class="info-card">
+                            <span class="label">Entrenamiento seleccionado</span>
+                            <h3 id="detalle-entrenamiento-fecha">Cargando...</h3>
+                            <p id="detalle-entrenamiento-subtexto">Cargando...</p>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Estado</span>
+                            <h3 id="detalle-entrenamiento-estado" class="status-badge">Cargando...</h3>
+                            <p id="detalle-entrenamiento-observaciones">Cargando...</p>
+                        </div>
                     </div>
 
                     <div class="table-wrap" style="margin-top: 1rem;">
@@ -106,13 +186,11 @@
                             </tbody>
                         </table>
                     </div>
-
                 </section>
 
             </div>
 
         </div>
-
     </main>
 
     <footer class="site-footer">
@@ -129,7 +207,7 @@
         </div>
     </footer>
 
-    <script src="../js/entrenamientos.js"></script>
+    <script src="../js/entrenamientos.js?v=3"></script>
 </body>
 
 </html>

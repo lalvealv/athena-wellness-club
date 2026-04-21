@@ -45,7 +45,7 @@
 
             <aside class="socios-sidebar">
                 <div class="socios-user">
-                    <img id="admin-foto" src="../img/admin.jpg" alt="Administrador ATHENA">
+                    <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
                     <h3 id="admin-nombre">Cargando...</h3>
                     <p id="admin-perfil">Cargando...</p>
                 </div>
@@ -90,11 +90,16 @@
                                 <button class="btn btn--primary btn--small" type="submit">Buscar</button>
                                 <button class="btn btn--ghost btn--small" type="reset"
                                     id="btn-limpiar-filtros-entrenamientos">Limpiar</button>
+                                <button class="btn btn--primary btn--small" type="button" id="btn-nuevo-entrenamiento">
+                                    Nuevo entrenamiento
+                                </button>
                             </div>
                         </form>
                     </div>
 
-                    <div class="table-wrap">
+                    <p id="mensaje-admin-entrenamientos" class="muted"></p>
+
+                    <div class="table-wrap" id="tabla-entrenamientos-wrap">
                         <table class="mini-table">
                             <thead>
                                 <tr>
@@ -103,13 +108,14 @@
                                     <th>Rutina / tipo</th>
                                     <th>Fecha</th>
                                     <th>Duración</th>
+                                    <th>Estado</th>
                                     <th>Observaciones</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-entrenamientos">
                                 <tr>
-                                    <td colspan="7">Cargando entrenamientos...</td>
+                                    <td colspan="8">Cargando entrenamientos...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -150,6 +156,84 @@
                             </tbody>
                         </table>
                     </div>
+                </section>
+
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Crear / editar entrenamiento</h2>
+
+                    <form id="form-entrenamiento-admin">
+                        <input type="hidden" id="idEntrenamiento" name="idEntrenamiento">
+
+                        <div class="two-cols">
+                            <div class="form-row">
+                                <label for="usuarioEntrenamiento">Usuario</label>
+                                <select id="usuarioEntrenamiento" name="usuarioEntrenamiento" required>
+                                    <option value="">Selecciona un usuario</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row form-row--date">
+                                <label for="fechaFormEntrenamiento">Fecha</label>
+                                <input type="date" id="fechaFormEntrenamiento" name="fechaFormEntrenamiento" required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="duracionEntrenamiento">Duración (min)</label>
+                                <input type="number" id="duracionEntrenamiento" name="duracionEntrenamiento" min="1"
+                                    required>
+                            </div>
+
+                            <div class="form-row">
+                                <label for="estadoEntrenamiento">Estado</label>
+                                <select id="estadoEntrenamiento" name="estadoEntrenamiento" required>
+                                    <option value="Programado">Programado</option>
+                                    <option value="Completado">Completado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row actions-top">
+                            <label for="observacionesEntrenamiento">Observaciones / tipo de rutina</label>
+                            <textarea id="observacionesEntrenamiento" name="observacionesEntrenamiento" rows="3"
+                                placeholder="Ej: rutina pierna, full body, cardio suave..."></textarea>
+                        </div>
+
+                        <h3 class="h2" style="margin-top: 1.25rem;">Ejercicios</h3>
+
+                        <div class="table-wrap">
+                            <table class="mini-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ejercicio</th>
+                                        <th>Series</th>
+                                        <th>Repeticiones</th>
+                                        <th>Peso (kg)</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-ejercicios-form">
+                                    <tr>
+                                        <td><input type="text" class="ejercicio-nombre" placeholder="Ejercicio"></td>
+                                        <td><input type="number" class="ejercicio-series" min="1" placeholder="3"></td>
+                                        <td><input type="number" class="ejercicio-repeticiones" min="1"
+                                                placeholder="12"></td>
+                                        <td><input type="number" class="ejercicio-peso" min="0" step="0.01"
+                                                placeholder="20"></td>
+                                        <td><button type="button" class="btn btn--ghost btn--small"
+                                                onclick="eliminarFilaEjercicio(this)">Quitar</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="actions actions-top">
+                            <button type="button" class="btn btn--ghost btn--small" id="btn-anadir-ejercicio">Añadir
+                                ejercicio</button>
+                            <button type="submit" class="btn btn--primary btn--small">Guardar entrenamiento</button>
+                            <button type="button" class="btn btn--ghost btn--small"
+                                id="btn-cancelar-edicion-entrenamiento">Cancelar edición</button>
+                        </div>
+                    </form>
                 </section>
 
                 <section class="socios-panel panel-spacing">
@@ -201,7 +285,7 @@
         </div>
     </footer>
 
-    <script src="../js/admin-entrenamientos.js"></script>
+    <script src="../js/admin-entrenamientos.js?v=2"></script>
 </body>
 
 </html>

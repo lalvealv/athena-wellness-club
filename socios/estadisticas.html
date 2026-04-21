@@ -15,11 +15,9 @@
 </head>
 
 <body>
-    <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo e identidad visual del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
@@ -28,7 +26,6 @@
                 </span>
             </a>
 
-            <!-- Navegación superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
@@ -44,22 +41,16 @@
         </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
     <main class="section section-socios">
-
         <div class="container socios-layout">
 
-            <!-- SIDEBAR / MENÚ LATERAL DEL SOCIO -->
             <aside class="socios-sidebar">
-
-                <!-- Información resumida del usuario -->
                 <div class="socios-user">
                     <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="sidebar-nombre">Cargando...</h3>
                     <p id="sidebar-plan">Cargando...</p>
                 </div>
 
-                <!-- Navegación lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
@@ -71,15 +62,13 @@
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
                     <a href="notificaciones.html">Notificaciones</a>
                 </nav>
-
             </aside>
 
-            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
-
                 <section class="socios-panel">
-
                     <h2 class="h2">Estadísticas</h2>
+
+                    <p id="mensaje-estadisticas" class="muted"></p>
 
                     <div class="dashboard-grid">
                         <div class="info-card">
@@ -106,16 +95,69 @@
                             <p id="estadistica-asistencia-detalle">Cargando...</p>
                         </div>
                     </div>
+                </section>
 
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Progreso de asistencia</h2>
+
+                    <div class="info-card">
+                        <span class="label">Porcentaje de asistencia</span>
+                        <h3 id="asistencia-porcentaje-visual">Cargando...</h3>
+                        <p id="asistencia-texto-visual">Cargando...</p>
+
+                        <div class="progress-bar progress-bar--large">
+                            <div id="barra-asistencia" class="progress-bar-fill"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Ranking de actividad</h2>
+
+                    <div class="table-wrap">
+                        <table class="mini-table">
+                            <thead>
+                                <tr>
+                                    <th>Posición</th>
+                                    <th>Actividad</th>
+                                    <th>Reservas</th>
+                                    <th>Progreso</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-ranking-actividad">
+                                <tr>
+                                    <td colspan="4">Cargando ranking...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Dashboard visual</h2>
+
+                    <div class="two-cols">
+                        <div class="info-card">
+                            <span class="label">Clases y entrenamientos</span>
+                            <div id="grafica-resumen-actividad" class="chart-bars">
+                                <div class="chart-empty">Cargando gráfica...</div>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <span class="label">Distribución de actividad favorita</span>
+                            <div id="grafica-ranking-actividad" class="chart-bars">
+                                <div class="chart-empty">Cargando gráfica...</div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
             </div>
 
         </div>
-
     </main>
 
-    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -130,7 +172,7 @@
         </div>
     </footer>
 
-    <script src="../js/estadisticas.js"></script>
+    <script src="../js/estadistica.js?v=4"></script>
 </body>
 
 </html>
