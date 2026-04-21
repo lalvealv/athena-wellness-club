@@ -1,7 +1,28 @@
 /* ATHENA Wellness Club — ESTILO GENERAL
    Base global, header, hero, cards, tablas, formularios, footer */
 
-/* 1. RESET Y BASE GLOBAL */
+/* 1. VARIABLES */
+:root {
+    --athena-bg: #0b0c10;
+    --athena-text: #e9e9ee;
+    --athena-text-soft: rgba(233, 233, 238, 0.72);
+    --athena-border: rgba(255, 255, 255, 0.10);
+    --athena-border-soft: rgba(255, 255, 255, 0.08);
+    --athena-panel: rgba(255, 255, 255, 0.03);
+
+    --athena-gold: #d7b46a;
+    --athena-gold-strong: #f0d596;
+    --athena-gold-soft: rgba(215, 180, 106, 0.18);
+    --athena-gold-border: rgba(215, 180, 106, 0.42);
+    --athena-gold-shadow: rgba(215, 180, 106, 0.18);
+
+    --athena-success: #8ae6a2;
+    --athena-danger: #ff9a9a;
+    --athena-warning: #ffd27d;
+    --athena-info: #78d2ff;
+}
+
+/* 2. RESET Y BASE GLOBAL */
 *,
 *::before,
 *::after {
@@ -16,13 +37,13 @@ body {
     margin: 0;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     line-height: 1.5;
-    color: #e9e9ee;
+    color: var(--athena-text);
     overflow-x: hidden;
     background:
         radial-gradient(1200px 800px at 10% 10%, rgba(175, 150, 255, 0.14), transparent 55%),
         radial-gradient(1200px 800px at 90% 20%, rgba(120, 210, 255, 0.10), transparent 55%),
         radial-gradient(1000px 700px at 50% 95%, rgba(255, 220, 140, 0.06), transparent 60%),
-        #0b0c10;
+        var(--athena-bg);
 }
 
 a {
@@ -31,10 +52,10 @@ a {
 }
 
 a:hover {
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
-/* 2. CONTENEDORES Y UTILIDADES */
+/* 3. CONTENEDORES Y UTILIDADES */
 .container {
     width: min(1120px, calc(100% - 2rem));
     margin-inline: auto;
@@ -49,7 +70,7 @@ a:hover {
 }
 
 .muted {
-    color: rgba(233, 233, 238, 0.72);
+    color: var(--athena-text-soft);
 }
 
 .h2 {
@@ -64,14 +85,14 @@ a:hover {
     max-width: 70ch;
 }
 
-/* 3. HEADER / CABECERA GENERAL */
+/* 4. HEADER / CABECERA GENERAL */
 .site-header {
     position: sticky;
     top: 0;
     z-index: 50;
     background: rgba(11, 12, 16, 0.72);
     backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--athena-border-soft);
 }
 
 .header-inner {
@@ -82,7 +103,7 @@ a:hover {
     padding: 1rem 0;
 }
 
-/* 4. MARCA / LOGO */
+/* 5. MARCA / LOGO */
 .brand {
     display: flex;
     align-items: center;
@@ -113,7 +134,7 @@ a:hover {
     margin-top: 0.1rem;
 }
 
-/* 5. NAVEGACIÓN GENERAL */
+/* 6. NAVEGACIÓN GENERAL */
 .nav {
     display: flex;
     align-items: center;
@@ -131,13 +152,19 @@ a:hover {
     font-size: 0.95rem;
 }
 
-.nav a.is-active {
-    color: rgba(233, 233, 238, 0.98);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.16);
+.nav a:hover {
+    color: rgba(233, 233, 238, 0.96);
+    border-color: rgba(255, 220, 140, 0.22);
+    background: rgba(255, 220, 140, 0.05);
 }
 
-/* 6. BOTONES */
+.nav a.is-active {
+    color: rgba(233, 233, 238, 0.98);
+    background: rgba(255, 220, 140, 0.08);
+    border-color: rgba(255, 220, 140, 0.24);
+}
+
+/* 7. BOTONES */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -145,35 +172,39 @@ a:hover {
     gap: 0.55rem;
     padding: 0.85rem 1.1rem;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 220, 140, 0.18);
     background: rgba(255, 255, 255, 0.04);
-    color: rgba(233, 233, 238, 0.92);
+    color: rgba(233, 233, 238, 0.94);
     cursor: pointer;
-    transition: transform 0.12s ease, background 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.12s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     font-weight: 600;
 }
 
 .btn:hover {
     transform: translateY(-1px);
-    border-color: rgba(255, 255, 255, 0.22);
-    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 220, 140, 0.36);
+    background: rgba(255, 220, 140, 0.06);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
 .btn--primary {
-    border-color: transparent;
-    background: linear-gradient(135deg, rgba(175, 150, 255, 0.95), rgba(120, 210, 255, 0.75));
-    color: #0b0c10;
+    border-color: rgba(255, 220, 140, 0.44);
+    background: linear-gradient(135deg, #f0d596, #d7b46a);
+    color: #16120c;
+    box-shadow: 0 10px 28px rgba(215, 180, 106, 0.18);
 }
 
 .btn--primary:hover {
-    background: linear-gradient(135deg, rgba(175, 150, 255, 1), rgba(120, 210, 255, 0.9));
+    background: linear-gradient(135deg, #f6deaa, #dfbc74);
+    border-color: rgba(255, 220, 140, 0.55);
+    box-shadow: 0 14px 32px rgba(215, 180, 106, 0.24);
 }
 
 .btn--ghost {
     background: transparent;
 }
 
-/* 7. HERO GENERAL */
+/* 8. HERO GENERAL */
 .hero {
     padding: 4.5rem 0 3.5rem;
     position: relative;
@@ -192,8 +223,8 @@ a:hover {
     gap: 0.5rem;
     padding: 0.35rem 0.75rem;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 220, 140, 0.16);
+    background: rgba(255, 220, 140, 0.03);
     color: rgba(233, 233, 238, 0.78);
     font-size: 0.9rem;
 }
@@ -220,7 +251,7 @@ a:hover {
 
 .hero-card {
     border-radius: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid var(--athena-border);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
     box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
     padding: 1.2rem;
@@ -236,7 +267,7 @@ a:hover {
     border-radius: 18px;
     padding: 1rem;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid var(--athena-border);
 }
 
 .stat-box strong {
@@ -251,7 +282,7 @@ a:hover {
     margin-top: 0.2rem;
 }
 
-/* 8. GRID Y TARJETAS GENERALES */
+/* 9. GRID Y TARJETAS GENERALES */
 .grid {
     display: grid;
     gap: 1rem;
@@ -267,7 +298,7 @@ a:hover {
 
 .card {
     border-radius: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid var(--athena-border);
     background: rgba(255, 255, 255, 0.03);
     overflow: hidden;
     transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
@@ -275,7 +306,7 @@ a:hover {
 
 .card:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 220, 140, 0.24);
     background: rgba(255, 255, 255, 0.04);
 }
 
@@ -315,11 +346,11 @@ a:hover {
     justify-content: space-between;
 }
 
-/* 9. TABLAS GENERALES */
+/* 10. TABLAS GENERALES */
 .table-wrap {
     border-radius: 18px;
     overflow-x: auto;
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid var(--athena-border);
     background: rgba(255, 255, 255, 0.02);
     max-width: 100%;
 }
@@ -352,10 +383,10 @@ tbody tr:hover td {
     background: rgba(255, 255, 255, 0.03);
 }
 
-/* 10. FORMULARIOS GENERALES */
+/* 11. FORMULARIOS GENERALES */
 .form-shell {
     border-radius: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid var(--athena-border);
     background: rgba(255, 255, 255, 0.03);
     padding: 1.3rem;
 }
@@ -366,7 +397,7 @@ form {
 }
 
 fieldset {
-    border: 1px solid rgba(255, 255, 255, 0.10);
+    border: 1px solid var(--athena-border);
     border-radius: 18px;
     padding: 1rem;
 }
@@ -404,8 +435,8 @@ textarea::placeholder {
 input:focus,
 select:focus,
 textarea:focus {
-    border-color: rgba(175, 150, 255, 0.6);
-    box-shadow: 0 0 0 4px rgba(175, 150, 255, 0.12);
+    border-color: rgba(215, 180, 106, 0.65);
+    box-shadow: 0 0 0 4px rgba(215, 180, 106, 0.12);
 }
 
 .form-grid {
@@ -438,9 +469,36 @@ textarea:focus {
     flex-wrap: wrap;
 }
 
-/* 11. FOOTER / PIE DE PÁGINA */
+/* 12. ICONOS Y CONTROLES DE FORMULARIO */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 2.8rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23f0d596' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    background-size: 1rem;
+}
+
+input[type="date"] {
+    color-scheme: dark;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.95;
+    filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(475%) hue-rotate(339deg) brightness(101%) contrast(89%);
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(475%) hue-rotate(339deg) brightness(101%) contrast(89%);
+}
+
+/* 13. FOOTER / PIE DE PÁGINA */
 .site-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--athena-border-soft);
     background: rgba(11, 12, 16, 0.70);
     margin-top: 3rem;
 }
@@ -458,7 +516,30 @@ textarea:focus {
     color: rgba(233, 233, 238, 0.70);
 }
 
-/* 12. RESPONSIVE GENERAL */
+/* 14. INPUT DATE CON ICONO VISIBLE */
+.form-row--date {
+    position: relative;
+}
+
+.form-row--date input[type="date"] {
+    padding-right: 3rem;
+}
+
+.form-row--date::after {
+    content: "";
+    position: absolute;
+    right: 1rem;
+    top: 3rem;
+    width: 1rem;
+    height: 1rem;
+    pointer-events: none;
+    opacity: 0.95;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f0d596'%3E%3Cpath d='M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1Zm12 8H5v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8ZM6 6a1 1 0 0 0-1 1v1h14V7a1 1 0 0 0-1-1H6Z'/%3E%3C/svg%3E");
+}
+
+/* 15. RESPONSIVE GENERAL */
 @media (max-width: 920px) {
     .hero-grid {
         grid-template-columns: 1fr;
@@ -487,35 +568,155 @@ textarea:focus {
     }
 }
 
-/* 13. INPUT DATE CON ICONO VISIBLE EN MODO OSCURO */
-.form-row--date {
-    position: relative;
+
+/* =========================================================
+   OVERRIDE FINAL COLOR DORADO ATHENA
+   Pegar al FINAL de estilo-general.css
+========================================================= */
+
+:root {
+    --athena-gold-main: #d7b46a;
+    --athena-gold-light: #f0d596;
+    --athena-gold-dark: #b89344;
+    --athena-gold-soft: rgba(215, 180, 106, 0.12);
+    --athena-gold-border: rgba(215, 180, 106, 0.34);
+    --athena-gold-shadow: rgba(215, 180, 106, 0.22);
 }
 
-.form-row--date input[type="date"] {
-    padding-right: 3rem;
-    color-scheme: dark;
+/* BOTONES PRINCIPALES */
+.btn--primary,
+.reserve-btn,
+.cancel-btn,
+button.btn--primary,
+a.btn--primary,
+input[type="submit"].btn--primary,
+input[type="button"].btn--primary {
+    background: linear-gradient(135deg, var(--athena-gold-light), var(--athena-gold-main)) !important;
+    border: 1px solid var(--athena-gold-border) !important;
+    color: #16120c !important;
+    box-shadow: 0 10px 24px var(--athena-gold-shadow) !important;
 }
 
-.form-row--date input[type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-    position: absolute;
-    right: 0.85rem;
-    width: 1.25rem;
-    height: 1.25rem;
-    cursor: pointer;
+.btn--primary:hover,
+.reserve-btn:hover,
+.cancel-btn:hover,
+button.btn--primary:hover,
+a.btn--primary:hover,
+input[type="submit"].btn--primary:hover,
+input[type="button"].btn--primary:hover {
+    background: linear-gradient(135deg, #f6deaa, #dfbc74) !important;
+    border-color: rgba(255, 220, 140, 0.55) !important;
+    color: #16120c !important;
+    box-shadow: 0 14px 32px rgba(215, 180, 106, 0.28) !important;
+}
+
+/* BOTONES SECUNDARIOS / GHOST */
+.btn,
+.btn--ghost,
+button,
+input[type="button"],
+input[type="submit"] {
+    transition: transform 0.12s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.btn:hover,
+.btn--ghost:hover {
+    border-color: rgba(255, 220, 140, 0.28) !important;
+    background: rgba(255, 220, 140, 0.06) !important;
+}
+
+/* ESTADOS ACTIVOS DE MENÚ Y NAVEGACIÓN */
+.nav a.is-active,
+.nav--socios a.is-active,
+.socios-menu a.is-active {
+    background: rgba(255, 220, 140, 0.08) !important;
+    border-color: rgba(255, 220, 140, 0.24) !important;
+    color: rgba(233, 233, 238, 0.98) !important;
+}
+
+.nav a:hover,
+.nav--socios a:hover,
+.socios-menu a:hover {
+    border-color: rgba(255, 220, 140, 0.22) !important;
+    background: rgba(255, 220, 140, 0.05) !important;
+}
+
+/* ENLACES DE ACCIÓN EN TABLAS */
+.table-wrap td a,
+.actions-table a {
+    color: var(--athena-gold-light) !important;
+}
+
+.table-wrap td a:hover,
+.actions-table a:hover {
+    color: #ffe7b3 !important;
+}
+
+/* SELECTS */
+select,
+.form-row select,
+.state-select,
+.select-perfil {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23f0d596' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.9rem center !important;
+    background-size: 1rem !important;
+    padding-right: 2.8rem !important;
+}
+
+/* FOCUS DE INPUTS / TEXTAREA / SELECT */
+input:focus,
+select:focus,
+textarea:focus,
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus,
+.state-select:focus,
+.select-perfil:focus {
+    border-color: rgba(215, 180, 106, 0.65) !important;
+    box-shadow: 0 0 0 3px rgba(215, 180, 106, 0.12) !important;
+}
+
+/* ICONO DE CALENDARIO */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.95 !important;
+    filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(475%) hue-rotate(339deg) brightness(101%) contrast(89%) !important;
+    cursor: pointer !important;
 }
 
 .form-row--date::after {
-    content: "";
-    position: absolute;
-    right: 1rem;
-    top: 3rem;
-    width: 1rem;
-    height: 1rem;
-    pointer-events: none;
-    opacity: 0.95;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1Zm12 8H5v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8ZM6 6a1 1 0 0 0-1 1v1h14V7a1 1 0 0 0-1-1H6Z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f0d596'%3E%3Cpath d='M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1Zm12 8H5v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8ZM6 6a1 1 0 0 0-1 1v1h14V7a1 1 0 0 0-1-1H6Z'/%3E%3C/svg%3E") !important;
+}
+
+/* OJO DE CONTRASEÑA EN CONTROLES NATIVOS */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(475%) hue-rotate(339deg) brightness(101%) contrast(89%) !important;
+}
+
+/* BARRAS Y PROGRESOS */
+.progress-bar-fill,
+.progress-value,
+.table-progress-fill,
+.chart-bar-fill {
+    background: linear-gradient(90deg, var(--athena-gold-light), var(--athena-gold-main)) !important;
+}
+
+/* BADGES DORADOS */
+.admin-lock-badge,
+.notification-unread,
+.weekly-check-item--done {
+    border-color: rgba(255, 220, 140, 0.30) !important;
+    background: rgba(255, 220, 140, 0.10) !important;
+    color: var(--athena-gold-light) !important;
+}
+
+/* ALERTAS DE ÉXITO MÁS ACORDES */
+.alert-success {
+    background: rgba(255, 220, 140, 0.08) !important;
+    border-color: rgba(255, 220, 140, 0.30) !important;
+}
+
+.alert-success strong {
+    color: var(--athena-gold-light) !important;
 }
