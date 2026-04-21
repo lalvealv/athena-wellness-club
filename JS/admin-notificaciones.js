@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function cargarNotificacionesAdmin() {
     try {
-        const response = await fetch("../api/admin-notificaciones.php", {
+        const response = await fetch("../API/admin-notificaciones.php", {
             method: "GET",
             credentials: "same-origin"
         });
@@ -91,7 +91,7 @@ async function enviarNotificacion() {
         const form = document.getElementById("form-notificacion");
         const formData = new FormData(form);
 
-        const response = await fetch("../api/admin-notificaciones.php", {
+        const response = await fetch("../API/admin-notificaciones.php", {
             method: "POST",
             credentials: "same-origin",
             body: formData

@@ -4,7 +4,7 @@ require_once __DIR__ . '/../conexion.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
-$idAdmin = $_SESSION['id_usuario'];
+$idAdmin = (int)$_SESSION['id_usuario'];
 
 function responderError(string $mensaje, int $codigo = 400, ?string $error = null): void
 {
@@ -53,7 +53,7 @@ try {
             ':destinatario_tipo' => $destinatario
         ]);
 
-        $idNotificacion = (int) $conn->lastInsertId();
+        $idNotificacion = (int)$conn->lastInsertId();
 
         if ($destinatario === 'Usuario') {
             if ($usuarioEspecifico === '') {
@@ -178,31 +178,31 @@ try {
             'tipo' => $item['tipo'] ?? '',
             'destinatario' => $item['destinatario_tipo'] ?? '',
             'fecha_envio' => !empty($item['fecha_envio']) ? date('d/m/Y H:i', strtotime($item['fecha_envio'])) : 'No disponible',
-            'total_destinatarios' => (int) ($item['total_destinatarios'] ?? 0)
+            'total_destinatarios' => (int)($item['total_destinatarios'] ?? 0)
         ];
     }
 
     $sqlHoy = "SELECT COUNT(*)
                FROM notificacion
                WHERE DATE(fecha_envio) = CURDATE()";
-    $avisosHoy = (int) $conn->query($sqlHoy)->fetchColumn();
+    $avisosHoy = (int)$conn->query($sqlHoy)->fetchColumn();
 
     $sqlGenerales = "SELECT COUNT(*)
                      FROM notificacion
                      WHERE tipo = 'General'";
-    $avisosGenerales = (int) $conn->query($sqlGenerales)->fetchColumn();
+    $avisosGenerales = (int)$conn->query($sqlGenerales)->fetchColumn();
 
     $sqlRecordatorios = "SELECT COUNT(*)
                          FROM notificacion
                          WHERE tipo = 'Recordatorio'";
-    $recordatorios = (int) $conn->query($sqlRecordatorios)->fetchColumn();
+    $recordatorios = (int)$conn->query($sqlRecordatorios)->fetchColumn();
 
     $sqlPendientes = "SELECT COUNT(*)
                       FROM usuario_notificacion
                       WHERE leida = 0";
-    $pendientes = (int) $conn->query($sqlPendientes)->fetchColumn();
+    $pendientes = (int)$conn->query($sqlPendientes)->fetchColumn();
 
-    $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/admin.jpg';
+    $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
     $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
 
     echo json_encode([

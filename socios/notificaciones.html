@@ -15,11 +15,9 @@
 </head>
 
 <body>
-    <!-- HEADER -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
-            <!-- Logo -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
@@ -28,7 +26,6 @@
                 </span>
             </a>
 
-            <!-- Navegación superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
@@ -37,29 +34,27 @@
                 <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
-                <a class="is-active" href="notificaciones.html">Avisos</a>
+                <a class="is-active" href="notificaciones.html">
+                    Avisos
+                    <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
+                </a>
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
-    <!-- MAIN -->
     <main class="section section-socios">
-
         <div class="container socios-layout">
 
-            <!-- SIDEBAR -->
             <aside class="socios-sidebar">
 
-                <!-- Usuario -->
                 <div class="socios-user">
                     <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="sidebar-nombre">Cargando...</h3>
                     <p id="sidebar-plan">Cargando...</p>
                 </div>
 
-                <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
@@ -69,17 +64,20 @@
                     <a href="entrenamientos.html">Entrenamientos</a>
                     <a href="estadisticas.html">Estadísticas</a>
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
-                    <a class="is-active" href="notificaciones.html">Notificaciones</a>
+                    <a href="notificaciones.html">
+                        Notificaciones
+                        <span id="menu-avisos-badge" class="menu-badge" hidden>0</span>
+                    </a>
                 </nav>
 
             </aside>
 
-            <!-- CONTENIDO -->
             <div class="socios-content">
 
                 <section class="socios-panel">
-
                     <h2 class="h2">Notificaciones</h2>
+
+                    <p id="mensaje-notificaciones" class="muted"></p>
 
                     <div class="notification-box">
                         <div class="notifications-list" id="lista-notificaciones">
@@ -89,16 +87,24 @@
                             </div>
                         </div>
                     </div>
+                </section>
 
+                <section class="socios-panel panel-spacing">
+                    <h2 class="h2">Detalle del aviso</h2>
+
+                    <div class="info-card notification-detail-card" id="detalle-notificacion-card">
+                        <span class="label" id="detalle-notificacion-tipo">Cargando...</span>
+                        <h3 id="detalle-notificacion-titulo">Selecciona una notificación</h3>
+                        <p id="detalle-notificacion-fecha" class="muted">—</p>
+                        <p id="detalle-notificacion-mensaje">Pulsa sobre un aviso para leerlo completo.</p>
+                    </div>
                 </section>
 
             </div>
 
         </div>
-
     </main>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -113,7 +119,8 @@
         </div>
     </footer>
 
-    <script src="../js/notificaciones.js"></script>
+    <script src="../js/notificaciones.js?v=2"></script>
+    <script src="../js/notificaciones-badge.js"></script>
 </body>
 
 </html>
