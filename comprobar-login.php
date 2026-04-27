@@ -1,19 +1,12 @@
 <?php
-// Iniciar sesión para poder comprobar si el usuario ha iniciado sesión
+// Verifica que el usuario haya iniciado sesión
+
+// Iniciar sesión para acceder a las variables de sesión
 session_start();
 
-// Si no existe un usuario logueado, redirigir al login
+// --- Comprobar si el usuario está logueado ---
 if (!isset($_SESSION['id_usuario'])) {
+    // Si no hay sesión activa, redirigir al login
     header("Location: ../publico/socios.html");
     exit;
 }
-
-/*
-<?php
-session_start();
-
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: ../publico/socios.html");
-    exit;
-}
-?>*/

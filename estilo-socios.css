@@ -1,7 +1,21 @@
-/* ATHENA Wellness Club — ESTILO ÁREA DE SOCIOS
-   Este archivo complementa a estilo-general.css */
+/* 
+   Complementa a estilo-general.css.
+   Define el diseño del área privada de socios:
+   - Header privado
+   - Menú lateral
+   - Paneles
+   - Dashboard
+   - Perfil
+   - Reservas
+   - Entrenamientos
+   - Estadísticas
+   - Notificaciones
+   - Responsive
+ */
 
-/* 1. AJUSTES GENERALES DEL ÁREA DE SOCIOS */
+
+/* 1. AJUSTES GENERALES DEL ÁREA DE SOCIOS*/
+
 .section-socios {
     padding-top: 2.5rem;
 }
@@ -14,7 +28,9 @@
     align-items: center;
 }
 
+
 /* 2. NAVEGACIÓN DEL ÁREA DE SOCIOS */
+
 .nav--socios {
     display: flex;
     align-items: center;
@@ -45,12 +61,15 @@
     font-weight: 600;
 }
 
+/* Botón pequeño usado en menús y tablas */
 .btn--small {
     padding: 0.7rem 1rem;
     font-size: 0.92rem;
 }
 
+
 /* 3. HERO SUPERIOR DEL ÁREA DE SOCIOS */
+
 .socios-hero {
     display: flex;
     justify-content: space-between;
@@ -66,7 +85,9 @@
     flex-shrink: 0;
 }
 
+
 /* 4. LAYOUT PRINCIPAL DEL ÁREA DE SOCIOS */
+
 .socios-layout {
     display: grid;
     grid-template-columns: 270px minmax(0, 1fr);
@@ -81,6 +102,7 @@
     min-width: 0;
 }
 
+/* Panel principal de contenido */
 .socios-panel {
     border-radius: 22px;
     border: 1px solid rgba(255, 255, 255, 0.10);
@@ -96,7 +118,9 @@
     margin-bottom: 1rem;
 }
 
+
 /* 5. SIDEBAR DEL ÁREA DE SOCIOS */
+
 .socios-sidebar {
     position: sticky;
     top: 92px;
@@ -108,6 +132,7 @@
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
 }
 
+/* Datos básicos del socio */
 .socios-user {
     text-align: center;
     margin-bottom: 1.25rem;
@@ -136,6 +161,7 @@
     color: rgba(233, 233, 238, 0.68);
 }
 
+/* Menú lateral */
 .socios-menu {
     display: flex;
     flex-direction: column;
@@ -166,7 +192,9 @@
     font-weight: 600;
 }
 
+
 /* 6. DASHBOARD / TARJETAS DE RESUMEN */
+
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -201,7 +229,9 @@
     color: rgba(233, 233, 238, 0.76);
 }
 
-/* 7. BLOQUES */
+
+/* 7. BLOQUES INTERNOS */
+
 .profile-box,
 .subscription-box,
 .goal-box,
@@ -212,7 +242,9 @@
     padding: 1rem;
 }
 
+
 /* 8. PERFIL DEL USUARIO */
+
 .profile-grid {
     display: grid;
     grid-template-columns: 150px minmax(0, 1fr);
@@ -259,14 +291,18 @@
     color: rgba(233, 233, 238, 0.95);
 }
 
+
 /* 9. BLOQUES EN DOS COLUMNAS */
+
 .two-cols {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
 }
 
+
 /* 10. TABLAS DEL ÁREA DE SOCIOS */
+
 .table-wrap {
     width: 100%;
     max-width: 100%;
@@ -282,6 +318,7 @@
     scrollbar-color: rgba(215, 180, 106, 0.82) rgba(255, 255, 255, 0.06);
 }
 
+/* Scrollbar personalizado */
 .table-wrap::-webkit-scrollbar {
     width: 12px;
     height: 12px;
@@ -322,6 +359,7 @@
     color: rgba(233, 233, 238, 0.88);
 }
 
+/* Cabecera fija de tabla */
 .table-wrap thead th {
     position: sticky;
     top: 0;
@@ -331,6 +369,7 @@
     font-weight: 700;
 }
 
+/* Primera columna fija */
 .table-wrap th:first-child,
 .table-wrap td:first-child {
     min-width: 120px;
@@ -345,10 +384,12 @@
     background: #050814;
 }
 
+/* Tabla pequeña */
 .mini-table {
     min-width: 640px !important;
 }
 
+/* Tabla amplia de reservas */
 .reservas-table {
     min-width: 2300px;
 }
@@ -374,7 +415,9 @@
     color: rgba(233, 233, 238, 0.34);
 }
 
+
 /* 11. HORARIOS Y RESERVAS */
+
 .class-slot {
     display: flex;
     flex-direction: column;
@@ -397,6 +440,7 @@
     line-height: 1.35;
 }
 
+/* Botones de reservar y cancelar */
 .reserve-btn,
 .cancel-btn {
     margin-top: 0.45rem;
@@ -419,6 +463,7 @@
     box-shadow: 0 14px 28px rgba(215, 180, 106, 0.22);
 }
 
+/* Estados de reserva o entrenamiento */
 .status-ok,
 .status-cancel,
 .status-wait {
@@ -452,7 +497,9 @@
     font-weight: 700;
 }
 
+
 /* 12. OBJETIVO / PROGRESO */
+
 .progress-bar {
     height: 10px;
     border-radius: 999px;
@@ -502,7 +549,9 @@
     color: #f0d596;
 }
 
-/* 13. MENSAJES */
+
+/* 13. MENSAJES Y ALERTAS */
+
 .form-message {
     margin-top: 1rem;
     padding: 0.9rem 1rem;
@@ -536,6 +585,7 @@
     color: #78d2ff;
 }
 
+/* Avisos de suscripción */
 .subscription-alert {
     margin-bottom: 1rem;
     padding: 1rem 1.1rem;
@@ -562,7 +612,9 @@
     color: #ff9a9a;
 }
 
+
 /* 14. NOTIFICACIONES */
+
 .notifications-list {
     display: flex;
     flex-direction: column;
@@ -587,6 +639,7 @@
     color: rgba(233, 233, 238, 0.76);
 }
 
+/* Notificación pulsable */
 .notification-item--clickable {
     width: 100%;
     text-align: left;
@@ -615,6 +668,7 @@
     min-height: 180px;
 }
 
+/* Badges de notificaciones */
 .nav-badge,
 .menu-badge {
     display: inline-flex;
@@ -639,7 +693,9 @@
     display: none !important;
 }
 
-/* 15. DASHBOARD VISUAL */
+
+/*  15. DASHBOARD VISUAL / GRÁFICAS */
+
 .table-progress {
     width: 100%;
     height: 10px;
@@ -691,6 +747,7 @@
     color: rgba(233, 233, 238, 0.72);
 }
 
+/* Acciones dentro de tablas */
 .actions-table {
     display: flex;
     flex-direction: column;
@@ -698,7 +755,9 @@
     align-items: flex-start;
 }
 
+
 /* 16. HORARIOS DESKTOP / MOBILE */
+
 .horarios-desktop {
     display: block;
 }
@@ -707,7 +766,9 @@
     display: none;
 }
 
+
 /* 17. MENSAJE DE ÉXITO */
+
 .alert-success {
     background: rgba(255, 220, 140, 0.08);
     border: 1px solid rgba(255, 220, 140, 0.30);
@@ -725,6 +786,7 @@
     color: #f0d596;
 }
 
+/* Animación de entrada para mensajes */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -737,7 +799,9 @@
     }
 }
 
+
 /* 18. RESPONSIVE */
+
 @media (max-width: 1180px) {
     .socios-layout {
         grid-template-columns: 230px minmax(0, 1fr);

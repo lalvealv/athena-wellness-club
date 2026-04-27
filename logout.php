@@ -1,19 +1,16 @@
 <?php
+
+// Cierra la sesión del usuario y redirige al login
+
 // Iniciar la sesión actual
 session_start();
 
-// Vaciar todas las variables de sesión
+// --- Eliminar todas las variables de sesión ---
 session_unset();
 
-// Destruir la sesión
+// --- Destruir completamente la sesión ---
 session_destroy();
 
-/*
-// Redirigir al inicio público
-header("Location: publico/index.html");
-exit;
-*/
-
-// Redirigir al usuario a la página pública de acceso
+// --- Redirigir al usuario a la página de acceso ---
 header("Location: publico/socios.html");
 exit;

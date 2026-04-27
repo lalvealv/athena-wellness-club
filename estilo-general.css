@@ -1,7 +1,22 @@
-/* ATHENA Wellness Club — ESTILO GENERAL
-   Base global, header, hero, cards, tablas, formularios, footer */
+/* 
+   Archivo base del proyecto.
+   Define estilos globales para:
+   - Variables de color
+   - Reset general
+   - Header
+   - Navegación
+   - Botones
+   - Hero
+   - Cards
+   - Tablas
+   - Formularios
+   - Footer
+   - Responsive
+ */
 
-/* 1. VARIABLES */
+
+/* 1. VARIABLES GLOBALES
+   Colores principales reutilizables en toda la web */
 :root {
     --athena-bg: #0b0c10;
     --athena-text: #e9e9ee;
@@ -27,23 +42,29 @@
     --athena-gold-text-dark: #16120c;
 }
 
-/* 2. RESET Y BASE GLOBAL */
+
+/*  2. RESET Y BASE GLOBAL
+    Ajustes generales para todos los elementos*/
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
 
+/* Desplazamiento suave al navegar por anclas */
 html {
     scroll-behavior: smooth;
 }
 
+/* Estilo principal del body */
 body {
     margin: 0;
     font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     line-height: 1.5;
     color: var(--athena-text);
     overflow-x: hidden;
+
+    /* Fondo oscuro con degradados decorativos */
     background:
         radial-gradient(1200px 800px at 10% 10%, rgba(175, 150, 255, 0.14), transparent 55%),
         radial-gradient(1200px 800px at 90% 20%, rgba(120, 210, 255, 0.10), transparent 55%),
@@ -51,6 +72,7 @@ body {
         var(--athena-bg);
 }
 
+/* Enlaces sin subrayado */
 a {
     color: inherit;
     text-decoration: none;
@@ -60,37 +82,48 @@ a:hover {
     opacity: 0.95;
 }
 
-/* 3. CONTENEDORES Y UTILIDADES */
+
+/*  3. CONTENEDORES Y UTILIDADES */
+
+/* Contenedor central con ancho máximo */
 .container {
     width: min(1120px, calc(100% - 2rem));
     margin-inline: auto;
 }
 
+/* Espaciado general para secciones */
 .section {
     padding: 4rem 0;
 }
 
+/* Variante de sección con menos padding */
 .section--tight {
     padding: 2.5rem 0;
 }
 
+/* Texto secundario */
 .muted {
     color: var(--athena-text-soft);
 }
 
+/* Títulos secundarios */
 .h2 {
     margin: 0 0 1rem;
     font-size: 1.45rem;
     letter-spacing: -0.01em;
 }
 
+/* Texto introductorio */
 .lead {
     margin: 0 0 1.4rem;
     color: rgba(233, 233, 238, 0.70);
     max-width: 70ch;
 }
 
+
 /* 4. HEADER / CABECERA GENERAL */
+
+/* Cabecera fija superior */
 .site-header {
     position: sticky;
     top: 0;
@@ -100,6 +133,7 @@ a:hover {
     border-bottom: 1px solid var(--athena-border-soft);
 }
 
+/* Distribución interna del header */
 .header-inner {
     display: flex;
     align-items: center;
@@ -108,7 +142,10 @@ a:hover {
     padding: 1rem 0;
 }
 
+
 /* 5. MARCA / LOGO */
+
+/* Contenedor del logo y texto de marca */
 .brand {
     display: flex;
     align-items: center;
@@ -116,6 +153,7 @@ a:hover {
     min-width: 200px;
 }
 
+/* Imagen del logo */
 .brand img {
     width: 48px;
     height: 48px;
@@ -124,6 +162,7 @@ a:hover {
     flex-shrink: 0;
 }
 
+/* Nombre ATHENA */
 .brand-text strong {
     display: block;
     font-weight: 700;
@@ -132,6 +171,7 @@ a:hover {
     font-size: 0.92rem;
 }
 
+/* Subtítulo de marca */
 .brand-text span {
     display: block;
     font-size: 0.86rem;
@@ -139,7 +179,10 @@ a:hover {
     margin-top: 0.1rem;
 }
 
-/* 6. NAVEGACIÓN GENERAL */
+
+/*  6. NAVEGACIÓN GENERAL */
+
+/* Menú principal */
 .nav {
     display: flex;
     align-items: center;
@@ -148,6 +191,7 @@ a:hover {
     justify-content: flex-end;
 }
 
+/* Enlaces del menú */
 .nav a {
     padding: 0.55rem 0.8rem;
     border-radius: 999px;
@@ -157,19 +201,24 @@ a:hover {
     font-size: 0.95rem;
 }
 
+/* Hover del menú */
 .nav a:hover {
     color: rgba(233, 233, 238, 0.96);
     border-color: rgba(255, 220, 140, 0.22);
     background: rgba(255, 220, 140, 0.05);
 }
 
+/* Enlace activo */
 .nav a.is-active {
     color: rgba(233, 233, 238, 0.98);
     background: rgba(255, 220, 140, 0.08);
     border-color: rgba(255, 220, 140, 0.24);
 }
 
+
 /* 7. BOTONES */
+
+/* Botón base */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -185,6 +234,7 @@ a:hover {
     font-weight: 600;
 }
 
+/* Hover del botón */
 .btn:hover {
     transform: translateY(-1px);
     border-color: rgba(255, 220, 140, 0.36);
@@ -192,6 +242,7 @@ a:hover {
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
+/* Botón principal dorado */
 .btn--primary {
     border-color: rgba(255, 220, 140, 0.44);
     background: linear-gradient(135deg, #f0d596, #d7b46a);
@@ -205,16 +256,20 @@ a:hover {
     box-shadow: 0 14px 32px rgba(215, 180, 106, 0.24);
 }
 
+/* Botón transparente */
 .btn--ghost {
     background: transparent;
 }
 
 /* 8. HERO GENERAL */
+
+/* Sección principal de presentación */
 .hero {
     padding: 4.5rem 0 3.5rem;
     position: relative;
 }
 
+/* Distribución del hero en dos columnas */
 .hero-grid {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
@@ -222,6 +277,7 @@ a:hover {
     align-items: center;
 }
 
+/* Etiqueta pequeña superior */
 .kicker {
     display: inline-flex;
     align-items: center;
@@ -234,6 +290,7 @@ a:hover {
     font-size: 0.9rem;
 }
 
+/* Título principal */
 .hero h1 {
     margin: 0.8rem 0 0.7rem;
     font-size: clamp(2.1rem, 4vw, 3.2rem);
@@ -241,6 +298,7 @@ a:hover {
     letter-spacing: -0.02em;
 }
 
+/* Texto descriptivo del hero */
 .hero p {
     margin: 0 0 1.3rem;
     color: rgba(233, 233, 238, 0.75);
@@ -248,12 +306,14 @@ a:hover {
     max-width: 58ch;
 }
 
+/* Contenedor de botones del hero */
 .hero-actions {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
 }
 
+/* Tarjeta lateral del hero */
 .hero-card {
     border-radius: 22px;
     border: 1px solid var(--athena-border);
@@ -262,12 +322,14 @@ a:hover {
     padding: 1.2rem;
 }
 
+/* Grid interno de estadísticas */
 .hero-card .stat {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.9rem;
 }
 
+/* Caja individual de estadísticas */
 .stat-box {
     border-radius: 18px;
     padding: 1rem;
@@ -287,20 +349,26 @@ a:hover {
     margin-top: 0.2rem;
 }
 
+
 /* 9. GRID Y TARJETAS GENERALES */
+
+/* Grid base */
 .grid {
     display: grid;
     gap: 1rem;
 }
 
+/* Grid de tres columnas */
 .grid--3 {
     grid-template-columns: repeat(3, 1fr);
 }
 
+/* Grid de cuatro columnas */
 .grid--4 {
     grid-template-columns: repeat(4, 1fr);
 }
 
+/* Tarjeta general */
 .card {
     border-radius: 22px;
     border: 1px solid var(--athena-border);
@@ -309,12 +377,14 @@ a:hover {
     transition: transform 0.15s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
+/* Efecto hover en tarjetas */
 .card:hover {
     transform: translateY(-2px);
     border-color: rgba(255, 220, 140, 0.24);
     background: rgba(255, 255, 255, 0.04);
 }
 
+/* Zona de imagen de la tarjeta */
 .card-media {
     width: 100%;
     height: 260px;
@@ -329,6 +399,7 @@ a:hover {
     display: block;
 }
 
+/* Cuerpo de la tarjeta */
 .card-body {
     padding: 1.1rem 1.1rem 1.2rem;
 }
@@ -343,6 +414,7 @@ a:hover {
     color: rgba(233, 233, 238, 0.70);
 }
 
+/* Pie de tarjeta */
 .card-footer {
     padding: 0 1.1rem 1.1rem;
     display: flex;
@@ -351,7 +423,10 @@ a:hover {
     justify-content: space-between;
 }
 
-/* 10. TABLAS GENERALES */
+
+/*  10. TABLAS GENERALES */
+
+/* Contenedor responsive de tablas */
 .table-wrap {
     border-radius: 18px;
     overflow-x: auto;
@@ -360,12 +435,14 @@ a:hover {
     max-width: 100%;
 }
 
+/* Tabla base */
 table {
     width: 100%;
     border-collapse: collapse;
     min-width: 860px;
 }
 
+/* Celdas */
 th,
 td {
     padding: 0.9rem;
@@ -375,6 +452,7 @@ td {
     color: rgba(233, 233, 238, 0.86);
 }
 
+/* Cabecera de tabla */
 thead th {
     position: sticky;
     top: 0;
@@ -384,11 +462,15 @@ thead th {
     color: rgba(233, 233, 238, 0.92);
 }
 
+/* Hover de filas */
 tbody tr:hover td {
     background: rgba(255, 255, 255, 0.03);
 }
 
+
 /* 11. FORMULARIOS GENERALES */
+
+/* Caja visual del formulario */
 .form-shell {
     border-radius: 22px;
     border: 1px solid var(--athena-border);
@@ -396,11 +478,13 @@ tbody tr:hover td {
     padding: 1.3rem;
 }
 
+/* Estructura general de formularios */
 form {
     display: grid;
     gap: 1rem;
 }
 
+/* Agrupación de campos */
 fieldset {
     border: 1px solid var(--athena-border);
     border-radius: 18px;
@@ -413,6 +497,7 @@ legend {
     font-weight: 600;
 }
 
+/* Etiquetas */
 label {
     display: block;
     margin-bottom: 0.35rem;
@@ -420,6 +505,7 @@ label {
     font-size: 0.95rem;
 }
 
+/* Inputs, selects y textareas */
 input,
 select,
 textarea {
@@ -433,11 +519,13 @@ textarea {
     font: inherit;
 }
 
+/* Placeholder */
 input::placeholder,
 textarea::placeholder {
     color: rgba(233, 233, 238, 0.45);
 }
 
+/* Foco de campos */
 input:focus,
 select:focus,
 textarea:focus {
@@ -445,17 +533,20 @@ textarea:focus {
     box-shadow: 0 0 0 4px rgba(215, 180, 106, 0.12);
 }
 
+/* Grid de formulario */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
 }
 
+/* Fila individual */
 .form-row {
     display: grid;
     gap: 0.35rem;
 }
 
+/* Elementos en línea: checkbox, radio, etc. */
 .inline {
     display: flex;
     align-items: center;
@@ -463,11 +554,13 @@ textarea:focus {
     flex-wrap: wrap;
 }
 
+/* Ajuste de tamaño para checkbox y radio */
 .inline input[type="checkbox"],
 .inline input[type="radio"] {
     width: auto;
 }
 
+/* Acciones del formulario */
 .actions {
     display: flex;
     justify-content: flex-start;
@@ -475,7 +568,10 @@ textarea:focus {
     flex-wrap: wrap;
 }
 
+
 /* 12. ICONOS Y CONTROLES DE FORMULARIO */
+
+/* Select personalizado con flecha dorada */
 select {
     appearance: none;
     -webkit-appearance: none;
@@ -487,39 +583,47 @@ select {
     background-size: 1rem;
 }
 
+/* Opciones del select */
 select option {
     background-color: #23242c;
     color: #f5f5f7;
 }
 
+/* Opción seleccionada */
 select option:checked,
 select option:selected {
     background-color: #3a3c46;
     color: #ffffff;
 }
 
+/* Input date en modo oscuro */
 input[type="date"] {
     color-scheme: dark;
 }
 
+/* Icono nativo del calendario */
 input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
     opacity: 0.95;
     filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(475%) hue-rotate(339deg) brightness(101%) contrast(89%);
 }
 
+/* Iconos nativos de Edge/IE para contraseña */
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
     filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(475%) hue-rotate(339deg) brightness(101%) contrast(89%);
 }
 
+
 /* 13. FOOTER / PIE DE PÁGINA */
+
 .site-footer {
     border-top: 1px solid var(--athena-border-soft);
     background: rgba(11, 12, 16, 0.70);
     margin-top: 3rem;
 }
 
+/* Distribución del footer */
 .footer-inner {
     padding: 2rem 0;
     display: grid;
@@ -528,20 +632,26 @@ input[type="password"]::-ms-clear {
     align-items: start;
 }
 
+/* Textos del footer */
 .footer-inner p {
     margin: 0.15rem 0;
     color: rgba(233, 233, 238, 0.70);
 }
 
+
 /* 14. INPUT DATE CON ICONO VISIBLE */
+
+/* Contenedor del campo fecha */
 .form-row--date {
     position: relative;
 }
 
+/* Deja espacio a la derecha para el icono */
 .form-row--date input[type="date"] {
     padding-right: 3rem;
 }
 
+/* Icono visual personalizado de calendario */
 .form-row--date::after {
     content: "";
     position: absolute;
@@ -556,7 +666,9 @@ input[type="password"]::-ms-clear {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f0d596'%3E%3Cpath d='M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1Zm12 8H5v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8ZM6 6a1 1 0 0 0-1 1v1h14V7a1 1 0 0 0-1-1H6Z'/%3E%3C/svg%3E");
 }
 
+
 /* 15. RESPONSIVE GENERAL */
+
 @media (max-width: 920px) {
     .hero-grid {
         grid-template-columns: 1fr;
@@ -585,7 +697,11 @@ input[type="password"]::-ms-clear {
     }
 }
 
-/* 16. OVERRIDE GLOBAL FINAL DORADO */
+
+/* 16. OVERRIDE GLOBAL FINAL DORADO
+   Reglas finales para mantener coherencia visual dorada */
+
+/* Botones principales y acciones importantes */
 .btn--primary,
 .reserve-btn,
 .cancel-btn,
@@ -599,6 +715,7 @@ input[type="button"].btn--primary {
     box-shadow: 0 10px 24px var(--athena-gold-shadow) !important;
 }
 
+/* Hover de botones principales */
 .btn--primary:hover,
 .reserve-btn:hover,
 .cancel-btn:hover,
@@ -612,12 +729,14 @@ input[type="button"].btn--primary:hover {
     box-shadow: 0 14px 32px rgba(215, 180, 106, 0.28) !important;
 }
 
+/* Hover de botones secundarios */
 .btn:hover,
 .btn--ghost:hover {
     border-color: rgba(255, 220, 140, 0.28) !important;
     background: rgba(255, 220, 140, 0.06) !important;
 }
 
+/* Elementos activos de navegación */
 .nav a.is-active,
 .nav--socios a.is-active,
 .socios-menu a.is-active {
@@ -626,6 +745,7 @@ input[type="button"].btn--primary:hover {
     color: rgba(233, 233, 238, 0.98) !important;
 }
 
+/* Hover de navegación */
 .nav a:hover,
 .nav--socios a:hover,
 .socios-menu a:hover {
@@ -633,6 +753,7 @@ input[type="button"].btn--primary:hover {
     background: rgba(255, 220, 140, 0.05) !important;
 }
 
+/* Enlaces dentro de tablas */
 .table-wrap td a,
 .actions-table a {
     color: var(--athena-gold-light) !important;
@@ -643,6 +764,7 @@ input[type="button"].btn--primary:hover {
     color: #ffe7b3 !important;
 }
 
+/* Flecha dorada en selects */
 select,
 .form-row select,
 .state-select,
@@ -654,6 +776,7 @@ select,
     padding-right: 2.8rem !important;
 }
 
+/* Foco final de campos */
 input:focus,
 select:focus,
 textarea:focus,
@@ -667,16 +790,19 @@ textarea:focus,
     box-shadow: 0 0 0 3px rgba(215, 180, 106, 0.12);
 }
 
+/* Calendario dorado */
 input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0.95 !important;
     filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(475%) hue-rotate(339deg) brightness(101%) contrast(89%) !important;
     cursor: pointer !important;
 }
 
+/* Icono visual de calendario */
 .form-row--date::after {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f0d596'%3E%3Cpath d='M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1Zm12 8H5v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8ZM6 6a1 1 0 0 0-1 1v1h14V7a1 1 0 0 0-1-1H6Z'/%3E%3C/svg%3E") !important;
 }
 
+/* Barras de progreso */
 .progress-bar-fill,
 .progress-value,
 .table-progress-fill,
@@ -684,6 +810,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: linear-gradient(90deg, var(--athena-gold-light), var(--athena-gold-main)) !important;
 }
 
+/* Elementos destacados */
 .admin-lock-badge,
 .notification-unread,
 .weekly-check-item--done {
@@ -692,6 +819,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: var(--athena-gold-light) !important;
 }
 
+/* Mensajes de éxito */
 .alert-success {
     background: rgba(255, 220, 140, 0.08) !important;
     border-color: rgba(255, 220, 140, 0.30) !important;
@@ -701,7 +829,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: var(--athena-gold-light) !important;
 }
 
-/* SELECTS OSCUROS EN FORMULARIOS PÚBLICOS */
+/* Selects oscuros en formularios públicos */
 select,
 select option,
 .form-row select,
