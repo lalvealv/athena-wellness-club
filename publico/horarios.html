@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -14,25 +15,36 @@
 </head>
 
 <body>
+
     <!-- HEADER / CABECERA PRINCIPAL -->
-    <!-- Logo del club y menú de navegación -->
+    <!-- Contiene el logo y el menú de navegación -->
     <header class="site-header">
         <div class="container header-inner">
-            <!-- Logo e identidad visual de la marca -->
+
+            <!-- Logo e identidad visual -->
             <a class="brand" href="index.html" aria-label="ATHENA Wellness Club">
+                <!-- Imagen del logo -->
                 <img src="../img/athena_logo.png" alt="Logo del Club">
+
+                <!-- Elemento decorativo -->
                 <span class="brand-mark" aria-hidden="true"></span>
+
+                <!-- Texto del logo -->
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Strength with Intelligence</span>
                 </span>
             </a>
-            <!-- Menú principal de navegación -->
+
+            <!-- Menú de navegación -->
             <nav class="nav" aria-label="Navegación principal">
                 <a href="nosotros.html">Sobre nosotros</a>
                 <a href="tarifas.html">Tarifas</a>
                 <a href="actividades.html">Actividades</a>
+
+                <!-- Clase is-active indica la página actual -->
                 <a class="is-active" href="horarios.html">Horarios</a>
+
                 <a href="unete.html">Únete</a>
                 <a href="socios.html">Área socios</a>
             </nav>
@@ -40,23 +52,33 @@
     </header>
 
     <main>
+
         <!-- SECCIÓN: HORARIO SEMANAL -->
-        <!-- Tabla con la planificación de actividades por día -->
+        <!-- Muestra una tabla con todas las clases del gimnasio -->
         <section class="section">
             <div class="container">
-                <!-- Título y texto introductorio -->
+
+                <!-- Título de la sección -->
                 <h2 class="h2">Horario semanal</h2>
-                <!--<p class="lead">Planifica tu semana.</p>-->
-                <p class="lead">Consulta las clases disponibles y organiza tus entrenamientos durante toda la semana.
+
+                <!-- Texto descriptivo -->
+                <p class="lead">
+                    Consulta las clases disponibles y organiza tus entrenamientos durante toda la semana.
                 </p>
 
+                <!-- Contenedor para hacer la tabla responsive -->
                 <div class="table-wrap">
-                    <!-- Tabla principal de horarios -->
+
+                    <!-- TABLA DE HORARIOS -->
                     <table>
-                        <!-- Encabezado de la tabla -->
+
+                        <!-- CABECERA DE LA TABLA -->
                         <thead>
                             <tr>
+                                <!-- Columna de horas -->
                                 <th>Horario</th>
+
+                                <!-- Días de la semana -->
                                 <th>Lunes</th>
                                 <th>Martes</th>
                                 <th>Miércoles</th>
@@ -66,9 +88,12 @@
                                 <th>Domingo</th>
                             </tr>
                         </thead>
-                        <!-- Cuerpo de la tabla con actividades por franja horaria -->
+
+                        <!-- CUERPO DE LA TABLA -->
+                        <!-- Contiene las clases organizadas por horas -->
                         <tbody>
-                            <!-- Franja 07:30 - 08:20 -->
+
+                            <!-- FILA: 07:30 - 08:20 -->
                             <tr>
                                 <td>07:30 - 08:20</td>
                                 <td>Spinning</td>
@@ -79,7 +104,8 @@
                                 <td>Yoga / Pilates</td>
                                 <td>Mobility</td>
                             </tr>
-                            <!-- Franja 08:30 - 09:20 -->
+
+                            <!-- FILA: 08:30 - 09:20 -->
                             <tr>
                                 <td>08:30 - 09:20</td>
                                 <td>Strength</td>
@@ -90,7 +116,8 @@
                                 <td>Spinning</td>
                                 <td>Hipopresivos</td>
                             </tr>
-                            <!-- Franja 09:30 - 10:20 -->
+
+                            <!-- FILA: 09:30 - 10:20 -->
                             <tr>
                                 <td>09:30 - 10:20</td>
                                 <td>Yoga / Pilates</td>
@@ -101,7 +128,8 @@
                                 <td>Zumba</td>
                                 <td>Yoga / Pilates</td>
                             </tr>
-                            <!-- Franja 10:30 - 11:20 -->
+
+                            <!-- FILA: 10:30 - 11:20 -->
                             <tr>
                                 <td>10:30 - 11:20</td>
                                 <td>Functional Training</td>
@@ -112,9 +140,11 @@
                                 <td>HIIT</td>
                                 <td>Mobility</td>
                             </tr>
-                            <!-- Franja 11:30 - 12:20 -->
+
+                            <!-- FILA: 11:30 - 12:20 -->
                             <tr>
                                 <td>11:30 - 12:20</td>
+                                <!-- Clases de entrenamiento personal -->
                                 <td>Personal Training</td>
                                 <td>Personal Training</td>
                                 <td>Personal Training</td>
@@ -123,7 +153,8 @@
                                 <td>Personal Training</td>
                                 <td>Personal Training</td>
                             </tr>
-                            <!-- Franja 12:30 - 13:20 -->
+
+                            <!-- FILA: 12:30 - 13:20 -->
                             <tr>
                                 <td>12:30 - 13:20</td>
                                 <td>Mobility</td>
@@ -134,7 +165,8 @@
                                 <td>Functional Training</td>
                                 <td>Zumba</td>
                             </tr>
-                            <!-- Franja 14:00 - 14:50 -->
+
+                            <!-- FILA: 14:00 - 14:50 -->
                             <tr>
                                 <td>14:00 - 14:50</td>
                                 <td>Hipopresivos</td>
@@ -143,9 +175,12 @@
                                 <td>Hipopresivos</td>
                                 <td>Yoga / Pilates</td>
                                 <td>Strength</td>
+
+                                <!-- Guion indica que no hay clase -->
                                 <td>—</td>
                             </tr>
-                            <!-- Franja 17:30 - 18:20 -->
+
+                            <!-- FILA: 17:30 - 18:20 -->
                             <tr>
                                 <td>17:30 - 18:20</td>
                                 <td>Zumba</td>
@@ -156,7 +191,8 @@
                                 <td>HIIT</td>
                                 <td>—</td>
                             </tr>
-                            <!-- Franja 18:30 - 19:20 -->
+
+                            <!-- FILA: 18:30 - 19:20 -->
                             <tr>
                                 <td>18:30 - 19:20</td>
                                 <td>Strength</td>
@@ -167,7 +203,8 @@
                                 <td>Yoga / Pilates</td>
                                 <td>—</td>
                             </tr>
-                            <!-- Franja 19:30 - 20:20 -->
+
+                            <!-- FILA: 19:30 - 20:20 -->
                             <tr>
                                 <td>19:30 - 20:20</td>
                                 <td>HIIT</td>
@@ -178,7 +215,8 @@
                                 <td>Mobility</td>
                                 <td>—</td>
                             </tr>
-                            <!-- Franja 20:30 - 21:20 -->
+
+                            <!-- FILA: 20:30 - 21:20 -->
                             <tr>
                                 <td>20:30 - 21:20</td>
                                 <td>Yoga / Pilates</td>
@@ -189,28 +227,35 @@
                                 <td>Zumba</td>
                                 <td>—</td>
                             </tr>
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
     </main>
+
     <!-- FOOTER / PIE DE PÁGINA -->
     <!-- Información de contacto y horario del club -->
-
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Datos de contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123 · 912 345 678</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario del gimnasio -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
             </div>
+
         </div>
     </footer>
+
 </body>
 
 </html>

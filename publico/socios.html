@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -10,32 +11,38 @@
      reservas gimnasio, ATHENA Wellness Club">
     <meta name="author" content="lavealv">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link rel="stylesheet" href="../estilo-general.css">-->
     <link rel="stylesheet" href="../estilo-general.css?v=2">
 </head>
 
 <body>
-    <!-- HEADER / CABECERA PRINCIPAL -->
-    <!-- Contiene el logo y el menú de navegación -->
+
+    <!-- HEADER -->
+    <!-- Logo + menú -->
     <header class="site-header">
         <div class="container header-inner">
-            <!-- Logo del club -->
+
+            <!-- Logo -->
             <a class="brand" href="index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo del Club">
+
+                <!-- Elemento decorativo -->
                 <span class="brand-mark" aria-hidden="true"></span>
+
+                <!-- Texto del logo -->
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Strength with Intelligence</span>
                 </span>
             </a>
 
-            <!-- Menú principal -->
+            <!-- Menú navegación -->
             <nav class="nav" aria-label="Navegación principal">
                 <a href="nosotros.html">Sobre nosotros</a>
                 <a href="tarifas.html">Tarifas</a>
                 <a href="actividades.html">Actividades</a>
                 <a href="horarios.html">Horarios</a>
                 <a href="unete.html">Únete</a>
+
                 <!-- Página activa -->
                 <a class="is-active" href="socios.html">Área socios</a>
             </nav>
@@ -43,54 +50,80 @@
     </header>
 
     <main>
-        <!-- SECCIÓN: ÁREA DE SOCIOS -->
-        <!-- Formulario de inicio de sesión -->
+
+        <!-- SECCIÓN: LOGIN DE USUARIOS -->
         <section class="section">
             <div class="container">
+
+                <!-- MENSAJE: REGISTRO COMPLETADO -->
+                <!-- Se muestra si viene ?registro=ok en la URL -->
                 <div id="mensaje-registro" class="alert-success" style="display: none;">
                     <strong>Registro completado</strong>
                     <p>Tu cuenta se ha creado correctamente. Ya puedes iniciar sesión.</p>
                 </div>
 
+                <!-- MENSAJE: PASSWORD CAMBIADO -->
+                <!-- Se muestra si viene ?password=ok -->
                 <div id="mensaje-password" class="alert-success" style="display: none;">
                     <strong>Contraseña actualizada</strong>
                     <p>Tu contraseña se ha cambiado correctamente. Ya puedes iniciar sesión.</p>
                 </div>
+
                 <!-- Título -->
                 <h2 class="h2">Área de socios</h2>
+
+                <!-- Descripción -->
                 <p class="lead">Accede a tu cuenta para reservar clases y ver tu plan.</p>
 
-                <!-- Contenedor visual del formulario -->
+                <!-- Contenedor del formulario -->
                 <div class="form-shell" style="max-width: 520px;">
 
-                    <!-- Formulario de login -->
-                    <!-- Enviará los datos al archivo login.php -->
+                    <!-- FORMULARIO LOGIN -->
+                    <!-- Envía datos a login.php -->
                     <form method="post" action="../login.php">
 
-                        <!-- Campo usuario o correo -->
+                        <!-- CAMPO: USUARIO O EMAIL -->
                         <div class="form-row">
                             <label for="identificador">Usuario o correo electrónico</label>
-                            <!-- name="identificador" es el nombre que recogerá PHP -->
+
+                            <!-- 
+                                name="identificador" → lo recogerá PHP
+                                Puede ser alias o correo
+                            -->
                             <input type="text" id="identificador" name="identificador" required autocomplete="username"
                                 placeholder="Tu usuario o tu correo">
                         </div>
 
-                        <!-- Campo contraseña -->
+                        <!-- CAMPO: CONTRASEÑA -->
                         <div class="form-row">
                             <label for="password">Contraseña</label>
-                            <!-- name="password" será la contraseña que recibirá login.php -->
+
+                            <!-- 
+                                name="password" → lo recibe login.php
+                            -->
                             <input type="password" id="password" name="password" required
                                 autocomplete="current-password" placeholder="Tu contraseña">
                         </div>
 
-                        <!-- Botones -->
+                        <!-- BOTONES -->
                         <div class="actions">
-                            <button class="btn btn--primary" type="submit">Entrar</button>
-                            <a class="btn btn--ghost" href="unete.html">Crear cuenta</a>
+
+                            <!-- Botón login -->
+                            <button class="btn btn--primary" type="submit">
+                                Entrar
+                            </button>
+
+                            <!-- Crear cuenta -->
+                            <a class="btn btn--ghost" href="unete.html">
+                                Crear cuenta
+                            </a>
                         </div>
 
+                        <!-- Link recuperar contraseña -->
                         <p class="muted" style="margin-top: 0.75rem;">
-                            <a href="recuperar-password.html">¿Has olvidado tu contraseña?</a>
+                            <a href="recuperar-password.html">
+                                ¿Has olvidado tu contraseña?
+                            </a>
                         </p>
 
                     </form>
@@ -103,59 +136,56 @@
     <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123 · 912 345 678</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
             </div>
         </div>
     </footer>
-    <!-- <script>
-        const params = new URLSearchParams(window.location.search);
-        if (params.get("registro") === "ok") {
-            alert("Registro completado correctamente. Ya puedes iniciar sesión.");
-        }
-    </script>
+
+    <!-- SCRIPTS JS -->
+    <!-- Controlan mensajes dinámicos según parámetros en la URL -->
 
     <script>
+        // Obtener parámetros de la URL (?registro=ok, ?password=ok)
         const params = new URLSearchParams(window.location.search);
 
+        // Si el usuario viene de registrarse
         if (params.get("registro") === "ok") {
-            const mensaje = document.getElementById("mensaje-registro");
-            mensaje.style.display = "block";
 
-            // Ocultarlo automáticamente después de 4 segundos
-            setTimeout(() => {
-                mensaje.style.display = "none";
-            }, 4000);
-        }
-    </script>-->
-
-    <script>
-        const params = new URLSearchParams(window.location.search);
-
-        if (params.get("registro") === "ok") {
+            // Mostrar mensaje de registro
             const mensajeRegistro = document.getElementById("mensaje-registro");
             mensajeRegistro.style.display = "block";
 
+            // Ocultarlo después de 4 segundos
             setTimeout(() => {
                 mensajeRegistro.style.display = "none";
             }, 4000);
         }
 
+        // Si el usuario ha cambiado la contraseña
         if (params.get("password") === "ok") {
+
+            // Mostrar mensaje de éxito
             const mensajePassword = document.getElementById("mensaje-password");
             mensajePassword.style.display = "block";
 
+            // Ocultarlo automáticamente
             setTimeout(() => {
                 mensajePassword.style.display = "none";
             }, 4000);
         }
     </script>
+
 </body>
 
 </html>
