@@ -1,12 +1,18 @@
 <?php
+// Inicia la sesión para comprobar el usuario logueado
 session_start();
+
+// Indica que la respuesta será JSON
 header('Content-Type: application/json; charset=utf-8');
 
+// Importa la conexión a la base de datos
 require_once __DIR__ . '/../conexion.php';
 
+// Importa y ejecuta la actualización automática de suscripciones
 require_once __DIR__ . '/../actualizar-suscripciones.php';
 actualizarSuscripcionesAutomaticamente($conn);
 
+// Comprueba si existe una sesión válida
 if (!isset($_SESSION['id_usuario'])) {
     echo json_encode([
         'ok' => false,
@@ -15,14 +21,17 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
+// Obtiene el ID del usuario logueado
 $idUsuario = (int) $_SESSION['id_usuario'];
 
+// Función reutilizable para devolver respuestas JSON
 function responderJSON(array $datos): void
 {
     echo json_encode($datos, JSON_UNESCAPED_UNICODE);
     exit;
 }
 
+// Formatea una fecha de base de datos a formato día/mes/año
 function formatearFecha(?string $fecha): string
 {
     if (!$fecha) {
@@ -32,6 +41,7 @@ function formatearFecha(?string $fecha): string
     return date('d/m/Y', strtotime($fecha));
 }
 
+// Obtiene los datos del sidebar del usuario
 function obtenerSidebar(PDO $conn, int $idUsuario): array
 {
     $sqlUsuario = "SELECT 
@@ -54,6 +64,7 @@ function obtenerSidebar(PDO $conn, int $idUsuario): array
 
     $usuario = $stmtUsuario->fetch(PDO::FETCH_ASSOC);
 
+    // Si no se encuentra usuario, devuelve datos por defecto
     if (!$usuario) {
         return [
             'foto_perfil' => '../img-socios/socio1.png',
@@ -62,11 +73,15 @@ function obtenerSidebar(PDO $conn, int $idUsuario): array
         ];
     }
 
+    // Define foto de perfil o imagen por defecto
     $fotoPerfil = !empty($usuario['foto_perfil'])
         ? $usuario['foto_perfil']
         : '../img-socios/socio1.png';
 
+    // Construye el nombre completo
     $nombreCompleto = trim(($usuario['nombre'] ?? '') . ' ' . ($usuario['apellidos'] ?? ''));
+
+    // Obtiene la membresía activa
     $membresia = $usuario['membresia'] ?? 'Sin suscripción activa';
 
     return [
@@ -76,6 +91,7 @@ function obtenerSidebar(PDO $conn, int $idUsuario): array
     ];
 }
 
+// Obtiene el historial de reservas del usuario
 function obtenerHistorial(PDO $conn, int $idUsuario): array
 {
     $sqlHistorial = "SELECT
@@ -106,12 +122,16 @@ function obtenerHistorial(PDO $conn, int $idUsuario): array
     $historial = $stmtHistorial->fetchAll(PDO::FETCH_ASSOC);
     $filas = [];
 
+    // Recorre las reservas y las formatea para el frontend
     foreach ($historial as $item) {
+        // Calcula la fecha y hora exacta de la clase
         $timestampClase = strtotime($item['fecha'] . ' ' . $item['hora_inicio']);
         $timestampAhora = time();
 
+        // Por defecto no se puede cancelar
         $puedeCancelar = false;
 
+        // Permite cancelar solo si está confirmada y falta más de 1 hora
         if (
             $item['estado'] === 'Confirmada' &&
             ($timestampClase - $timestampAhora) > 3600
@@ -133,11 +153,14 @@ function obtenerHistorial(PDO $conn, int $idUsuario): array
     return $filas;
 }
 
+// Cancela una reserva del usuario si cumple las condiciones
 function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
 {
     try {
+        // Inicia transacción para evitar cambios inconsistentes
         $conn->beginTransaction();
 
+        // Busca la reserva del usuario y la bloquea durante la operación
         $sqlReserva = "SELECT
                             r.id_reserva,
                             r.estado,
@@ -161,6 +184,7 @@ function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
 
         $reserva = $stmtReserva->fetch(PDO::FETCH_ASSOC);
 
+        // Si no existe, se cancela la operación
         if (!$reserva) {
             $conn->rollBack();
             return [
@@ -169,6 +193,7 @@ function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
             ];
         }
 
+        // Solo se pueden cancelar reservas confirmadas
         if ($reserva['estado'] !== 'Confirmada') {
             $conn->rollBack();
             return [
@@ -177,9 +202,11 @@ function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
             ];
         }
 
+        // Calcula cuánto falta para la clase
         $timestampClase = strtotime($reserva['fecha'] . ' ' . $reserva['hora_inicio']);
         $timestampAhora = time();
 
+        // No permite cancelar con menos de 1 hora de antelación
         if (($timestampClase - $timestampAhora) <= 3600) {
             $conn->rollBack();
             return [
@@ -188,6 +215,7 @@ function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
             ];
         }
 
+        // Actualiza el estado de la reserva a Cancelada
         $sqlUpdate = "UPDATE reserva
                       SET estado = 'Cancelada'
                       WHERE id_reserva = :id_reserva";
@@ -197,6 +225,7 @@ function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
             ':id_reserva' => $idReserva
         ]);
 
+        // Confirma la cancelación
         $conn->commit();
 
         return [
@@ -204,6 +233,7 @@ function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
             'mensaje' => 'Reserva cancelada correctamente.'
         ];
     } catch (PDOException $e) {
+        // Si hay error, deshace la transacción
         if ($conn->inTransaction()) {
             $conn->rollBack();
         }
@@ -216,6 +246,7 @@ function cancelarReserva(PDO $conn, int $idUsuario, int $idReserva): array
 }
 
 try {
+    // PETICIÓN GET: devuelve sidebar e historial de reservas
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $sidebar = obtenerSidebar($conn, $idUsuario);
         $historial = obtenerHistorial($conn, $idUsuario);
@@ -227,9 +258,11 @@ try {
         ]);
     }
 
+    // PETICIÓN POST: cancela una reserva
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $accion = $_POST['accion'] ?? '';
 
+        // Valida la acción recibida
         if ($accion !== 'cancelar') {
             responderJSON([
                 'ok' => false,
@@ -237,8 +270,10 @@ try {
             ]);
         }
 
+        // Recoge el ID de la reserva
         $idReserva = isset($_POST['id_reserva']) ? (int) $_POST['id_reserva'] : 0;
 
+        // Valida el ID de reserva
         if ($idReserva <= 0) {
             responderJSON([
                 'ok' => false,
@@ -246,15 +281,18 @@ try {
             ]);
         }
 
+        // Cancela la reserva y devuelve el resultado
         $resultado = cancelarReserva($conn, $idUsuario, $idReserva);
         responderJSON($resultado);
     }
 
+    // Si llega otro método HTTP, devuelve error
     responderJSON([
         'ok' => false,
         'mensaje' => 'Método no permitido.'
     ]);
 } catch (PDOException $e) {
+    // Devuelve error si falla la consulta principal
     responderJSON([
         'ok' => false,
         'mensaje' => 'Error al obtener el historial de reservas: ' . $e->getMessage()

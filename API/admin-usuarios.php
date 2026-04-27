@@ -1,14 +1,20 @@
 <?php
+// Inicia la sesión para comprobar el administrador logueado
 session_start();
+
+// Indica que la respuesta será JSON
 header('Content-Type: application/json; charset=utf-8');
 
+// Importa la conexión a la base de datos
 require_once __DIR__ . '/../conexion.php';
 
+// Recoge el filtro de búsqueda enviado por GET
 $busqueda = trim($_GET['buscar'] ?? '');
 
-// ID del admin original e intocable
+// ID del administrador original e intocable
 define('ADMIN_ORIGINAL_ID', 1);
 
+// Comprueba si existe una sesión válida
 if (!isset($_SESSION['id_usuario'])) {
     echo json_encode([
         'ok' => false,
@@ -17,6 +23,7 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
+// Comprueba que el usuario logueado tenga perfil ADMIN
 if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
     echo json_encode([
         'ok' => false,
@@ -25,24 +32,29 @@ if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
     exit;
 }
 
+// ID del administrador logueado
 $idAdmin = (int) $_SESSION['id_usuario'];
 
+// Función reutilizable para devolver respuestas JSON
 function responderJSON(array $datos): void
 {
     echo json_encode($datos, JSON_UNESCAPED_UNICODE);
     exit;
 }
 
+// Comprueba si un usuario es el administrador original
 function esAdminOriginal(int $idUsuario): bool
 {
     return $idUsuario === ADMIN_ORIGINAL_ID;
 }
 
+// Comprueba si el administrador logueado es el administrador original
 function adminLogueadoEsOriginal(int $idAdmin): bool
 {
     return $idAdmin === ADMIN_ORIGINAL_ID;
 }
 
+// Obtiene los datos del administrador logueado
 function obtenerAdmin(PDO $conn, int $idAdmin): array
 {
     $sqlAdmin = "SELECT nombre, apellidos, foto_perfil
@@ -56,6 +68,7 @@ function obtenerAdmin(PDO $conn, int $idAdmin): array
     ]);
     $admin = $stmtAdmin->fetch(PDO::FETCH_ASSOC);
 
+    // Si no se encuentra, devuelve datos por defecto
     if (!$admin) {
         return [
             'foto_perfil' => '../img/athena_logo.png',
@@ -64,6 +77,7 @@ function obtenerAdmin(PDO $conn, int $idAdmin): array
         ];
     }
 
+    // Prepara foto y nombre completo
     $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
     $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
 
@@ -74,6 +88,7 @@ function obtenerAdmin(PDO $conn, int $idAdmin): array
     ];
 }
 
+// Obtiene el listado de usuarios aplicando búsqueda opcional
 function obtenerUsuarios(PDO $conn, string $busqueda): array
 {
     $sqlUsuarios = "SELECT 
@@ -105,6 +120,7 @@ function obtenerUsuarios(PDO $conn, string $busqueda): array
     ]);
     $usuarios = $stmtUsuarios->fetchAll(PDO::FETCH_ASSOC);
 
+    // Formatea los usuarios para enviarlos al frontend
     $listaUsuarios = [];
     foreach ($usuarios as $usuario) {
         $idUsuario = (int)$usuario['id_usuario'];
@@ -125,8 +141,10 @@ function obtenerUsuarios(PDO $conn, string $busqueda): array
     return $listaUsuarios;
 }
 
+// Cambia el estado de un usuario desde administración
 function actualizarEstadoUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuevoEstado, int $idAdmin): array
 {
+    // Estados permitidos
     $estadosPermitidos = ['Activo', 'Inactivo', 'Bloqueado'];
 
     if (!in_array($nuevoEstado, $estadosPermitidos, true)) {
@@ -136,6 +154,7 @@ function actualizarEstadoUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
         ];
     }
 
+    // Evita que el administrador cambie su propio estado
     if ($idUsuarioObjetivo === $idAdmin) {
         return [
             'ok' => false,
@@ -143,6 +162,7 @@ function actualizarEstadoUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
         ];
     }
 
+    // Protege al administrador original
     if (esAdminOriginal($idUsuarioObjetivo)) {
         return [
             'ok' => false,
@@ -151,6 +171,7 @@ function actualizarEstadoUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
     }
 
     try {
+        // Comprueba que el usuario exista
         $sqlComprobar = "SELECT id_usuario
                          FROM usuario
                          WHERE id_usuario = :id_usuario
@@ -170,6 +191,7 @@ function actualizarEstadoUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
             ];
         }
 
+        // Actualiza el estado del usuario
         $sqlUpdate = "UPDATE usuario
                       SET estado = :estado
                       WHERE id_usuario = :id_usuario";
@@ -192,8 +214,10 @@ function actualizarEstadoUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
     }
 }
 
+// Cambia el perfil de un usuario desde administración
 function actualizarPerfilUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuevoPerfil, int $idAdmin): array
 {
+    // Perfiles permitidos
     $perfilesPermitidos = ['ADMIN', 'CLIENTE'];
 
     if (!in_array($nuevoPerfil, $perfilesPermitidos, true)) {
@@ -203,6 +227,7 @@ function actualizarPerfilUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
         ];
     }
 
+    // Evita que el administrador cambie su propio perfil
     if ($idUsuarioObjetivo === $idAdmin) {
         return [
             'ok' => false,
@@ -210,6 +235,7 @@ function actualizarPerfilUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
         ];
     }
 
+    // Protege al administrador original
     if (esAdminOriginal($idUsuarioObjetivo)) {
         return [
             'ok' => false,
@@ -217,7 +243,7 @@ function actualizarPerfilUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
         ];
     }
 
-    // Solo el admin original puede ascender usuarios a ADMIN
+    // Solo el administrador original puede ascender usuarios a ADMIN
     if ($nuevoPerfil === 'ADMIN' && !adminLogueadoEsOriginal($idAdmin)) {
         return [
             'ok' => false,
@@ -226,6 +252,7 @@ function actualizarPerfilUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
     }
 
     try {
+        // Comprueba que el usuario exista
         $sqlComprobar = "SELECT id_usuario
                          FROM usuario
                          WHERE id_usuario = :id_usuario
@@ -245,6 +272,7 @@ function actualizarPerfilUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
             ];
         }
 
+        // Busca el ID del perfil indicado
         $sqlPerfil = "SELECT id_perfil
                       FROM perfil
                       WHERE nombre_perfil = :perfil
@@ -264,6 +292,7 @@ function actualizarPerfilUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
             ];
         }
 
+        // Actualiza el perfil del usuario
         $sqlUpdate = "UPDATE usuario
                       SET id_perfil = :id_perfil
                       WHERE id_usuario = :id_usuario";
@@ -287,6 +316,7 @@ function actualizarPerfilUsuario(PDO $conn, int $idUsuarioObjetivo, string $nuev
 }
 
 try {
+    // PETICIÓN GET: devuelve administrador, usuarios y permisos del admin logueado
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         responderJSON([
             'ok' => true,
@@ -296,10 +326,12 @@ try {
         ]);
     }
 
+    // PETICIÓN POST: cambia estado o perfil de un usuario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $accion = $_POST['accion'] ?? '';
         $idUsuarioObjetivo = isset($_POST['id_usuario']) ? (int)$_POST['id_usuario'] : 0;
 
+        // Cambiar estado
         if ($accion === 'cambiar_estado') {
             $nuevoEstado = trim($_POST['estado'] ?? '');
 
@@ -313,6 +345,7 @@ try {
             responderJSON(actualizarEstadoUsuario($conn, $idUsuarioObjetivo, $nuevoEstado, $idAdmin));
         }
 
+        // Cambiar perfil
         if ($accion === 'cambiar_perfil') {
             $nuevoPerfil = strtoupper(trim($_POST['perfil'] ?? ''));
 
@@ -326,17 +359,20 @@ try {
             responderJSON(actualizarPerfilUsuario($conn, $idUsuarioObjetivo, $nuevoPerfil, $idAdmin));
         }
 
+        // Acción no reconocida
         responderJSON([
             'ok' => false,
             'mensaje' => 'Acción no válida.'
         ]);
     }
 
+    // Método HTTP no permitido
     responderJSON([
         'ok' => false,
         'mensaje' => 'Método no permitido.'
     ]);
 } catch (PDOException $e) {
+    // Error general de base de datos
     responderJSON([
         'ok' => false,
         'mensaje' => 'Error al obtener los usuarios: ' . $e->getMessage()

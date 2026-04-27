@@ -1,18 +1,27 @@
 <?php
+// Inicia la sesión para comprobar el usuario logueado
 session_start();
+
+// Indica que la respuesta será JSON
 header('Content-Type: application/json; charset=utf-8');
 
+// Importa la conexión a la base de datos
 require_once __DIR__ . '/../conexion.php';
+
+// Importa el archivo que actualiza las suscripciones automáticamente
 require_once __DIR__ . '/../actualizar-suscripciones.php';
 
+// Ejecuta la actualización automática de suscripciones antes de consultar datos
 actualizarSuscripcionesAutomaticamente($conn);
 
+// Función reutilizable para devolver respuestas JSON
 function responderJSON(array $datos): void
 {
     echo json_encode($datos, JSON_UNESCAPED_UNICODE);
     exit;
 }
 
+// Formatea una fecha a formato día/mes/año
 function formatearFecha(?string $fecha): string
 {
     if (!$fecha) {
@@ -27,6 +36,7 @@ function formatearFecha(?string $fecha): string
     return date('d/m/Y', $timestamp);
 }
 
+// Devuelve información descriptiva según el tipo de membresía
 function obtenerDetallesMembresia(?string $membresia): array
 {
     switch ($membresia) {
@@ -67,6 +77,7 @@ function obtenerDetallesMembresia(?string $membresia): array
     }
 }
 
+// Calcula cuántos días faltan para la renovación
 function calcularDiasParaRenovacion(?string $fechaRenovacion): ?int
 {
     if (!$fechaRenovacion) {
@@ -83,6 +94,7 @@ function calcularDiasParaRenovacion(?string $fechaRenovacion): ?int
     return (int)(($renovacion - $hoy) / 86400);
 }
 
+// Comprueba si existe una sesión válida
 if (!isset($_SESSION['id_usuario'])) {
     responderJSON([
         'ok' => false,
@@ -90,9 +102,11 @@ if (!isset($_SESSION['id_usuario'])) {
     ]);
 }
 
+// Obtiene el ID del usuario logueado
 $idUsuario = (int)$_SESSION['id_usuario'];
 
 try {
+    // PETICIÓN GET: obtiene los datos de la suscripción del usuario
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $sql = "SELECT
                     u.nombre,
@@ -122,6 +136,7 @@ try {
 
         $datos = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        // Si no se encuentran datos, devuelve error
         if (!$datos) {
             responderJSON([
                 'ok' => false,
@@ -129,9 +144,13 @@ try {
             ]);
         }
 
+        // Obtiene textos descriptivos del plan
         $detallesMembresia = obtenerDetallesMembresia($datos['membresia'] ?? null);
+
+        // Calcula días restantes hasta la renovación
         $diasParaRenovacion = calcularDiasParaRenovacion($datos['fecha_renovacion'] ?? null);
 
+        // Devuelve los datos de la suscripción al frontend
         responderJSON([
             'ok' => true,
             'id_suscripcion' => !empty($datos['id_suscripcion']) ? (int)$datos['id_suscripcion'] : 0,
@@ -151,9 +170,11 @@ try {
         ]);
     }
 
+    // PETICIÓN POST: permite cancelar la suscripción
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $accion = $_POST['accion'] ?? '';
 
+        // Solo se permite la acción cancelar
         if ($accion !== 'cancelar') {
             responderJSON([
                 'ok' => false,
@@ -161,6 +182,7 @@ try {
             ]);
         }
 
+        // Busca una suscripción activa o pausada del usuario
         $sqlSuscripcion = "SELECT id_suscripcion, estado
                            FROM suscripcion
                            WHERE id_usuario = :id_usuario
@@ -175,6 +197,7 @@ try {
 
         $suscripcion = $stmtSuscripcion->fetch(PDO::FETCH_ASSOC);
 
+        // Si no hay suscripción cancelable, devuelve error
         if (!$suscripcion) {
             responderJSON([
                 'ok' => false,
@@ -182,6 +205,7 @@ try {
             ]);
         }
 
+        // Cancela la suscripción y desactiva la renovación automática
         $sqlCancelar = "UPDATE suscripcion
                         SET estado = 'Cancelada',
                             renovacion_automatica = 0
@@ -192,17 +216,20 @@ try {
             ':id_suscripcion' => $suscripcion['id_suscripcion']
         ]);
 
+        // Devuelve confirmación al frontend
         responderJSON([
             'ok' => true,
             'mensaje' => 'Tu suscripción ha sido cancelada correctamente. No se realizará el siguiente cargo automático.'
         ]);
     }
 
+    // Si llega otro método HTTP, devuelve error
     responderJSON([
         'ok' => false,
         'mensaje' => 'Método no permitido.'
     ]);
 } catch (PDOException $e) {
+    // Devuelve error si falla la base de datos
     responderJSON([
         'ok' => false,
         'mensaje' => 'Error al gestionar la suscripción.',

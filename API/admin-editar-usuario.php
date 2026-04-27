@@ -1,48 +1,63 @@
 <?php
+// Inicia la sesión para poder comprobar el usuario logueado
 session_start();
+
+// Indica que la respuesta será JSON
 header('Content-Type: application/json; charset=utf-8');
 
+// Importa la conexión a la base de datos
 require_once __DIR__ . '/../conexion.php';
 
+// ID del administrador original del sistema
 define('ADMIN_ORIGINAL_ID', 1);
 
+// Función para responder siempre en formato JSON
 function responderJSON(bool $ok, string $mensaje, int $codigo = 200, array $extra = []): void
 {
     http_response_code($codigo);
+
     echo json_encode(array_merge([
         'ok' => $ok,
         'mensaje' => $mensaje
     ], $extra), JSON_UNESCAPED_UNICODE);
+
     exit;
 }
 
+// Comprueba si un usuario es el administrador original
 function esAdminOriginal(int $idUsuario): bool
 {
     return $idUsuario === ADMIN_ORIGINAL_ID;
 }
 
+// Comprueba si el administrador logueado es el administrador original
 function adminLogueadoEsOriginal(int $idAdmin): bool
 {
     return $idAdmin === ADMIN_ORIGINAL_ID;
 }
 
+// Si no hay sesión iniciada, se bloquea el acceso
 if (!isset($_SESSION['id_usuario'])) {
     responderJSON(false, 'Sesión no válida.', 401);
 }
 
+// Si el usuario logueado no tiene perfil ADMIN, se bloquea el acceso
 if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
     responderJSON(false, 'Acceso no autorizado.', 403);
 }
 
 try {
+    // PETICIÓN GET: carga los datos del usuario que se quiere editar
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $idAdmin = (int)$_SESSION['id_usuario'];
         $idUsuario = (int)($_GET['id'] ?? 0);
 
+        // Valida que el ID recibido sea correcto
         if ($idUsuario <= 0) {
             responderJSON(false, 'ID de usuario no válido.', 400);
         }
 
+        // Consulta los datos del administrador logueado
         $sqlAdmin = "SELECT nombre, apellidos, foto_perfil
                      FROM usuario
                      WHERE id_usuario = :id_usuario
@@ -58,6 +73,7 @@ try {
             responderJSON(false, 'No se encontró el administrador logueado.', 404);
         }
 
+        // Consulta todos los datos del usuario a editar
         $sqlUsuario = "SELECT
                             u.id_usuario,
                             u.alias,
@@ -101,13 +117,16 @@ try {
         ]);
         $usuario = $stmtUsuario->fetch(PDO::FETCH_ASSOC);
 
+        // Si no existe el usuario, se devuelve error
         if (!$usuario) {
             responderJSON(false, 'No se encontró el usuario indicado.', 404);
         }
 
+        // Prepara los datos del administrador
         $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
         $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
 
+        // Devuelve al JavaScript los datos del admin y del usuario
         responderJSON(true, 'Datos cargados correctamente.', 200, [
             'admin' => [
                 'foto_perfil' => $fotoAdmin,
@@ -149,14 +168,18 @@ try {
         ]);
     }
 
+    // Si no es POST, se rechaza la petición
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         responderJSON(false, 'Método no permitido.', 405);
     }
 
+    // ID del administrador logueado
     $idAdmin = (int)$_SESSION['id_usuario'];
 
+    // ID del usuario que se va a actualizar
     $idUsuario = (int)($_POST['idUsuario'] ?? 0);
 
+    // Recoge los datos personales
     $alias = trim($_POST['alias'] ?? '');
     $dni = strtoupper(trim($_POST['dni'] ?? ''));
     $nombre = trim($_POST['nombre'] ?? '');
@@ -166,6 +189,7 @@ try {
     $fechaNacimiento = trim($_POST['fechaNacimiento'] ?? '');
     $sexo = trim($_POST['sexo'] ?? '');
 
+    // Recoge los datos de dirección
     $calle = trim($_POST['calle'] ?? '');
     $portal = trim($_POST['portal'] ?? '');
     $piso = trim($_POST['piso'] ?? '');
@@ -173,19 +197,23 @@ try {
     $ciudad = trim($_POST['ciudad'] ?? '');
     $pais = trim($_POST['pais'] ?? '');
 
+    // Recoge permisos y estado
     $perfil = strtoupper(trim($_POST['perfil'] ?? ''));
     $estado = trim($_POST['estado'] ?? '');
     $fotoPerfil = trim($_POST['fotoPerfil'] ?? '');
     $contrasena = $_POST['contrasena'] ?? '';
 
+    // Recoge datos de suscripción
     $membresia = trim($_POST['membresia'] ?? '');
     $estadoSuscripcion = trim($_POST['estadoSuscripcion'] ?? 'Activa');
     $renovacionAutomatica = trim($_POST['renovacionAutomatica'] ?? 'Si');
 
+    // Valida ID
     if ($idUsuario <= 0) {
         responderJSON(false, 'ID de usuario no válido.');
     }
 
+    // Valida campos obligatorios
     if (
         $alias === '' || $dni === '' || $nombre === '' || $apellidos === '' || $correo === '' ||
         $telefono === '' || $calle === '' || $cp === '' || $ciudad === '' || $pais === '' ||
@@ -194,24 +222,30 @@ try {
         responderJSON(false, 'Debes completar todos los campos obligatorios.');
     }
 
+    // Valida correo
     if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
         responderJSON(false, 'El correo electrónico no es válido.');
     }
 
+    // Valida DNI
     if (!preg_match('/^[0-9]{8}[A-Z]$/', $dni)) {
         responderJSON(false, 'El DNI debe tener 8 números y una letra.');
     }
 
+    // Valida teléfono
     if (!preg_match('/^[6-9][0-9]{8}$/', $telefono)) {
         responderJSON(false, 'El teléfono debe tener 9 dígitos y empezar por 6, 7, 8 o 9.');
     }
 
+    // Valida código postal
     if (!preg_match('/^[0-9]{5}$/', $cp)) {
         responderJSON(false, 'El código postal debe tener 5 dígitos.');
     }
 
+    // Inicia transacción para actualizar todo de forma segura
     $conn->beginTransaction();
 
+    // Busca el usuario actual y su dirección
     $sqlUsuarioActual = "SELECT id_direccion
                          FROM usuario
                          WHERE id_usuario = :id_usuario
@@ -227,6 +261,7 @@ try {
         responderJSON(false, 'No se encontró el usuario.');
     }
 
+    // Protege al administrador original para que no pierda permisos
     if (esAdminOriginal($idUsuario)) {
         if ($perfil !== 'ADMIN') {
             $conn->rollBack();
@@ -239,6 +274,7 @@ try {
         }
     }
 
+    // Solo el administrador original puede convertir a otros usuarios en ADMIN
     if ($perfil === 'ADMIN' && !adminLogueadoEsOriginal($idAdmin)) {
         $sqlPerfilActual = "SELECT p.nombre_perfil
                             FROM usuario u
@@ -257,6 +293,7 @@ try {
         }
     }
 
+    // Comprueba que alias, correo y DNI no estén repetidos en otro usuario
     $sqlDuplicados = "SELECT COUNT(*)
                       FROM usuario
                       WHERE (alias = :alias OR correo = :correo OR dni = :dni)
@@ -275,6 +312,7 @@ try {
         responderJSON(false, 'Ya existe otro usuario con ese alias, correo o DNI.');
     }
 
+    // Busca el ID del perfil seleccionado
     $sqlPerfil = "SELECT id_perfil
                   FROM perfil
                   WHERE nombre_perfil = :perfil
@@ -290,8 +328,10 @@ try {
         responderJSON(false, 'No se encontró el perfil indicado.');
     }
 
+    // Obtiene el ID de dirección actual
     $idDireccion = $usuarioActual['id_direccion'];
 
+    // Si el usuario ya tiene dirección, se actualiza
     if ($idDireccion) {
         $sqlActualizarDireccion = "UPDATE direccion
                                    SET calle = :calle,
@@ -313,6 +353,7 @@ try {
             ':id_direccion' => $idDireccion
         ]);
     } else {
+        // Si no tiene dirección, se crea una nueva
         $sqlInsertDireccion = "INSERT INTO direccion (calle, portal, piso, cp, ciudad, pais)
                                VALUES (:calle, :portal, :piso, :cp, :ciudad, :pais)";
         $stmtInsertDireccion = $conn->prepare($sqlInsertDireccion);
@@ -324,9 +365,11 @@ try {
             ':ciudad' => $ciudad,
             ':pais' => $pais
         ]);
+
         $idDireccion = (int)$conn->lastInsertId();
     }
 
+    // Si se escribe nueva contraseña, se actualiza también
     if ($contrasena !== '') {
         $hash = password_hash($contrasena, PASSWORD_DEFAULT);
 
@@ -364,6 +407,7 @@ try {
             ':id_usuario' => $idUsuario
         ]);
     } else {
+        // Si no se escribe contraseña, se actualizan los datos sin modificarla
         $sqlActualizarUsuario = "UPDATE usuario
                                  SET alias = :alias,
                                      nombre = :nombre,
@@ -397,7 +441,10 @@ try {
         ]);
     }
 
+    // Actualiza o crea la suscripción del usuario
     if ($membresia !== '' || $estadoSuscripcion !== '' || $renovacionAutomatica !== '') {
+
+        // Busca la suscripción más reciente del usuario
         $sqlSuscripcionActiva = "SELECT id_suscripcion
                                  FROM suscripcion
                                  WHERE id_usuario = :id_usuario
@@ -412,6 +459,7 @@ try {
 
         $idMembresia = null;
 
+        // Si se ha elegido una membresía nueva, se busca su ID
         if ($membresia !== '') {
             $sqlMembresia = "SELECT id_membresia
                              FROM membresia
@@ -429,15 +477,19 @@ try {
             }
         }
 
+        // Convierte renovación automática a 1 o 0
         $renovacion = $renovacionAutomatica === 'Si' ? 1 : 0;
 
+        // Si la suscripción se cancela, se desactiva la renovación automática
         if ($estadoSuscripcion === 'Cancelada') {
             $renovacion = 0;
         }
 
+        // Nueva fecha de renovación
         $fechaRenovacion = date('Y-m-d', strtotime('+1 month'));
 
         if ($idSuscripcion) {
+            // Prepara campos dinámicos para actualizar solo lo necesario
             $campos = [];
             $params = [':id_suscripcion' => $idSuscripcion];
 
@@ -459,6 +511,7 @@ try {
                 $params[':fecha_renovacion'] = $fechaRenovacion;
             }
 
+            // Actualiza la suscripción existente
             $sqlActualizarSuscripcion = "UPDATE suscripcion
                                          SET " . implode(', ', $campos) . "
                                          WHERE id_suscripcion = :id_suscripcion";
@@ -466,6 +519,7 @@ try {
             $stmtActualizarSuscripcion = $conn->prepare($sqlActualizarSuscripcion);
             $stmtActualizarSuscripcion->execute($params);
         } else {
+            // Si no existe suscripción, se crea una nueva
             if (!$idMembresia) {
                 $conn->rollBack();
                 responderJSON(false, 'Para crear una nueva suscripción debes indicar una membresía.');
@@ -487,14 +541,18 @@ try {
         }
     }
 
+    // Confirma todos los cambios
     $conn->commit();
 
+    // Respuesta correcta
     responderJSON(true, 'Usuario actualizado correctamente.');
 } catch (PDOException $e) {
+    // Si hay error, deshace la transacción
     if ($conn->inTransaction()) {
         $conn->rollBack();
     }
 
+    // Devuelve error en JSON
     responderJSON(false, 'Error al actualizar el usuario.', 500, [
         'error' => $e->getMessage()
     ]);

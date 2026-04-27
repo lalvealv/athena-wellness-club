@@ -1,11 +1,17 @@
 <?php
+// Comprueba que el usuario ha iniciado sesión
 require_once __DIR__ . '/../comprobar-login.php';
+
+// Importa la conexión a la base de datos
 require_once __DIR__ . '/../conexion.php';
 
+// Indica que la respuesta será JSON
 header('Content-Type: application/json; charset=utf-8');
 
+// Obtiene el ID del usuario logueado desde la sesión
 $idUsuario = $_SESSION['id_usuario'];
 
+// Devuelve un mensaje según el número de entrenamientos semanales
 function mensajeEntrenamientos(int $total): string
 {
     if ($total <= 0) {
@@ -23,32 +29,40 @@ function mensajeEntrenamientos(int $total): string
     return 'Ritmo excelente';
 }
 
+// Calcula el porcentaje de progreso de un objetivo según fechas y estado
 function porcentajeObjetivo(?string $fechaInicio, ?string $fechaFin, string $estado): ?int
 {
+    // Si el objetivo está completado, el progreso es 100%
     if ($estado === 'Completado') {
         return 100;
     }
 
+    // Si faltan fechas, no se puede calcular porcentaje
     if (empty($fechaInicio) || empty($fechaFin)) {
         return null;
     }
 
+    // Convierte las fechas a timestamp
     $inicio = strtotime($fechaInicio);
     $fin = strtotime($fechaFin);
     $hoy = strtotime(date('Y-m-d'));
 
+    // Valida que las fechas sean correctas
     if ($inicio === false || $fin === false || $fin <= $inicio) {
         return null;
     }
 
+    // Si todavía no ha empezado el objetivo
     if ($hoy <= $inicio) {
         return 0;
     }
 
+    // Si ya se ha pasado la fecha final
     if ($hoy >= $fin) {
         return 100;
     }
 
+    // Calcula el porcentaje transcurrido
     $total = $fin - $inicio;
     $transcurrido = $hoy - $inicio;
 
@@ -56,6 +70,7 @@ function porcentajeObjetivo(?string $fechaInicio, ?string $fechaFin, string $est
 }
 
 try {
+    // Consulta datos básicos del usuario y su suscripción activa
     $sqlUsuario = "SELECT 
                         u.nombre,
                         u.apellidos,
@@ -76,6 +91,7 @@ try {
     ]);
     $usuario = $stmtUsuario->fetch(PDO::FETCH_ASSOC);
 
+    // Si no se encuentra el usuario, devuelve error
     if (!$usuario) {
         http_response_code(404);
         echo json_encode([
@@ -85,6 +101,7 @@ try {
         exit;
     }
 
+    // Consulta la próxima clase confirmada del usuario
     $sqlProximaClase = "SELECT 
                             a.nombre AS actividad,
                             sa.fecha,
@@ -109,6 +126,7 @@ try {
     ]);
     $proximaClase = $stmtProximaClase->fetch(PDO::FETCH_ASSOC);
 
+    // Cuenta los entrenamientos del usuario en la semana actual
     $sqlEntrenamientos = "SELECT COUNT(*) 
                           FROM entrenamiento
                           WHERE id_usuario = :id_usuario
@@ -120,6 +138,7 @@ try {
     ]);
     $totalEntrenamientosSemana = (int) $stmtEntrenamientos->fetchColumn();
 
+    // Consulta el objetivo fitness principal del usuario
     $sqlObjetivo = "SELECT 
                         objetivo,
                         fecha_inicio,
@@ -143,29 +162,38 @@ try {
     ]);
     $objetivo = $stmtObjetivo->fetch(PDO::FETCH_ASSOC);
 
+    // Define la foto de perfil o una imagen por defecto
     $fotoPerfil = !empty($usuario['foto_perfil'])
         ? $usuario['foto_perfil']
         : '../img-socios/socio1.png';
 
+    // Construye el nombre completo
     $nombreCompleto = trim(($usuario['nombre'] ?? '') . ' ' . ($usuario['apellidos'] ?? ''));
+
+    // Define la membresía actual
     $membresia = $usuario['membresia'] ?? 'Sin suscripción activa';
 
+    // Formatea la fecha de renovación
     $renovacion = !empty($usuario['fecha_renovacion'])
         ? 'Renovación: ' . date('d/m/Y', strtotime($usuario['fecha_renovacion']))
         : 'Sin renovación programada';
 
+    // Valores por defecto si no hay próxima clase
     $proximaClaseNombre = $proximaClase['actividad'] ?? 'Sin reservas activas';
     $proximaClaseDetalle = 'No tienes próximas clases reservadas';
 
+    // Si existe próxima clase, formatea fecha y hora
     if ($proximaClase) {
         $fechaClase = date('d/m/Y', strtotime($proximaClase['fecha']));
         $horaClase = substr($proximaClase['hora_inicio'], 0, 5);
         $proximaClaseDetalle = $fechaClase . ' · ' . $horaClase;
     }
 
+    // Valores por defecto si no hay objetivo activo
     $objetivoTexto = 'Sin objetivo activo';
     $objetivoProgreso = '—';
 
+    // Si existe objetivo, calcula o muestra su progreso
     if ($objetivo) {
         $objetivoTexto = $objetivo['objetivo'] ?? 'Objetivo sin definir';
 
@@ -182,6 +210,7 @@ try {
         }
     }
 
+    // Devuelve los datos del sidebar y del resumen general
     echo json_encode([
         'ok' => true,
         'sidebar' => [
@@ -201,6 +230,7 @@ try {
         ]
     ], JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
+    // Si ocurre un error de base de datos, devuelve error JSON
     http_response_code(500);
     echo json_encode([
         'ok' => false,

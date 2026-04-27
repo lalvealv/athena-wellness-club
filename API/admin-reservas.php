@@ -1,14 +1,20 @@
 <?php
+// Inicia la sesión para comprobar el administrador logueado
 session_start();
+
+// Indica que la respuesta será JSON
 header('Content-Type: application/json; charset=utf-8');
 
+// Importa la conexión a la base de datos
 require_once __DIR__ . '/../conexion.php';
 
+// Recoge datos de sesión y filtros GET
 $idAdmin = (int)($_SESSION['id_usuario'] ?? 0);
 $busqueda = trim($_GET['buscar'] ?? '');
 $estado = trim($_GET['estado'] ?? '');
 $fecha = trim($_GET['fecha'] ?? '');
 
+// Comprueba si existe una sesión válida
 if ($idAdmin <= 0) {
     echo json_encode([
         'ok' => false,
@@ -17,6 +23,7 @@ if ($idAdmin <= 0) {
     exit;
 }
 
+// Comprueba que el usuario logueado sea administrador
 if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
     echo json_encode([
         'ok' => false,
@@ -25,6 +32,7 @@ if (!isset($_SESSION['id_perfil']) || (int)$_SESSION['id_perfil'] !== 1) {
     exit;
 }
 
+// Función reutilizable para responder en JSON
 function responderJSON(array $datos): void
 {
     echo json_encode($datos, JSON_UNESCAPED_UNICODE);
@@ -32,6 +40,7 @@ function responderJSON(array $datos): void
 }
 
 try {
+    // Consulta datos del administrador logueado
     $sqlAdmin = "SELECT nombre, apellidos, foto_perfil
                  FROM usuario
                  WHERE id_usuario = :id_usuario
@@ -43,6 +52,7 @@ try {
     ]);
     $admin = $stmtAdmin->fetch(PDO::FETCH_ASSOC);
 
+    // Si no se encuentra el administrador, devuelve error
     if (!$admin) {
         responderJSON([
             'ok' => false,
@@ -50,10 +60,12 @@ try {
         ]);
     }
 
+    // PETICIÓN POST: eliminar reserva o cambiar estado
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $accion = $_POST['accion'] ?? '';
         $idReserva = isset($_POST['id_reserva']) ? (int)$_POST['id_reserva'] : 0;
 
+        // Valida el ID de reserva
         if ($idReserva <= 0) {
             responderJSON([
                 'ok' => false,
@@ -61,6 +73,7 @@ try {
             ]);
         }
 
+        // Comprueba que la reserva exista
         $sqlComprobar = "SELECT id_reserva
                          FROM reserva
                          WHERE id_reserva = :id_reserva
@@ -80,6 +93,7 @@ try {
             ]);
         }
 
+        // Acción: eliminar reserva
         if ($accion === 'eliminar') {
             $sqlEliminar = "DELETE FROM reserva
                             WHERE id_reserva = :id_reserva
@@ -96,10 +110,12 @@ try {
             ]);
         }
 
+        // Acción: cambiar estado de la reserva
         if ($accion === 'cambiar_estado') {
             $nuevoEstado = trim($_POST['estado'] ?? '');
             $estadosPermitidos = ['Asistida', 'No asistida'];
 
+            // Valida que el estado sea permitido
             if (!in_array($nuevoEstado, $estadosPermitidos, true)) {
                 responderJSON([
                     'ok' => false,
@@ -107,6 +123,7 @@ try {
                 ]);
             }
 
+            // Actualiza el estado de la reserva
             $sqlActualizar = "UPDATE reserva
                               SET estado = :estado
                               WHERE id_reserva = :id_reserva";
@@ -123,12 +140,14 @@ try {
             ]);
         }
 
+        // Si la acción no coincide con ninguna permitida
         responderJSON([
             'ok' => false,
             'mensaje' => 'Acción no válida.'
         ]);
     }
 
+    // Consulta reservas con filtros opcionales
     $sqlReservas = "SELECT
                         r.id_reserva,
                         u.id_usuario,
@@ -170,6 +189,7 @@ try {
     ]);
     $reservas = $stmtReservas->fetchAll(PDO::FETCH_ASSOC);
 
+    // Formatea las reservas para enviarlas al frontend
     $listaReservas = [];
     foreach ($reservas as $item) {
         $listaReservas[] = [
@@ -185,6 +205,7 @@ try {
         ];
     }
 
+    // Calcula resumen diario de reservas
     $sqlResumen = "SELECT
                         SUM(CASE WHEN r.estado = 'Confirmada' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS confirmadas,
                         SUM(CASE WHEN r.estado = 'Asistida' AND sa.fecha = CURDATE() THEN 1 ELSE 0 END) AS asistidas,
@@ -196,9 +217,11 @@ try {
 
     $resumen = $conn->query($sqlResumen)->fetch(PDO::FETCH_ASSOC);
 
+    // Prepara datos del administrador para la interfaz
     $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
     $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
 
+    // Devuelve datos completos al JavaScript
     responderJSON([
         'ok' => true,
         'admin' => [
@@ -215,6 +238,7 @@ try {
         ]
     ]);
 } catch (PDOException $e) {
+    // Devuelve error si falla la base de datos
     responderJSON([
         'ok' => false,
         'mensaje' => 'Error al obtener las reservas.',

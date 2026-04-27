@@ -1,16 +1,24 @@
 <?php
+// Comprueba que el usuario logueado es administrador
 require_once __DIR__ . '/../comprobar-admin.php';
+
+// Importa la conexión a la base de datos
 require_once __DIR__ . '/../conexion.php';
 
+// Importa el archivo que actualiza suscripciones caducadas o automáticas
 require_once __DIR__ . '/../actualizar-suscripciones.php';
+
+// Ejecuta la actualización automática de suscripciones antes de cargar el panel
 actualizarSuscripcionesAutomaticamente($conn);
 
+// Indica que la respuesta será JSON
 header('Content-Type: application/json; charset=utf-8');
 
+// Guarda el ID del administrador logueado
 $idAdmin = $_SESSION['id_usuario'];
 
 try {
-    // Datos del admin logueado
+    // Consulta los datos del administrador logueado
     $sqlAdmin = "SELECT nombre, apellidos, foto_perfil
                  FROM usuario
                  WHERE id_usuario = :id_usuario
@@ -22,6 +30,7 @@ try {
     ]);
     $admin = $stmtAdmin->fetch(PDO::FETCH_ASSOC);
 
+    // Si no se encuentra el administrador, devuelve error
     if (!$admin) {
         http_response_code(404);
         echo json_encode([
@@ -31,15 +40,15 @@ try {
         exit;
     }
 
-    // Usuarios activos
+    // Cuenta usuarios activos
     $sqlActivos = "SELECT COUNT(*) FROM usuario WHERE estado = 'Activo'";
     $usuariosActivos = (int) $conn->query($sqlActivos)->fetchColumn();
 
-    // Usuarios bloqueados
+    // Cuenta usuarios bloqueados
     $sqlBloqueados = "SELECT COUNT(*) FROM usuario WHERE estado = 'Bloqueado'";
     $usuariosBloqueados = (int) $conn->query($sqlBloqueados)->fetchColumn();
 
-    // Reservas hoy
+    // Cuenta reservas confirmadas del día actual
     $sqlReservasHoy = "SELECT COUNT(*)
                        FROM reserva r
                        INNER JOIN sesion_actividad sa ON r.id_sesion = sa.id_sesion
@@ -47,13 +56,13 @@ try {
                          AND r.estado = 'Confirmada'";
     $reservasHoy = (int) $conn->query($sqlReservasHoy)->fetchColumn();
 
-    // Nuevas altas últimos 7 días
+    // Cuenta nuevas altas de los últimos 7 días
     $sqlAltas = "SELECT COUNT(*)
                  FROM usuario
                  WHERE fecha_registro >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
     $nuevasAltas = (int) $conn->query($sqlAltas)->fetchColumn();
 
-    // Últimos usuarios registrados
+    // Consulta los últimos 5 usuarios registrados
     $sqlUltimos = "SELECT 
                         id_usuario,
                         alias,
@@ -68,6 +77,7 @@ try {
     $stmtUltimos = $conn->query($sqlUltimos);
     $ultimosUsuarios = $stmtUltimos->fetchAll(PDO::FETCH_ASSOC);
 
+    // Formatea la lista de últimos usuarios para enviarla al frontend
     $listaUltimos = [];
     foreach ($ultimosUsuarios as $usuario) {
         $listaUltimos[] = [
@@ -82,9 +92,11 @@ try {
         ];
     }
 
+    // Prepara la foto y el nombre completo del administrador
     $fotoAdmin = !empty($admin['foto_perfil']) ? $admin['foto_perfil'] : '../img/athena_logo.png';
     $nombreAdmin = trim(($admin['nombre'] ?? '') . ' ' . ($admin['apellidos'] ?? ''));
 
+    // Devuelve al JavaScript todos los datos del panel
     echo json_encode([
         'ok' => true,
         'admin' => [
@@ -101,6 +113,7 @@ try {
         'ultimos_usuarios' => $listaUltimos
     ], JSON_UNESCAPED_UNICODE);
 } catch (PDOException $e) {
+    // Si ocurre un error con la base de datos, devuelve error JSON
     http_response_code(500);
     echo json_encode([
         'ok' => false,

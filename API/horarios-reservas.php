@@ -1,12 +1,18 @@
 <?php
+// Inicia la sesión para comprobar el usuario logueado
 session_start();
+
+// Indica que la respuesta será JSON
 header('Content-Type: application/json; charset=utf-8');
 
+// Importa la conexión a la base de datos
 require_once __DIR__ . '/../conexion.php';
 
+// Importa y ejecuta la actualización automática de suscripciones
 require_once __DIR__ . '/../actualizar-suscripciones.php';
 actualizarSuscripcionesAutomaticamente($conn);
 
+// Comprueba si existe una sesión válida
 if (!isset($_SESSION['id_usuario'])) {
     echo json_encode([
         'ok' => false,
@@ -15,15 +21,20 @@ if (!isset($_SESSION['id_usuario'])) {
     exit;
 }
 
+// Obtiene el ID del usuario logueado
 $idUsuario = (int) $_SESSION['id_usuario'];
+
+// Número de días que se mostrarán en la tabla de horarios
 $diasMostrados = 28;
 
+// Función reutilizable para devolver respuestas JSON
 function responderJSON(array $datos): void
 {
     echo json_encode($datos, JSON_UNESCAPED_UNICODE);
     exit;
 }
 
+// Formatea una fecha a formato día/mes/año
 function formatearFecha(?string $fecha): string
 {
     if (!$fecha) {
@@ -38,6 +49,7 @@ function formatearFecha(?string $fecha): string
     return date('d/m/Y', $timestamp);
 }
 
+// Devuelve el día de la semana completo según una fecha
 function diaSemanaDesdeFecha(string $fecha): string
 {
     $mapa = [
@@ -54,6 +66,7 @@ function diaSemanaDesdeFecha(string $fecha): string
     return $mapa[$numero] ?? '';
 }
 
+// Devuelve el día de la semana abreviado según una fecha
 function diaCortoDesdeFecha(string $fecha): string
 {
     $mapa = [
@@ -70,12 +83,14 @@ function diaCortoDesdeFecha(string $fecha): string
     return $mapa[$numero] ?? '';
 }
 
+// Comprueba si una clase todavía se puede reservar
 function esFechaHoraReservable(string $fecha, string $horaInicio): bool
 {
     $timestampClase = strtotime($fecha . ' ' . $horaInicio);
     return $timestampClase > time();
 }
 
+// Obtiene los datos del usuario para el sidebar
 function obtenerUsuarioSidebar(PDO $conn, int $idUsuario): array
 {
     $sql = "SELECT 
@@ -99,6 +114,7 @@ function obtenerUsuarioSidebar(PDO $conn, int $idUsuario): array
 
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    // Si no encuentra el usuario, devuelve datos por defecto
     if (!$usuario) {
         return [
             'foto_perfil' => '../img-socios/socio1.png',
@@ -107,6 +123,7 @@ function obtenerUsuarioSidebar(PDO $conn, int $idUsuario): array
         ];
     }
 
+    // Define foto de perfil o imagen por defecto
     $foto = !empty($usuario['foto_perfil'])
         ? $usuario['foto_perfil']
         : '../img-socios/socio1.png';
@@ -118,8 +135,10 @@ function obtenerUsuarioSidebar(PDO $conn, int $idUsuario): array
     ];
 }
 
+// Obtiene el resumen superior de reservas del usuario
 function obtenerResumen(PDO $conn, int $idUsuario): array
 {
+    // Valores por defecto
     $resumen = [
         'proxima_clase' => 'Sin reservas',
         'proxima_fecha' => 'No hay próximas sesiones',
@@ -129,6 +148,7 @@ function obtenerResumen(PDO $conn, int $idUsuario): array
         'sesiones_disponibles' => 0
     ];
 
+    // Próxima clase confirmada del usuario
     $sqlProxima = "SELECT 
                         a.nombre AS actividad,
                         sa.fecha,
@@ -151,11 +171,13 @@ function obtenerResumen(PDO $conn, int $idUsuario): array
 
     $proxima = $stmtProxima->fetch(PDO::FETCH_ASSOC);
 
+    // Si existe próxima clase, se actualiza el resumen
     if ($proxima) {
         $resumen['proxima_clase'] = $proxima['actividad'];
         $resumen['proxima_fecha'] = formatearFecha($proxima['fecha']) . ' · ' . substr($proxima['hora_inicio'], 0, 5);
     }
 
+    // Cuenta las reservas activas futuras
     $sqlActivas = "SELECT COUNT(*)
                    FROM reserva r
                    INNER JOIN sesion_actividad sa ON r.id_sesion = sa.id_sesion
@@ -172,6 +194,7 @@ function obtenerResumen(PDO $conn, int $idUsuario): array
 
     $resumen['reservas_activas'] = (int) $stmtActivas->fetchColumn();
 
+    // Consulta la última reserva realizada por el usuario
     $sqlUltima = "SELECT 
                     a.nombre AS actividad,
                     r.fecha_reserva
@@ -190,6 +213,7 @@ function obtenerResumen(PDO $conn, int $idUsuario): array
 
     $ultima = $stmtUltima->fetch(PDO::FETCH_ASSOC);
 
+    // Si existe última reserva, se actualiza el resumen
     if ($ultima) {
         $resumen['ultima_reserva'] = $ultima['actividad'];
         $resumen['ultima_fecha'] = formatearFecha($ultima['fecha_reserva']);
@@ -198,6 +222,7 @@ function obtenerResumen(PDO $conn, int $idUsuario): array
     return $resumen;
 }
 
+// Obtiene los horarios base configurados por el administrador
 function obtenerHorariosBase(PDO $conn): array
 {
     $sql = "SELECT
@@ -219,6 +244,7 @@ function obtenerHorariosBase(PDO $conn): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+// Obtiene sesiones reales dentro de un rango de fechas
 function obtenerSesionesRango(PDO $conn, int $idUsuario, string $fechaInicio, string $fechaFin): array
 {
     $sql = "SELECT
@@ -252,6 +278,7 @@ function obtenerSesionesRango(PDO $conn, int $idUsuario, string $fechaInicio, st
         ':fecha_fin' => $fechaFin
     ]);
 
+    // Guarda las sesiones con clave id_horario|fecha para localizarlas rápido
     $resultado = [];
     foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $fila) {
         $clave = $fila['id_horario'] . '|' . $fila['fecha'];
@@ -261,6 +288,7 @@ function obtenerSesionesRango(PDO $conn, int $idUsuario, string $fechaInicio, st
     return $resultado;
 }
 
+// Construye la tabla semanal/mensual de horarios para mostrar en la pantalla
 function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): array
 {
     $horarios = obtenerHorariosBase($conn);
@@ -272,6 +300,7 @@ function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): ar
     $franjas = [];
     $franjasVista = [];
 
+    // Organiza los horarios por día y franja horaria
     foreach ($horarios as $horario) {
         $franja = substr($horario['hora_inicio'], 0, 5) . ' - ' . substr($horario['hora_fin'], 0, 5);
         $claveDiaFranja = $horario['dia_semana'] . '|' . $franja;
@@ -288,14 +317,17 @@ function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): ar
         }
     }
 
+    // Ordena las franjas por hora de inicio
     usort($franjas, function ($a, $b) {
         return strcmp($a['hora_inicio'], $b['hora_inicio']);
     });
 
+    // Extrae las franjas visibles
     foreach ($franjas as $item) {
         $franjasVista[] = $item['franja'];
     }
 
+    // Genera las columnas de los próximos días
     $columnas = [];
     for ($i = 0; $i < $diasMostrados; $i++) {
         $fechaIso = date('Y-m-d', strtotime('+' . $i . ' days'));
@@ -309,17 +341,20 @@ function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): ar
     $filas = [];
     $sesionesDisponibles = 0;
 
+    // Construye cada fila de la tabla por franja horaria
     foreach ($franjasVista as $franja) {
         $fila = [
             'franja' => $franja,
             'celdas' => []
         ];
 
+        // Rellena cada celda según fecha y franja
         foreach ($columnas as $columna) {
             $fechaIso = $columna['fecha_iso'];
             $diaSemana = diaSemanaDesdeFecha($fechaIso);
             $claveHorario = $diaSemana . '|' . $franja;
 
+            // Si no hay actividad en esa fecha/franja, la celda queda vacía
             if (!isset($horariosPorDiaFranja[$claveHorario])) {
                 $fila['celdas'][] = [
                     'vacia' => true
@@ -331,12 +366,14 @@ function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): ar
             $claveSesion = $horario['id_horario'] . '|' . $fechaIso;
             $sesion = $sesiones[$claveSesion] ?? null;
 
+            // Valores base de la celda
             $capacidad = (int) ($horario['capacidad'] ?? 20);
             $ocupadas = 0;
             $monitor = 'Por confirmar';
             $estado = 'Disponible';
             $puedeReservar = esFechaHoraReservable($fechaIso, $horario['hora_inicio']);
 
+            // Si existe sesión real para ese día, usa sus datos
             if ($sesion) {
                 $capacidad = (int) ($sesion['capacidad_real'] ?? $capacidad);
                 $ocupadas = (int) ($sesion['ocupadas'] ?? 0);
@@ -354,20 +391,24 @@ function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): ar
                 }
             }
 
+            // Calcula plazas libres
             $libres = $capacidad - $ocupadas;
             if ($libres < 0) {
                 $libres = 0;
             }
 
+            // Si no quedan plazas, se marca como completa
             if ($estado === 'Disponible' && $libres <= 0) {
                 $estado = 'Completa';
                 $puedeReservar = false;
             }
 
+            // Cuenta sesiones disponibles para el resumen
             if ($puedeReservar) {
                 $sesionesDisponibles++;
             }
 
+            // Añade la celda a la fila
             $fila['celdas'][] = [
                 'vacia' => false,
                 'id_horario' => (int) $horario['id_horario'],
@@ -392,6 +433,7 @@ function obtenerTablaHorarios(PDO $conn, int $idUsuario, int $diasMostrados): ar
     ];
 }
 
+// Obtiene un horario concreto para comprobar si se puede reservar
 function obtenerHorarioParaReserva(PDO $conn, int $idHorario): ?array
 {
     $sql = "SELECT
@@ -415,18 +457,22 @@ function obtenerHorarioParaReserva(PDO $conn, int $idHorario): ?array
     return $fila ?: null;
 }
 
+// Obtiene una sesión existente o la crea si todavía no existe
 function obtenerOCrearSesion(PDO $conn, int $idHorario, string $fecha): ?array
 {
     $horario = obtenerHorarioParaReserva($conn, $idHorario);
 
+    // Si no existe horario activo, no se puede reservar
     if (!$horario) {
         return null;
     }
 
+    // Comprueba que la fecha coincida con el día semanal del horario
     if (diaSemanaDesdeFecha($fecha) !== $horario['dia_semana']) {
         return null;
     }
 
+    // Busca la sesión y la bloquea para evitar reservas simultáneas incorrectas
     $sqlSesion = "SELECT
                     sa.id_sesion,
                     sa.id_horario,
@@ -448,6 +494,7 @@ function obtenerOCrearSesion(PDO $conn, int $idHorario, string $fecha): ?array
 
     $sesion = $stmtSesion->fetch(PDO::FETCH_ASSOC);
 
+    // Si existe sesión, devuelve sus datos
     if ($sesion) {
         return [
             'id_sesion' => (int) $sesion['id_sesion'],
@@ -458,6 +505,7 @@ function obtenerOCrearSesion(PDO $conn, int $idHorario, string $fecha): ?array
         ];
     }
 
+    // Si no existe, crea una nueva sesión programada
     $capacidad = (int) ($horario['capacidad'] ?? 20);
 
     $sqlInsertar = "INSERT INTO sesion_actividad (id_horario, fecha, instructor, plazas_totales, estado)
@@ -479,11 +527,14 @@ function obtenerOCrearSesion(PDO $conn, int $idHorario, string $fecha): ?array
     ];
 }
 
+// Realiza la reserva de un horario para el usuario
 function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fecha): array
 {
     try {
+        // Inicia transacción para controlar sesión, plazas y reserva
         $conn->beginTransaction();
 
+        // Obtiene o crea la sesión real para ese horario y fecha
         $datosSesion = obtenerOCrearSesion($conn, $idHorario, $fecha);
 
         if (!$datosSesion) {
@@ -494,6 +545,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
             ];
         }
 
+        // No permite reservar clases pasadas
         if (!esFechaHoraReservable($datosSesion['fecha'], $datosSesion['hora_inicio'])) {
             $conn->rollBack();
             return [
@@ -502,6 +554,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
             ];
         }
 
+        // Solo permite reservar sesiones programadas
         if ($datosSesion['estado'] !== 'Programada') {
             $conn->rollBack();
             return [
@@ -512,6 +565,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
 
         $idSesion = (int) $datosSesion['id_sesion'];
 
+        // Cuenta las plazas ya ocupadas
         $sqlOcupadas = "SELECT COUNT(*)
                         FROM reserva
                         WHERE id_sesion = :id_sesion
@@ -525,6 +579,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
         $ocupadas = (int) $stmtOcupadas->fetchColumn();
         $capacidad = (int) ($datosSesion['capacidad'] ?? 20);
 
+        // Comprueba si quedan plazas disponibles
         if ($ocupadas >= $capacidad) {
             $conn->rollBack();
             return [
@@ -533,6 +588,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
             ];
         }
 
+        // Comprueba si el usuario ya tenía una reserva para esa sesión
         $sqlExistente = "SELECT id_reserva, estado
                          FROM reserva
                          WHERE id_usuario = :id_usuario
@@ -548,6 +604,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
 
         $reservaExistente = $stmtExistente->fetch(PDO::FETCH_ASSOC);
 
+        // Si ya está confirmada, no permite duplicar reserva
         if ($reservaExistente && $reservaExistente['estado'] === 'Confirmada') {
             $conn->rollBack();
             return [
@@ -556,6 +613,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
             ];
         }
 
+        // Si existía una reserva cancelada/no activa, la reactiva
         if ($reservaExistente) {
             $sqlActualizar = "UPDATE reserva
                               SET estado = 'Confirmada',
@@ -567,6 +625,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
                 ':id_reserva' => $reservaExistente['id_reserva']
             ]);
         } else {
+            // Si no existía reserva, crea una nueva
             $sqlInsertar = "INSERT INTO reserva (id_usuario, id_sesion, fecha_reserva, estado)
                             VALUES (:id_usuario, :id_sesion, NOW(), 'Confirmada')";
 
@@ -577,6 +636,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
             ]);
         }
 
+        // Confirma todos los cambios
         $conn->commit();
 
         return [
@@ -584,6 +644,7 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
             'mensaje' => 'Reserva realizada correctamente.'
         ];
     } catch (PDOException $e) {
+        // Si hay error, deshace los cambios
         if ($conn->inTransaction()) {
             $conn->rollBack();
         }
@@ -596,10 +657,13 @@ function reservarHorario(PDO $conn, int $idUsuario, int $idHorario, string $fech
 }
 
 try {
+    // PETICIÓN GET: devuelve usuario, resumen y tabla de horarios
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $usuario = obtenerUsuarioSidebar($conn, $idUsuario);
         $resumen = obtenerResumen($conn, $idUsuario);
         $tablaData = obtenerTablaHorarios($conn, $idUsuario, $diasMostrados);
+
+        // Añade al resumen el número de sesiones disponibles
         $resumen['sesiones_disponibles'] = $tablaData['sesiones_disponibles'];
 
         responderJSON([
@@ -611,10 +675,12 @@ try {
         ]);
     }
 
+    // PETICIÓN POST: realiza una reserva
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $idHorario = isset($_POST['id_horario']) ? (int) $_POST['id_horario'] : 0;
         $fecha = trim($_POST['fecha'] ?? '');
 
+        // Valida datos de reserva
         if ($idHorario <= 0 || $fecha === '') {
             responderJSON([
                 'ok' => false,
@@ -622,15 +688,18 @@ try {
             ]);
         }
 
+        // Ejecuta la reserva
         $resultado = reservarHorario($conn, $idUsuario, $idHorario, $fecha);
         responderJSON($resultado);
     }
 
+    // Si llega otro método HTTP, devuelve error
     responderJSON([
         'ok' => false,
         'mensaje' => 'Método no permitido.'
     ]);
 } catch (PDOException $e) {
+    // Devuelve error del servidor
     responderJSON([
         'ok' => false,
         'mensaje' => 'Error del servidor: ' . $e->getMessage()
