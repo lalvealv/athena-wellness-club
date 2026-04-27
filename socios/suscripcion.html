@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -16,54 +17,76 @@
 
 <body>
 
+    <!-- HEADER DEL ÁREA DE SOCIOS -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
+
+                <!-- Texto de marca -->
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Área privada</span>
                 </span>
             </a>
 
+            <!-- Menú superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
+
+                <!-- Página actual -->
                 <a class="is-active" href="suscripcion.html">Suscripción</a>
+
                 <a href="horarios-reservas.html">Reservas</a>
                 <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
+
+                <!-- Avisos con contador dinámico -->
                 <a href="notificaciones.html">
                     Avisos
                     <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
                 </a>
+
+                <!-- Cierre de sesión -->
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
+
+                <!-- Datos del socio cargados dinámicamente -->
                 <div class="socios-user">
                     <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="sidebar-nombre">Cargando...</h3>
                     <p id="sidebar-plan">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
+
+                    <!-- Página actual -->
                     <a class="is-active" href="suscripcion.html">Mi suscripción</a>
+
                     <a href="horarios-reservas.html">Horarios y reservas</a>
                     <a href="historial-reservas.html">Historial reservas</a>
                     <a href="entrenamientos.html">Entrenamientos</a>
                     <a href="estadisticas.html">Estadísticas</a>
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
+
+                    <!-- Notificaciones con contador dinámico -->
                     <a href="notificaciones.html">
                         Notificaciones
                         <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
@@ -71,31 +94,55 @@
                 </nav>
             </aside>
 
+            <!-- ZONA DE CONTENIDO -->
             <div class="socios-content">
+
+                <!-- PANEL: INFORMACIÓN DE LA SUSCRIPCIÓN -->
                 <section class="socios-panel">
                     <h2 class="h2">Mi suscripción</h2>
 
+                    <!-- Aviso dinámico sobre el estado de la suscripción -->
                     <div id="aviso-suscripcion" class="subscription-alert" style="display: none;"></div>
 
+                    <!-- Caja con los datos de la suscripción -->
                     <div class="subscription-box">
+
+                        <!-- Plan contratado -->
                         <p><strong>Plan:</strong> <span id="plan">Cargando...</span></p>
+
+                        <!-- Precio mensual de la membresía -->
                         <p><strong>Precio:</strong> <span id="precio">Cargando...</span></p>
+
+                        <!-- Periodo de facturación -->
                         <p><strong>Periodo:</strong> <span id="periodo">Cargando...</span></p>
+
+                        <!-- Horario incluido en el plan -->
                         <p><strong>Horario:</strong> <span id="horario">Cargando...</span></p>
+
+                        <!-- Fecha de inicio de la suscripción -->
                         <p><strong>Fecha inicio:</strong> <span id="fecha-inicio">Cargando...</span></p>
+
+                        <!-- Próxima fecha de renovación -->
                         <p><strong>Renovación:</strong> <span id="fecha-renovacion">Cargando...</span></p>
+
+                        <!-- Estado actual de la suscripción -->
                         <p><strong>Estado:</strong> <span id="estado" class="status-badge">Cargando...</span></p>
+
+                        <!-- Indica si la renovación automática está activada -->
                         <p><strong>Renovación automática:</strong> <span id="renovacion-automatica">Cargando...</span>
                         </p>
 
+                        <!-- Descripción del plan contratado -->
                         <p id="descripcion">Cargando descripción...</p>
 
+                        <!-- Botón para cancelar la suscripción -->
                         <div class="actions actions-top" style="margin-top: 1rem;">
                             <button id="btn-cancelar-suscripcion" class="btn btn--ghost" type="button">
                                 Cancelar suscripción
                             </button>
                         </div>
 
+                        <!-- Mensaje dinámico para confirmaciones o errores -->
                         <p id="mensaje-suscripcion" class="muted"></p>
                     </div>
                 </section>
@@ -104,13 +151,18 @@
         </div>
     </main>
 
+    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -118,7 +170,10 @@
         </div>
     </footer>
 
+    <!-- JavaScript que carga y gestiona los datos de la suscripción -->
     <script src="../js/suscripcion.js?v=4"></script>
+
+    <!-- JavaScript que actualiza los contadores de notificaciones -->
     <script src="../js/notificaciones-badge.js"></script>
 </body>
 

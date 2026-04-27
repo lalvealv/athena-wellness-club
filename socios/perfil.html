@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -15,6 +16,7 @@
 </head>
 
 <body>
+
     <!-- HEADER / CABECERA DEL ÁREA DE SOCIOS -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
@@ -22,6 +24,8 @@
             <!-- Logo e identidad del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
+
+                <!-- Texto de marca -->
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Área privada</span>
@@ -31,16 +35,23 @@
             <!-- Navegación superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
+
+                <!-- Página actual -->
                 <a class="is-active" href="perfil.html">Mi perfil</a>
+
                 <a href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
                 <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
+
+                <!-- Avisos con contador dinámico -->
                 <a href="notificaciones.html">
                     Avisos
                     <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
                 </a>
+
+                <!-- Cierre de sesión -->
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
@@ -56,7 +67,7 @@
             <!-- SIDEBAR DEL SOCIO -->
             <aside class="socios-sidebar">
 
-                <!-- Información básica del usuario -->
+                <!-- Información básica del usuario cargada con JavaScript -->
                 <div class="socios-user">
                     <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="sidebar-nombre-completo">Cargando...</h3>
@@ -66,13 +77,18 @@
                 <!-- Menú lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
+
+                    <!-- Página actual -->
                     <a class="is-active" href="perfil.html">Mi perfil</a>
+
                     <a href="suscripcion.html">Mi suscripción</a>
                     <a href="horarios-reservas.html">Horarios y reservas</a>
                     <a href="historial-reservas.html">Historial reservas</a>
                     <a href="entrenamientos.html">Entrenamientos</a>
                     <a href="estadisticas.html">Estadísticas</a>
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
+
+                    <!-- Notificaciones con contador dinámico -->
                     <a href="notificaciones.html">
                         Notificaciones
                         <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
@@ -84,12 +100,16 @@
             <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
+                <!-- PANEL: PERFIL DEL SOCIO -->
                 <section class="socios-panel">
 
+                    <!-- Título del panel -->
                     <h2 class="h2">Mi perfil</h2>
 
+                    <!-- Caja principal del perfil -->
                     <div class="profile-box">
 
+                        <!-- Grid con foto e información del usuario -->
                         <div class="profile-grid">
 
                             <!-- Foto del usuario -->
@@ -98,34 +118,40 @@
                                     alt="Foto de perfil ampliada del socio">
                             </div>
 
-                            <!-- Información personal -->
+                            <!-- Información personal cargada dinámicamente -->
                             <div class="profile-data">
 
+                                <!-- Nombre del socio -->
                                 <div class="profile-item">
                                     <span>Nombre</span>
                                     <strong id="perfil-nombre">Cargando...</strong>
                                 </div>
 
+                                <!-- Apellidos del socio -->
                                 <div class="profile-item">
                                     <span>Apellidos</span>
                                     <strong id="perfil-apellidos">Cargando...</strong>
                                 </div>
 
+                                <!-- Correo electrónico -->
                                 <div class="profile-item">
                                     <span>Email</span>
                                     <strong id="perfil-correo">Cargando...</strong>
                                 </div>
 
+                                <!-- Teléfono de contacto -->
                                 <div class="profile-item">
                                     <span>Teléfono</span>
                                     <strong id="perfil-telefono">Cargando...</strong>
                                 </div>
 
+                                <!-- Dirección del socio -->
                                 <div class="profile-item">
                                     <span>Dirección</span>
                                     <strong id="perfil-direccion">Cargando...</strong>
                                 </div>
 
+                                <!-- Plan o membresía activa -->
                                 <div class="profile-item">
                                     <span>Plan</span>
                                     <strong id="perfil-plan">Cargando...</strong>
@@ -146,11 +172,15 @@
     <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -158,7 +188,10 @@
         </div>
     </footer>
 
+    <!-- JavaScript que carga los datos del perfil del socio -->
     <script src="../js/perfil.js"></script>
+
+    <!-- JavaScript que actualiza los contadores de notificaciones -->
     <script src="../js/notificaciones-badge.js"></script>
 </body>
 

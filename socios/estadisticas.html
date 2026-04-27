@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -15,9 +16,12 @@
 </head>
 
 <body>
+
+    <!-- HEADER DEL ÁREA DE SOCIOS -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
                 <span class="brand-text">
@@ -26,6 +30,7 @@
                 </span>
             </a>
 
+            <!-- Menú superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
@@ -33,27 +38,38 @@
                 <a href="horarios-reservas.html">Reservas</a>
                 <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
+
+                <!-- Página actual -->
                 <a class="is-active" href="estadisticas.html">Estadísticas</a>
+
+                <!-- Avisos con contador dinámico -->
                 <a href="notificaciones.html">
                     Avisos
                     <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
                 </a>
+
+                <!-- Cierre de sesión -->
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
+
+                <!-- Datos del socio cargados dinámicamente -->
                 <div class="socios-user">
                     <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="sidebar-nombre">Cargando...</h3>
                     <p id="sidebar-plan">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
@@ -61,8 +77,13 @@
                     <a href="horarios-reservas.html">Horarios y reservas</a>
                     <a href="historial-reservas.html">Historial reservas</a>
                     <a href="entrenamientos.html">Entrenamientos</a>
+
+                    <!-- Página actual -->
                     <a class="is-active" href="estadisticas.html">Estadísticas</a>
+
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
+
+                    <!-- Notificaciones con contador dinámico -->
                     <a href="notificaciones.html">
                         Notificaciones
                         <span id="menu-avisos-badge" class="menu-badge" hidden>0</span>
@@ -70,31 +91,41 @@
                 </nav>
             </aside>
 
+            <!-- ZONA DE CONTENIDO -->
             <div class="socios-content">
+
+                <!-- PANEL: ESTADÍSTICAS GENERALES -->
                 <section class="socios-panel">
                     <h2 class="h2">Estadísticas</h2>
 
+                    <!-- Mensaje informativo cargado con JavaScript -->
                     <p id="mensaje-estadisticas" class="muted"></p>
 
+                    <!-- Tarjetas resumen de estadísticas -->
                     <div class="dashboard-grid">
+
+                        <!-- Tarjeta: clases realizadas en el mes -->
                         <div class="info-card">
                             <span class="label">Clases este mes</span>
                             <h3 id="estadistica-clases-mes">Cargando...</h3>
                             <p id="estadistica-clases-mes-detalle">Cargando...</p>
                         </div>
 
+                        <!-- Tarjeta: actividad favorita -->
                         <div class="info-card">
                             <span class="label">Actividad favorita</span>
                             <h3 id="estadistica-actividad-favorita">Cargando...</h3>
                             <p id="estadistica-actividad-favorita-detalle">Cargando...</p>
                         </div>
 
+                        <!-- Tarjeta: entrenamientos semanales -->
                         <div class="info-card">
                             <span class="label">Entrenamientos semanales</span>
                             <h3 id="estadistica-entrenamientos-semanales">Cargando...</h3>
                             <p id="estadistica-entrenamientos-semanales-detalle">Cargando...</p>
                         </div>
 
+                        <!-- Tarjeta: asistencia general -->
                         <div class="info-card">
                             <span class="label">Asistencia</span>
                             <h3 id="estadistica-asistencia">Cargando...</h3>
@@ -103,6 +134,7 @@
                     </div>
                 </section>
 
+                <!-- PANEL: PROGRESO DE ASISTENCIA -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Progreso de asistencia</h2>
 
@@ -111,15 +143,18 @@
                         <h3 id="asistencia-porcentaje-visual">Cargando...</h3>
                         <p id="asistencia-texto-visual">Cargando...</p>
 
+                        <!-- Barra visual del porcentaje de asistencia -->
                         <div class="progress-bar progress-bar--large">
                             <div id="barra-asistencia" class="progress-bar-fill"></div>
                         </div>
                     </div>
                 </section>
 
+                <!-- PANEL: RANKING DE ACTIVIDAD -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Ranking de actividad</h2>
 
+                    <!-- Tabla con las actividades más realizadas o reservadas -->
                     <div class="table-wrap">
                         <table class="mini-table">
                             <thead>
@@ -130,6 +165,8 @@
                                     <th>Progreso</th>
                                 </tr>
                             </thead>
+
+                            <!-- Cuerpo cargado dinámicamente con JavaScript -->
                             <tbody id="tabla-ranking-actividad">
                                 <tr>
                                     <td colspan="4">Cargando ranking...</td>
@@ -139,10 +176,13 @@
                     </div>
                 </section>
 
+                <!-- PANEL: DASHBOARD VISUAL -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Dashboard visual</h2>
 
                     <div class="two-cols">
+
+                        <!-- Gráfica de clases y entrenamientos -->
                         <div class="info-card">
                             <span class="label">Clases y entrenamientos</span>
                             <div id="grafica-resumen-actividad" class="chart-bars">
@@ -150,6 +190,7 @@
                             </div>
                         </div>
 
+                        <!-- Gráfica de distribución de actividad favorita -->
                         <div class="info-card">
                             <span class="label">Distribución de actividad favorita</span>
                             <div id="grafica-ranking-actividad" class="chart-bars">
@@ -164,13 +205,18 @@
         </div>
     </main>
 
+    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -178,7 +224,10 @@
         </div>
     </footer>
 
+    <!-- JavaScript que carga las estadísticas del socio -->
     <script src="../js/estadistica.js?v=4"></script>
+
+    <!-- JavaScript que actualiza los contadores de notificaciones -->
     <script src="../js/notificaciones-badge.js"></script>
 </body>
 

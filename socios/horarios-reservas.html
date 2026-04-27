@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -15,54 +16,77 @@
 </head>
 
 <body>
+
+    <!-- HEADER DEL ÁREA DE SOCIOS -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
+
+                <!-- Texto de marca -->
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Área privada</span>
                 </span>
             </a>
 
+            <!-- Menú superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
+
+                <!-- Página actual -->
                 <a class="is-active" href="horarios-reservas.html">Reservas</a>
+
                 <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
+
+                <!-- Avisos con contador dinámico -->
                 <a href="notificaciones.html">
                     Avisos
                     <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
                 </a>
+
+                <!-- Cierre de sesión -->
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
+
+                <!-- Datos del socio cargados dinámicamente -->
                 <div class="socios-user">
                     <img id="foto-usuario-sidebar" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="nombre-usuario-sidebar">Cargando...</h3>
                     <p id="membresia-usuario-sidebar">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
                     <a href="suscripcion.html">Mi suscripción</a>
+
+                    <!-- Página actual -->
                     <a class="is-active" href="horarios-reservas.html">Horarios y reservas</a>
+
                     <a href="historial-reservas.html">Historial reservas</a>
                     <a href="entrenamientos.html">Entrenamientos</a>
                     <a href="estadisticas.html">Estadísticas</a>
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
+
+                    <!-- Notificaciones con contador dinámico -->
                     <a href="notificaciones.html">
                         Notificaciones
                         <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
@@ -70,36 +94,47 @@
                 </nav>
             </aside>
 
+            <!-- ZONA DE CONTENIDO -->
             <div class="socios-content">
+
+                <!-- PANEL: HORARIOS Y RESERVAS -->
                 <section class="socios-panel">
                     <h2 class="h2">Horarios y reservas</h2>
 
+                    <!-- Texto introductorio -->
                     <p class="lead">
                         Consulta el horario fijo del club con fechas reales, revisa sala, monitor y plazas libres, y
                         reserva tu próxima sesión.
                     </p>
 
+                    <!-- Mensaje dinámico para confirmar reservas, errores o avisos -->
                     <p id="mensaje-reserva" class="muted"></p>
 
+                    <!-- Tarjetas resumen de reservas -->
                     <div class="dashboard-grid">
+
+                        <!-- Tarjeta: próxima clase reservada -->
                         <div class="info-card">
                             <span class="label">Próxima clase</span>
                             <h3 id="resumen-proxima-clase">Cargando...</h3>
                             <p id="resumen-proxima-fecha">Cargando...</p>
                         </div>
 
+                        <!-- Tarjeta: número de reservas activas -->
                         <div class="info-card">
                             <span class="label">Reservas activas</span>
                             <h3 id="resumen-reservas-activas">0</h3>
                             <p>Sesiones futuras confirmadas</p>
                         </div>
 
+                        <!-- Tarjeta: última reserva realizada -->
                         <div class="info-card">
                             <span class="label">Última reserva</span>
                             <h3 id="resumen-ultima-reserva">Cargando...</h3>
                             <p id="resumen-ultima-fecha">Cargando...</p>
                         </div>
 
+                        <!-- Tarjeta: sesiones con plazas libres -->
                         <div class="info-card">
                             <span class="label">Sesiones con plazas</span>
                             <h3 id="resumen-sesiones-disponibles">0</h3>
@@ -107,14 +142,19 @@
                         </div>
                     </div>
 
+                    <!-- Tabla del horario semanal -->
                     <div class="table-wrap reservas-wrap" style="margin-top: 1rem;">
                         <table class="reservas-table">
+
+                            <!-- Cabecera generada dinámicamente con JavaScript -->
                             <thead id="cabecera-horario-semanal">
                                 <tr>
                                     <th>Horario</th>
                                     <th>Cargando calendario...</th>
                                 </tr>
                             </thead>
+
+                            <!-- Cuerpo de la tabla cargado dinámicamente -->
                             <tbody id="tabla-horario-semanal-socios">
                                 <tr>
                                     <td colspan="2">Cargando horario semanal...</td>
@@ -129,13 +169,18 @@
         </div>
     </main>
 
+    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123 · 912 345 678</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -143,8 +188,10 @@
         </div>
     </footer>
 
+    <!-- JavaScript que carga horarios, plazas disponibles y reservas -->
     <script src="../js/horarios-reservas.js"></script>
-    <!-- <script src="../js/horarios-reservas.js?v=2"></script> -->
+
+    <!-- JavaScript que actualiza los contadores de notificaciones -->
     <script src="../js/notificaciones-badge.js"></script>
 </body>
 

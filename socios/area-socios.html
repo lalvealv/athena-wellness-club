@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -15,45 +16,63 @@
 </head>
 
 <body>
+
+    <!-- HEADER DEL ÁREA DE SOCIOS -->
+    <!-- Contiene el logo y la navegación privada -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo de ATHENA Wellness Club">
+
+                <!-- Texto de marca -->
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Área privada</span>
                 </span>
             </a>
 
+            <!-- Menú superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
+                <!-- Página actual -->
                 <a class="is-active" href="area-socios.html">Resumen</a>
+
                 <a href="perfil.html">Mi perfil</a>
                 <a href="suscripcion.html">Suscripción</a>
                 <a href="horarios-reservas.html">Reservas</a>
                 <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
+
+                <!-- Enlace a avisos con contador dinámico -->
                 <a href="notificaciones.html">
                     Avisos
                     <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
                 </a>
+
+                <!-- Cierre de sesión -->
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL DEL ÁREA DE SOCIOS -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
+
+                <!-- Datos del socio cargados dinámicamente con JavaScript -->
                 <div class="socios-user">
                     <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="sidebar-nombre">Cargando...</h3>
                     <p id="sidebar-plan">Cargando...</p>
                 </div>
 
+                <!-- Navegación lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a class="is-active" href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
@@ -63,6 +82,8 @@
                     <a href="entrenamientos.html">Entrenamientos</a>
                     <a href="estadisticas.html">Estadísticas</a>
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
+
+                    <!-- Notificaciones con contador dinámico -->
                     <a href="notificaciones.html">
                         Notificaciones
                         <span id="menu-avisos-badge" class="menu-badge" hidden>0</span>
@@ -70,30 +91,38 @@
                 </nav>
             </aside>
 
+            <!-- CONTENIDO PRINCIPAL -->
             <div class="socios-content">
+
+                <!-- Panel de resumen general -->
                 <section class="socios-panel">
                     <h2 class="h2">Resumen general</h2>
 
+                    <!-- Tarjetas resumen del panel privado -->
                     <div class="dashboard-grid">
 
+                        <!-- Tarjeta: suscripción actual -->
                         <div class="info-card">
                             <span class="label">Suscripción</span>
                             <h3 id="resumen-suscripcion">Cargando...</h3>
                             <p id="resumen-renovacion">Cargando...</p>
                         </div>
 
+                        <!-- Tarjeta: próxima clase reservada -->
                         <div class="info-card">
                             <span class="label">Próxima clase</span>
                             <h3 id="resumen-proxima-clase">Cargando...</h3>
                             <p id="resumen-proxima-clase-detalle">Cargando...</p>
                         </div>
 
+                        <!-- Tarjeta: entrenamientos semanales -->
                         <div class="info-card">
                             <span class="label">Entrenamientos esta semana</span>
                             <h3 id="resumen-entrenamientos-semana">Cargando...</h3>
                             <p id="resumen-entrenamientos-mensaje">Cargando...</p>
                         </div>
 
+                        <!-- Tarjeta: objetivo fitness -->
                         <div class="info-card">
                             <span class="label">Objetivo fitness</span>
                             <h3 id="resumen-objetivo-progreso">Cargando...</h3>
@@ -108,13 +137,18 @@
         </div>
     </main>
 
+    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Datos de contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario del club -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -122,7 +156,10 @@
         </div>
     </footer>
 
+    <!-- JavaScript que carga los datos del resumen del socio -->
     <script src="../js/area-socios.js"></script>
+
+    <!-- JavaScript que actualiza los contadores de notificaciones -->
     <script src="../js/notificaciones-badge.js"></script>
 </body>
 

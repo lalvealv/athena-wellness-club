@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -15,17 +16,23 @@
 </head>
 
 <body>
+
+    <!-- HEADER DEL ÁREA DE SOCIOS -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA Wellness Club">
+
+                <!-- Texto de marca -->
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Área privada</span>
                 </span>
             </a>
 
+            <!-- Menú superior del área privada -->
             <nav class="nav nav--socios" aria-label="Navegación del área privada">
                 <a href="area-socios.html">Resumen</a>
                 <a href="perfil.html">Mi perfil</a>
@@ -34,27 +41,35 @@
                 <a href="historial-reservas.html">Historial reservas</a>
                 <a href="entrenamientos.html">Entrenamientos</a>
                 <a href="estadisticas.html">Estadísticas</a>
+
+                <!-- Página actual con contador de avisos -->
                 <a class="is-active" href="notificaciones.html">
                     Avisos
                     <span id="nav-avisos-badge" class="nav-badge" hidden>0</span>
                 </a>
+
+                <!-- Cierre de sesión -->
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
 
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
 
+                <!-- Datos del socio cargados dinámicamente -->
                 <div class="socios-user">
                     <img id="sidebar-foto" src="../img-socios/socio1.png" alt="Foto de perfil del socio">
                     <h3 id="sidebar-nombre">Cargando...</h3>
                     <p id="sidebar-plan">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral del área privada -->
                 <nav class="socios-menu" aria-label="Menú lateral del área privada">
                     <a href="area-socios.html">Resumen</a>
                     <a href="perfil.html">Mi perfil</a>
@@ -64,6 +79,8 @@
                     <a href="entrenamientos.html">Entrenamientos</a>
                     <a href="estadisticas.html">Estadísticas</a>
                     <a href="objetivo-fitness.html">Objetivo fitness</a>
+
+                    <!-- Enlace a notificaciones con contador dinámico -->
                     <a href="notificaciones.html">
                         Notificaciones
                         <span id="menu-avisos-badge" class="menu-badge" hidden>0</span>
@@ -72,14 +89,20 @@
 
             </aside>
 
+            <!-- ZONA DE CONTENIDO -->
             <div class="socios-content">
 
+                <!-- PANEL: LISTADO DE NOTIFICACIONES -->
                 <section class="socios-panel">
                     <h2 class="h2">Notificaciones</h2>
 
+                    <!-- Mensaje informativo cargado con JavaScript -->
                     <p id="mensaje-notificaciones" class="muted"></p>
 
+                    <!-- Contenedor de notificaciones -->
                     <div class="notification-box">
+
+                        <!-- Lista de avisos cargada dinámicamente -->
                         <div class="notifications-list" id="lista-notificaciones">
                             <div class="notification-item">
                                 <strong>Cargando...</strong>
@@ -89,9 +112,11 @@
                     </div>
                 </section>
 
+                <!-- PANEL: DETALLE DE NOTIFICACIÓN -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Detalle del aviso</h2>
 
+                    <!-- Tarjeta donde se muestra el contenido completo del aviso seleccionado -->
                     <div class="info-card notification-detail-card" id="detalle-notificacion-card">
                         <span class="label" id="detalle-notificacion-tipo">Cargando...</span>
                         <h3 id="detalle-notificacion-titulo">Selecciona una notificación</h3>
@@ -105,13 +130,18 @@
         </div>
     </main>
 
+    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -119,7 +149,10 @@
         </div>
     </footer>
 
+    <!-- JavaScript que carga y gestiona las notificaciones -->
     <script src="../js/notificaciones.js?v=2"></script>
+
+    <!-- JavaScript que actualiza los contadores de avisos -->
     <script src="../js/notificaciones-badge.js"></script>
 </body>
 
