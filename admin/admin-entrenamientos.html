@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -17,9 +18,11 @@
 
 <body>
 
+    <!-- HEADER DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
                 <span class="brand-text">
@@ -28,21 +31,27 @@
                 </span>
             </a>
 
+            <!-- Menú superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
                 <a href="admin-panel.html">Resumen</a>
                 <a href="admin-usuarios.html">Usuarios</a>
                 <a href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
+
+                <!-- Página actual -->
                 <a class="is-active" href="admin-entrenamientos.html">Entrenamientos</a>
+
                 <a href="admin-notificaciones.html">Avisos</a>
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR DE ADMINISTRACIÓN -->
             <aside class="socios-sidebar">
                 <div class="socios-user">
                     <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
@@ -50,42 +59,54 @@
                     <p id="admin-perfil">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
                     <a href="admin-panel.html">Resumen general</a>
                     <a href="admin-usuarios.html">Gestión de usuarios</a>
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
+
+                    <!-- Página actual -->
                     <a class="is-active" href="admin-entrenamientos.html">Gestión de entrenamientos</a>
+
                     <a href="admin-notificaciones.html">Gestión de notificaciones</a>
                 </nav>
             </aside>
 
+            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
+                <!-- PANEL: FILTROS Y LISTADO -->
                 <section class="socios-panel">
                     <h2 class="h2">Gestión de entrenamientos</h2>
 
+                    <!-- Formulario de búsqueda y filtros -->
                     <div class="profile-box box-spacing">
                         <form id="form-filtro-entrenamientos">
                             <div class="two-cols">
+
+                                <!-- Buscar por usuario -->
                                 <div class="form-row">
                                     <label for="buscarEntrenamiento">Buscar usuario</label>
                                     <input type="text" id="buscarEntrenamiento" name="buscarEntrenamiento"
                                         placeholder="Alias o nombre del socio">
                                 </div>
 
+                                <!-- Filtrar por texto de observación -->
                                 <div class="form-row">
                                     <label for="filtrarRutina">Filtrar por observación</label>
                                     <input type="text" id="filtrarRutina" name="filtrarRutina"
                                         placeholder="Ej: pierna, cardio, full body...">
                                 </div>
 
+                                <!-- Filtrar por fecha -->
                                 <div class="form-row form-row--date">
                                     <label for="fechaEntrenamiento">Fecha</label>
                                     <input type="date" id="fechaEntrenamiento" name="fechaEntrenamiento">
                                 </div>
                             </div>
 
+                            <!-- Botones del filtro -->
                             <div class="actions actions-top">
                                 <button class="btn btn--primary btn--small" type="submit">Buscar</button>
                                 <button class="btn btn--ghost btn--small" type="reset"
@@ -97,8 +118,10 @@
                         </form>
                     </div>
 
+                    <!-- Mensaje dinámico de administración -->
                     <p id="mensaje-admin-entrenamientos" class="muted"></p>
 
+                    <!-- Tabla principal de entrenamientos -->
                     <div class="table-wrap" id="tabla-entrenamientos-wrap">
                         <table class="mini-table">
                             <thead>
@@ -113,6 +136,8 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
+
+                            <!-- Cuerpo cargado dinámicamente con JavaScript -->
                             <tbody id="tabla-entrenamientos">
                                 <tr>
                                     <td colspan="8">Cargando entrenamientos...</td>
@@ -122,16 +147,20 @@
                     </div>
                 </section>
 
+                <!-- PANEL: DETALLE DEL ENTRENAMIENTO -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Detalle del entrenamiento seleccionado</h2>
 
                     <div class="two-cols">
+
+                        <!-- Datos del usuario seleccionado -->
                         <div class="info-card">
                             <span class="label">Usuario</span>
                             <h3 id="detalle-usuario">Cargando...</h3>
                             <p id="detalle-subtexto-usuario">Cargando...</p>
                         </div>
 
+                        <!-- Datos de la rutina seleccionada -->
                         <div class="info-card">
                             <span class="label">Rutina / tipo</span>
                             <h3 id="detalle-rutina">Cargando...</h3>
@@ -139,6 +168,7 @@
                         </div>
                     </div>
 
+                    <!-- Tabla de ejercicios del entrenamiento seleccionado -->
                     <div class="table-wrap actions-top">
                         <table class="mini-table">
                             <thead>
@@ -149,6 +179,8 @@
                                     <th>Peso</th>
                                 </tr>
                             </thead>
+
+                            <!-- Cuerpo cargado dinámicamente -->
                             <tbody id="tabla-detalle-entrenamiento-admin">
                                 <tr>
                                     <td colspan="4">Cargando detalle...</td>
@@ -158,13 +190,19 @@
                     </div>
                 </section>
 
+                <!-- PANEL: CREAR O EDITAR ENTRENAMIENTO -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Crear / editar entrenamiento</h2>
 
+                    <!-- Formulario para alta o edición de entrenamientos -->
                     <form id="form-entrenamiento-admin">
+
+                        <!-- ID oculto: vacío si es nuevo, con valor si se está editando -->
                         <input type="hidden" id="idEntrenamiento" name="idEntrenamiento">
 
                         <div class="two-cols">
+
+                            <!-- Selección del usuario -->
                             <div class="form-row">
                                 <label for="usuarioEntrenamiento">Usuario</label>
                                 <select id="usuarioEntrenamiento" name="usuarioEntrenamiento" required>
@@ -172,17 +210,20 @@
                                 </select>
                             </div>
 
+                            <!-- Fecha del entrenamiento -->
                             <div class="form-row form-row--date">
                                 <label for="fechaFormEntrenamiento">Fecha</label>
                                 <input type="date" id="fechaFormEntrenamiento" name="fechaFormEntrenamiento" required>
                             </div>
 
+                            <!-- Duración en minutos -->
                             <div class="form-row">
                                 <label for="duracionEntrenamiento">Duración (min)</label>
                                 <input type="number" id="duracionEntrenamiento" name="duracionEntrenamiento" min="1"
                                     required>
                             </div>
 
+                            <!-- Estado del entrenamiento -->
                             <div class="form-row">
                                 <label for="estadoEntrenamiento">Estado</label>
                                 <select id="estadoEntrenamiento" name="estadoEntrenamiento" required>
@@ -192,6 +233,7 @@
                             </div>
                         </div>
 
+                        <!-- Observaciones o tipo de rutina -->
                         <div class="form-row actions-top">
                             <label for="observacionesEntrenamiento">Observaciones / tipo de rutina</label>
                             <textarea id="observacionesEntrenamiento" name="observacionesEntrenamiento" rows="3"
@@ -200,6 +242,7 @@
 
                         <h3 class="h2" style="margin-top: 1.25rem;">Ejercicios</h3>
 
+                        <!-- Tabla editable de ejercicios -->
                         <div class="table-wrap">
                             <table class="mini-table">
                                 <thead>
@@ -226,6 +269,7 @@
                             </table>
                         </div>
 
+                        <!-- Botones del formulario -->
                         <div class="actions actions-top">
                             <button type="button" class="btn btn--ghost btn--small" id="btn-anadir-ejercicio">Añadir
                                 ejercicio</button>
@@ -236,28 +280,34 @@
                     </form>
                 </section>
 
+                <!-- PANEL: RESUMEN DE ACTIVIDAD -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Resumen de actividad</h2>
 
                     <div class="dashboard-grid">
+
+                        <!-- Total semanal -->
                         <div class="info-card">
                             <span class="label">Entrenamientos esta semana</span>
                             <h3 id="resumen-entrenamientos-semana">Cargando...</h3>
                             <p>Total de sesiones registradas</p>
                         </div>
 
+                        <!-- Observación más repetida -->
                         <div class="info-card">
                             <span class="label">Observación más usada</span>
                             <h3 id="resumen-rutina-usada">Cargando...</h3>
                             <p>Texto más repetido en observaciones</p>
                         </div>
 
+                        <!-- Usuarios activos -->
                         <div class="info-card">
                             <span class="label">Usuarios activos</span>
                             <h3 id="resumen-usuarios-activos">Cargando...</h3>
                             <p>Han entrenado en los últimos 7 días</p>
                         </div>
 
+                        <!-- Usuarios con poco seguimiento -->
                         <div class="info-card">
                             <span class="label">Seguimiento bajo</span>
                             <h3 id="resumen-seguimiento-bajo">Cargando...</h3>
@@ -271,6 +321,7 @@
         </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -285,6 +336,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript que gestiona entrenamientos desde administración -->
     <script src="../js/admin-entrenamientos.js?v=2"></script>
 </body>
 

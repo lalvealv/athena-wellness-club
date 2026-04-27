@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -17,9 +18,11 @@
 
 <body>
 
+    <!-- HEADER DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
                 <span class="brand-text">
@@ -28,21 +31,27 @@
                 </span>
             </a>
 
+            <!-- Menú superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
                 <a href="admin-panel.html">Resumen</a>
                 <a href="admin-usuarios.html">Usuarios</a>
                 <a href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
                 <a href="admin-entrenamientos.html">Entrenamientos</a>
+
+                <!-- Página actual -->
                 <a class="is-active" href="admin-notificaciones.html">Avisos</a>
+
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
             </nav>
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR DE ADMINISTRACIÓN -->
             <aside class="socios-sidebar">
                 <div class="socios-user">
                     <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
@@ -50,24 +59,33 @@
                     <p id="admin-perfil">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
                     <a href="admin-panel.html">Resumen general</a>
                     <a href="admin-usuarios.html">Gestión de usuarios</a>
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
                     <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
+
+                    <!-- Página actual -->
                     <a class="is-active" href="admin-notificaciones.html">Gestión de notificaciones</a>
                 </nav>
             </aside>
 
+            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
+                <!-- PANEL: CREAR NOTIFICACIÓN -->
                 <section class="socios-panel">
                     <h2 class="h2">Gestión de notificaciones</h2>
 
                     <div class="profile-box">
+
+                        <!-- Formulario para enviar avisos a los socios -->
                         <form id="form-notificacion">
                             <div class="two-cols">
+
+                                <!-- Destinatario del aviso -->
                                 <div class="form-row">
                                     <label for="destinatario">Destinatario</label>
                                     <select id="destinatario" name="destinatario" required>
@@ -80,6 +98,7 @@
                                     </select>
                                 </div>
 
+                                <!-- Tipo de aviso -->
                                 <div class="form-row">
                                     <label for="tipoAviso">Tipo de aviso</label>
                                     <select id="tipoAviso" name="tipoAviso" required>
@@ -91,38 +110,45 @@
                                 </div>
                             </div>
 
+                            <!-- Campo visible solo si se elige usuario específico -->
                             <div class="form-row" id="fila-usuario-especifico" style="display:none;">
                                 <label for="usuarioEspecifico">Alias o correo del usuario</label>
                                 <input type="text" id="usuarioEspecifico" name="usuarioEspecifico"
                                     placeholder="Escribe el alias o el correo del usuario">
                             </div>
 
+                            <!-- Título de la notificación -->
                             <div class="form-row">
                                 <label for="tituloAviso">Título</label>
                                 <input type="text" id="tituloAviso" name="tituloAviso"
                                     placeholder="Escribe el título del aviso" required>
                             </div>
 
+                            <!-- Mensaje de la notificación -->
                             <div class="form-row">
                                 <label for="mensajeAviso">Mensaje</label>
                                 <textarea id="mensajeAviso" name="mensajeAviso" rows="6"
                                     placeholder="Escribe aquí el contenido de la notificación" required></textarea>
                             </div>
 
+                            <!-- Botones del formulario -->
                             <div class="actions actions-top">
                                 <button class="btn btn--primary" type="submit">Enviar notificación</button>
                                 <button class="btn btn--ghost" type="reset"
                                     id="btn-limpiar-notificacion">Limpiar</button>
                             </div>
 
+                            <!-- Mensaje dinámico de respuesta -->
                             <p id="mensaje-form-notificacion" class="muted"></p>
                         </form>
                     </div>
                 </section>
 
+                <!-- PANEL: ÚLTIMAS NOTIFICACIONES -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Últimas notificaciones enviadas</h2>
 
+                    <!-- Listado cargado dinámicamente con JavaScript -->
                     <div class="notification-box">
                         <div class="notifications-list" id="lista-notificaciones-admin">
                             <div class="notification-item">
@@ -133,28 +159,34 @@
                     </div>
                 </section>
 
+                <!-- PANEL: RESUMEN DE COMUNICACIÓN -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Resumen de comunicación</h2>
 
                     <div class="dashboard-grid">
+
+                        <!-- Avisos enviados hoy -->
                         <div class="info-card">
                             <span class="label">Avisos enviados hoy</span>
                             <h3 id="resumen-avisos-hoy">Cargando...</h3>
                             <p>Mensajes registrados en el sistema</p>
                         </div>
 
+                        <!-- Avisos de tipo general -->
                         <div class="info-card">
                             <span class="label">Avisos generales</span>
                             <h3 id="resumen-avisos-generales">Cargando...</h3>
                             <p>Comunicaciones generales</p>
                         </div>
 
+                        <!-- Recordatorios enviados -->
                         <div class="info-card">
                             <span class="label">Recordatorios</span>
                             <h3 id="resumen-recordatorios">Cargando...</h3>
                             <p>Mensajes de tipo recordatorio</p>
                         </div>
 
+                        <!-- Notificaciones pendientes de leer -->
                         <div class="info-card">
                             <span class="label">Pendientes de lectura</span>
                             <h3 id="resumen-pendientes">Cargando...</h3>
@@ -168,13 +200,18 @@
         </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -182,6 +219,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript que gestiona el envío y listado de notificaciones -->
     <script src="../js/admin-notificaciones.js?v=2"></script>
 </body>
 

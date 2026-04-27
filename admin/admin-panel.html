@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -17,9 +18,11 @@
 
 <body>
 
+    <!-- HEADER DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
                 <span class="brand-text">
@@ -28,6 +31,7 @@
                 </span>
             </a>
 
+            <!-- Menú superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
                 <a class="is-active" href="admin-panel.html">Resumen</a>
                 <a href="admin-usuarios.html">Usuarios</a>
@@ -40,16 +44,21 @@
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR DE ADMINISTRACIÓN -->
             <aside class="socios-sidebar">
+
+                <!-- Datos del administrador cargados dinámicamente -->
                 <div class="socios-user">
                     <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
                     <h3 id="admin-nombre">Cargando...</h3>
                     <p id="admin-perfil">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
                     <a class="is-active" href="admin-panel.html">Resumen general</a>
                     <a href="admin-usuarios.html">Gestión de usuarios</a>
@@ -60,30 +69,38 @@
                 </nav>
             </aside>
 
+            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
+                <!-- PANEL: RESUMEN GENERAL -->
                 <section class="socios-panel">
                     <h2 class="h2">Panel de administración</h2>
 
+                    <!-- Tarjetas con indicadores principales -->
                     <div class="dashboard-grid">
+
+                        <!-- Usuarios activos -->
                         <div class="info-card">
                             <span class="label">Usuarios activos</span>
                             <h3 id="panel-usuarios-activos">Cargando...</h3>
                             <p>Socios con acceso activo</p>
                         </div>
 
+                        <!-- Usuarios bloqueados -->
                         <div class="info-card">
                             <span class="label">Usuarios bloqueados</span>
                             <h3 id="panel-usuarios-bloqueados">Cargando...</h3>
                             <p>Requieren revisión</p>
                         </div>
 
+                        <!-- Reservas del día -->
                         <div class="info-card">
                             <span class="label">Reservas hoy</span>
                             <h3 id="panel-reservas-hoy">Cargando...</h3>
                             <p>Sesiones confirmadas hoy</p>
                         </div>
 
+                        <!-- Nuevas altas -->
                         <div class="info-card">
                             <span class="label">Nuevas altas</span>
                             <h3 id="panel-nuevas-altas">Cargando...</h3>
@@ -92,10 +109,13 @@
                     </div>
                 </section>
 
+                <!-- PANEL: ACCESOS RÁPIDOS -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Accesos rápidos</h2>
 
                     <div class="two-cols">
+
+                        <!-- Acceso a gestión de usuarios -->
                         <div class="info-card">
                             <span class="label">Usuarios</span>
                             <h3>Gestionar clientes</h3>
@@ -105,6 +125,7 @@
                             </div>
                         </div>
 
+                        <!-- Acceso a gestión de reservas -->
                         <div class="info-card">
                             <span class="label">Reservas</span>
                             <h3>Control de clases</h3>
@@ -114,6 +135,7 @@
                             </div>
                         </div>
 
+                        <!-- Acceso a gestión de suscripciones -->
                         <div class="info-card">
                             <span class="label">Suscripciones</span>
                             <h3>Planes y renovaciones</h3>
@@ -124,6 +146,7 @@
                             </div>
                         </div>
 
+                        <!-- Acceso a gestión de avisos -->
                         <div class="info-card">
                             <span class="label">Avisos</span>
                             <h3>Comunicación con socios</h3>
@@ -135,9 +158,11 @@
                     </div>
                 </section>
 
+                <!-- PANEL: ÚLTIMOS USUARIOS REGISTRADOS -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Últimos usuarios registrados</h2>
 
+                    <!-- Tabla cargada dinámicamente con JavaScript -->
                     <div class="table-wrap">
                         <table class="mini-table">
                             <thead>
@@ -150,6 +175,7 @@
                                     <th>Acción</th>
                                 </tr>
                             </thead>
+
                             <tbody id="tabla-ultimos-usuarios">
                                 <tr>
                                     <td colspan="6">Cargando usuarios...</td>
@@ -164,13 +190,18 @@
         </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -178,6 +209,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript que carga los datos del panel de administración -->
     <script src="../js/admin-panel.js"></script>
 </body>
 

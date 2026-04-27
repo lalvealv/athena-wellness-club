@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -13,6 +14,7 @@
     <link rel="stylesheet" href="../estilo-general.css?v=2">
     <link rel="stylesheet" href="../estilo-socios.css?v=2">
     <link rel="stylesheet" href="../estilo-admin.css?v=2">
+</head>
 
 <body>
 
@@ -23,20 +25,27 @@
             <!-- Logo e identidad visual -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
+
+                <!-- Texto de marca del área de administración -->
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Administración</span>
                 </span>
             </a>
 
-            <!-- Navegación superior -->
+            <!-- Navegación superior del administrador -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
                 <a href="admin-panel.php">Resumen</a>
+
+                <!-- Página actual -->
                 <a class="is-active" href="admin-usuarios.html">Usuarios</a>
+
                 <a href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
                 <a href="admin-entrenamientos.html">Entrenamientos</a>
                 <a href="admin-notificaciones.html">Avisos</a>
+
+                <!-- Botón visual de cerrar sesión -->
                 <button class="btn btn--ghost btn--small" type="button">Cerrar sesión</button>
             </nav>
 
@@ -49,15 +58,21 @@
 
             <!-- SIDEBAR / MENÚ LATERAL -->
             <aside class="socios-sidebar">
+
+                <!-- Información fija del administrador -->
                 <div class="socios-user">
                     <img src="../img/admin.jpg" alt="Administrador ATHENA">
                     <h3>Administrador ATHENA</h3>
                     <p>Perfil ADMIN</p>
                 </div>
 
+                <!-- Menú lateral de administración -->
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
                     <a href="admin-panel.php">Resumen general</a>
+
+                    <!-- Página actual -->
                     <a class="is-active" href="admin-usuarios.html">Gestión de usuarios</a>
+
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
                     <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
@@ -72,6 +87,7 @@
                 <section class="socios-panel">
                     <h2 class="h2">Crear nuevo usuario</h2>
 
+                    <!-- Tarjeta introductoria -->
                     <div class="info-card">
                         <span class="label">Alta manual</span>
                         <h3>Nuevo usuario en ATHENA</h3>
@@ -79,8 +95,7 @@
                     </div>
                 </section>
 
-                <!-- FORMULARIO -->
-                <!--<form action="#" method="post">-->
+                <!-- FORMULARIO PRINCIPAL -->
                 <form id="form-crear-usuario">
 
                     <!-- DATOS PERSONALES -->
@@ -88,43 +103,52 @@
                         <h2 class="h2">Datos personales</h2>
 
                         <div class="two-cols">
+
+                            <!-- Campo: alias -->
                             <div class="form-row">
                                 <label for="alias">Alias</label>
                                 <input type="text" id="alias" name="alias" placeholder="Introduce el alias">
                             </div>
 
+                            <!-- Campo: DNI -->
                             <div class="form-row">
                                 <label for="dni">DNI</label>
                                 <input type="text" id="dni" name="dni" placeholder="Introduce el DNI">
                             </div>
 
+                            <!-- Campo: nombre -->
                             <div class="form-row">
                                 <label for="nombre">Nombre</label>
                                 <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre">
                             </div>
 
+                            <!-- Campo: apellidos -->
                             <div class="form-row">
                                 <label for="apellidos">Apellidos</label>
                                 <input type="text" id="apellidos" name="apellidos"
                                     placeholder="Introduce los apellidos">
                             </div>
 
+                            <!-- Campo: correo electrónico -->
                             <div class="form-row">
                                 <label for="correo">Correo electrónico</label>
                                 <input type="email" id="correo" name="correo"
                                     placeholder="Introduce el correo electrónico">
                             </div>
 
+                            <!-- Campo: teléfono -->
                             <div class="form-row">
                                 <label for="telefono">Teléfono</label>
                                 <input type="text" id="telefono" name="telefono" placeholder="Introduce el teléfono">
                             </div>
 
+                            <!-- Campo: fecha de nacimiento -->
                             <div class="form-row">
                                 <label for="fechaNacimiento">Fecha de nacimiento</label>
                                 <input type="date" id="fechaNacimiento" name="fechaNacimiento">
                             </div>
 
+                            <!-- Campo: sexo -->
                             <div class="form-row">
                                 <label for="sexo">Sexo</label>
                                 <select id="sexo" name="sexo">
@@ -142,6 +166,8 @@
                         <h2 class="h2">Acceso y permisos</h2>
 
                         <div class="two-cols">
+
+                            <!-- Perfil del usuario: cliente o administrador -->
                             <div class="form-row">
                                 <label for="perfil">Perfil</label>
                                 <select id="perfil" name="perfil">
@@ -150,6 +176,7 @@
                                 </select>
                             </div>
 
+                            <!-- Estado inicial de la cuenta -->
                             <div class="form-row">
                                 <label for="estado">Estado</label>
                                 <select id="estado" name="estado">
@@ -159,18 +186,21 @@
                                 </select>
                             </div>
 
+                            <!-- Contraseña inicial -->
                             <div class="form-row">
                                 <label for="contrasena">Contraseña</label>
                                 <input type="password" id="contrasena" name="contrasena"
                                     placeholder="Introduce una contraseña">
                             </div>
 
+                            <!-- Confirmación de contraseña -->
                             <div class="form-row">
                                 <label for="confirmarContrasena">Confirmar contraseña</label>
                                 <input type="password" id="confirmarContrasena" name="confirmarContrasena"
                                     placeholder="Repite la contraseña">
                             </div>
 
+                            <!-- Ruta de la imagen de perfil -->
                             <div class="form-row">
                                 <label for="fotoPerfil">Ruta foto perfil</label>
                                 <input type="text" id="fotoPerfil" name="fotoPerfil" value="../img/perfil.jpg">
@@ -182,6 +212,7 @@
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Suscripción inicial</h2>
 
+                        <!-- Información explicativa sobre la asignación -->
                         <div class="two-cols">
                             <div class="info-card">
                                 <span class="label">Membresía</span>
@@ -197,6 +228,8 @@
                         </div>
 
                         <div class="two-cols panel-spacing">
+
+                            <!-- Selección de membresía inicial -->
                             <div class="form-row">
                                 <label for="membresia">Membresía</label>
                                 <select id="membresia" name="membresia">
@@ -207,6 +240,7 @@
                                 </select>
                             </div>
 
+                            <!-- Renovación automática de la suscripción -->
                             <div class="form-row">
                                 <label for="renovacionAutomatica">Renovación automática</label>
                                 <select id="renovacionAutomatica" name="renovacionAutomatica">
@@ -222,6 +256,8 @@
                         <h2 class="h2">Acciones rápidas</h2>
 
                         <div class="two-cols">
+
+                            <!-- Acceso al listado de usuarios -->
                             <div class="info-card">
                                 <span class="label">Gestión de usuarios</span>
                                 <h3>Volver al listado</h3>
@@ -231,6 +267,7 @@
                                 </div>
                             </div>
 
+                            <!-- Acceso al panel de suscripciones -->
                             <div class="info-card">
                                 <span class="label">Control administrativo</span>
                                 <h3>Revisar suscripciones</h3>
@@ -242,6 +279,7 @@
                             </div>
                         </div>
 
+                        <!-- Botones finales del formulario -->
                         <div class="actions actions-top">
                             <button class="btn btn--primary" type="submit">Crear usuario</button>
                             <a class="btn btn--ghost" href="admin-usuarios.html">Cancelar</a>
@@ -255,14 +293,18 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
+    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -270,6 +312,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript que gestiona el alta del usuario desde administración -->
     <script src="../js/admin-crear-usuario.js"></script>
 
 </body>

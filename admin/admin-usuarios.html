@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -17,9 +18,11 @@
 
 <body>
 
+    <!-- HEADER DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
                 <span class="brand-text">
@@ -28,9 +31,13 @@
                 </span>
             </a>
 
+            <!-- Menú superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
                 <a href="admin-panel.html">Resumen</a>
+
+                <!-- Página actual -->
                 <a class="is-active" href="admin-usuarios.html">Usuarios</a>
+
                 <a href="admin-suscripciones.html">Suscripciones</a>
                 <a href="admin-reservas.html">Reservas</a>
                 <a href="admin-entrenamientos.html">Entrenamientos</a>
@@ -40,19 +47,27 @@
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR DE ADMINISTRACIÓN -->
             <aside class="socios-sidebar">
+
+                <!-- Datos del administrador cargados dinámicamente -->
                 <div class="socios-user">
                     <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
                     <h3 id="admin-nombre">Cargando...</h3>
                     <p id="admin-perfil">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
                     <a href="admin-panel.html">Resumen general</a>
+
+                    <!-- Página actual -->
                     <a class="is-active" href="admin-usuarios.html">Gestión de usuarios</a>
+
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
                     <a href="admin-reservas.html">Gestión de reservas</a>
                     <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
@@ -60,19 +75,25 @@
                 </nav>
             </aside>
 
+            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
+                <!-- PANEL: GESTIÓN DE USUARIOS -->
                 <section class="socios-panel">
                     <h2 class="h2">Gestión de usuarios</h2>
 
+                    <!-- Formulario de búsqueda -->
                     <div class="profile-box box-spacing">
                         <form id="form-buscar-usuarios">
+
+                            <!-- Campo para buscar por alias, nombre o correo -->
                             <div class="form-row">
                                 <label for="buscarUsuario">Buscar usuario</label>
                                 <input type="text" id="buscarUsuario" name="buscarUsuario"
                                     placeholder="Buscar por alias, nombre o correo">
                             </div>
 
+                            <!-- Botones de acción del formulario -->
                             <div class="actions actions-top">
                                 <button class="btn btn--primary btn--small" type="submit">Buscar</button>
                                 <button class="btn btn--ghost btn--small" type="reset"
@@ -82,8 +103,10 @@
                         </form>
                     </div>
 
+                    <!-- Mensaje dinámico para avisos, errores o resultados -->
                     <p id="mensaje-admin-usuarios" class="muted"></p>
 
+                    <!-- Tabla principal de usuarios -->
                     <div class="table-wrap" id="tabla-usuarios-wrap">
                         <table class="mini-table">
                             <thead>
@@ -98,6 +121,8 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
+
+                            <!-- Cuerpo cargado dinámicamente con JavaScript -->
                             <tbody id="tabla-usuarios-body">
                                 <tr>
                                     <td colspan="8">Cargando usuarios...</td>
@@ -107,10 +132,13 @@
                     </div>
                 </section>
 
+                <!-- PANEL: ACCIONES RÁPIDAS -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Acciones rápidas</h2>
 
                     <div class="two-cols">
+
+                        <!-- Acceso rápido a la tabla para cambiar estados -->
                         <a class="quick-card-link" href="#tabla-usuarios-wrap">
                             <div class="info-card quick-card">
                                 <span class="label">Cambios frecuentes</span>
@@ -119,6 +147,7 @@
                             </div>
                         </a>
 
+                        <!-- Acceso rápido a la tabla para cambiar perfiles -->
                         <a class="quick-card-link" href="#tabla-usuarios-wrap">
                             <div class="info-card quick-card">
                                 <span class="label">Permisos</span>
@@ -127,6 +156,7 @@
                             </div>
                         </a>
 
+                        <!-- Acceso a suscripciones -->
                         <a class="quick-card-link" href="admin-suscripciones.html">
                             <div class="info-card quick-card">
                                 <span class="label">Gestión comercial</span>
@@ -135,6 +165,7 @@
                             </div>
                         </a>
 
+                        <!-- Acceso a reservas y seguimiento -->
                         <a class="quick-card-link" href="admin-reservas.html">
                             <div class="info-card quick-card">
                                 <span class="label">Seguimiento</span>
@@ -149,13 +180,18 @@
         </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -163,6 +199,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript que gestiona búsqueda, listado y acciones de usuarios -->
     <script src="../js/admin-usuarios.js?v=4"></script>
 </body>
 

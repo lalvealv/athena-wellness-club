@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -17,9 +18,11 @@
 
 <body>
 
+    <!-- HEADER DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
                 <span class="brand-text">
@@ -28,6 +31,7 @@
                 </span>
             </a>
 
+            <!-- Menú superior de administración -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
                 <a href="admin-panel.html">Resumen</a>
                 <a class="is-active" href="admin-usuarios.html">Usuarios</a>
@@ -40,9 +44,11 @@
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR DE ADMINISTRACIÓN -->
             <aside class="socios-sidebar">
                 <div class="socios-user">
                     <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
@@ -50,6 +56,7 @@
                     <p id="admin-perfil">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral de administración -->
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
                     <a href="admin-panel.html">Resumen general</a>
                     <a class="is-active" href="admin-usuarios.html">Gestión de usuarios</a>
@@ -60,18 +67,23 @@
                 </nav>
             </aside>
 
+            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
+                <!-- PANEL: RESUMEN DEL USUARIO -->
                 <section class="socios-panel">
                     <h2 class="h2">Editar usuario</h2>
 
                     <div class="profile-box">
                         <div class="profile-grid">
+
+                            <!-- Foto de perfil del usuario seleccionado -->
                             <div class="profile-photo-wrap">
                                 <img id="resumen-foto-usuario" src="../img/athena_logo.png"
                                     alt="Foto de perfil del usuario">
                             </div>
 
+                            <!-- Datos resumen del usuario seleccionado -->
                             <div class="profile-data">
                                 <div class="profile-item">
                                     <span>ID usuario</span>
@@ -97,11 +109,14 @@
                     </div>
                 </section>
 
+                <!-- FORMULARIO DE EDICIÓN -->
                 <form id="form-editar-usuario">
 
+                    <!-- Campos ocultos usados por JavaScript/PHP para identificar el usuario -->
                     <input type="hidden" id="idUsuario" name="idUsuario">
                     <input type="hidden" id="esAdminOriginal" name="esAdminOriginal">
 
+                    <!-- DATOS PERSONALES -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Datos personales</h2>
 
@@ -153,6 +168,7 @@
                         </div>
                     </section>
 
+                    <!-- DIRECCIÓN DEL USUARIO -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Dirección</h2>
 
@@ -189,6 +205,7 @@
                         </div>
                     </section>
 
+                    <!-- PERMISOS Y ESTADO -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Permisos y estado</h2>
 
@@ -223,6 +240,7 @@
                         </div>
                     </section>
 
+                    <!-- SUSCRIPCIÓN ACTUAL -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Suscripción actual</h2>
 
@@ -272,6 +290,7 @@
                         </div>
                     </section>
 
+                    <!-- ACCIONES RÁPIDAS -->
                     <section class="socios-panel panel-spacing">
                         <h2 class="h2">Acciones rápidas</h2>
 
@@ -296,11 +315,13 @@
                             </div>
                         </div>
 
+                        <!-- Botones finales del formulario -->
                         <div class="actions actions-top">
                             <button class="btn btn--primary" type="submit">Guardar cambios</button>
                             <a class="btn btn--ghost" href="admin-usuarios.html">Volver</a>
                         </div>
 
+                        <!-- Mensaje dinámico de respuesta -->
                         <p id="mensaje-form-editar-usuario" class="muted"></p>
                     </section>
 
@@ -310,6 +331,7 @@
         </div>
     </main>
 
+    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="site-footer">
         <div class="container footer-inner">
             <div>
@@ -324,6 +346,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript que carga y actualiza los datos del usuario -->
     <script src="../js/admin-editar-usuario.js?v=2"></script>
 </body>
 

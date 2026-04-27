@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="es">
 
 <head>
@@ -17,22 +18,29 @@
 
 <body>
 
+    <!-- HEADER DEL ÁREA DE ADMINISTRACIÓN -->
     <header class="site-header site-header--socios">
         <div class="container header-inner header-inner--socios">
 
+            <!-- Logo del club -->
             <a class="brand" href="../publico/index.html" aria-label="ATHENA Wellness Club">
                 <img src="../img/athena_logo.png" alt="Logo ATHENA">
+
                 <span class="brand-text">
                     <strong>ATHENA</strong>
                     <span>Wellness Club · Administración</span>
                 </span>
             </a>
 
+            <!-- Menú superior -->
             <nav class="nav nav--socios" aria-label="Navegación del área de administración">
                 <a href="admin-panel.html">Resumen</a>
                 <a href="admin-usuarios.html">Usuarios</a>
                 <a href="admin-suscripciones.html">Suscripciones</a>
+
+                <!-- Página actual -->
                 <a class="is-active" href="admin-reservas.html">Reservas</a>
+
                 <a href="admin-entrenamientos.html">Entrenamientos</a>
                 <a href="admin-notificaciones.html">Avisos</a>
                 <a class="btn btn--ghost btn--small" href="../logout.php">Cerrar sesión</a>
@@ -40,40 +48,54 @@
         </div>
     </header>
 
+    <!-- CONTENIDO PRINCIPAL -->
     <main class="section section-socios">
         <div class="container socios-layout">
 
+            <!-- SIDEBAR DE ADMINISTRACIÓN -->
             <aside class="socios-sidebar">
+
+                <!-- Datos del administrador cargados dinámicamente -->
                 <div class="socios-user">
                     <img id="admin-foto" src="../img/athena_logo.png" alt="Administrador ATHENA">
                     <h3 id="admin-nombre">Cargando...</h3>
                     <p id="admin-perfil">Cargando...</p>
                 </div>
 
+                <!-- Menú lateral -->
                 <nav class="socios-menu" aria-label="Menú lateral de administración">
                     <a href="admin-panel.html">Resumen general</a>
                     <a href="admin-usuarios.html">Gestión de usuarios</a>
                     <a href="admin-suscripciones.html">Gestión de suscripciones</a>
+
+                    <!-- Página actual -->
                     <a class="is-active" href="admin-reservas.html">Gestión de reservas</a>
+
                     <a href="admin-entrenamientos.html">Gestión de entrenamientos</a>
                     <a href="admin-notificaciones.html">Gestión de notificaciones</a>
                 </nav>
             </aside>
 
+            <!-- CONTENIDO CENTRAL -->
             <div class="socios-content">
 
+                <!-- PANEL: GESTIÓN DE RESERVAS -->
                 <section class="socios-panel">
                     <h2 class="h2">Gestión de reservas</h2>
 
+                    <!-- Formulario de filtros -->
                     <div class="profile-box box-spacing">
                         <form id="form-filtro-reservas">
                             <div class="two-cols">
+
+                                <!-- Buscar por usuario o actividad -->
                                 <div class="form-row">
                                     <label for="buscarReserva">Buscar usuario o actividad</label>
                                     <input type="text" id="buscarReserva" name="buscarReserva"
                                         placeholder="Nombre del socio o clase">
                                 </div>
 
+                                <!-- Filtrar por estado de reserva -->
                                 <div class="form-row">
                                     <label for="filtrarEstadoReserva">Estado</label>
                                     <select id="filtrarEstadoReserva" name="filtrarEstadoReserva">
@@ -85,12 +107,14 @@
                                     </select>
                                 </div>
 
+                                <!-- Filtrar por fecha -->
                                 <div class="form-row form-row--date">
                                     <label for="fechaReserva">Fecha</label>
                                     <input type="date" id="fechaReserva" name="fechaReserva">
                                 </div>
                             </div>
 
+                            <!-- Botones de búsqueda y limpieza -->
                             <div class="actions actions-top">
                                 <button class="btn btn--primary btn--small" type="submit">Buscar</button>
                                 <button class="btn btn--ghost btn--small" type="reset"
@@ -99,8 +123,10 @@
                         </form>
                     </div>
 
+                    <!-- Mensaje dinámico de administración -->
                     <p id="mensaje-admin-reservas" class="muted"></p>
 
+                    <!-- Tabla principal de reservas -->
                     <div class="table-wrap" id="tabla-reservas-wrap">
                         <table class="mini-table">
                             <thead>
@@ -116,6 +142,8 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
+
+                            <!-- Cuerpo cargado dinámicamente con JavaScript -->
                             <tbody id="tabla-reservas">
                                 <tr>
                                     <td colspan="9">Cargando reservas...</td>
@@ -125,28 +153,34 @@
                     </div>
                 </section>
 
+                <!-- PANEL: RESUMEN DIARIO -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Resumen diario</h2>
 
                     <div class="dashboard-grid">
+
+                        <!-- Reservas confirmadas -->
                         <div class="info-card">
                             <span class="label">Reservas confirmadas</span>
                             <h3 id="resumen-confirmadas">Cargando...</h3>
                             <p>Sesiones activas para hoy</p>
                         </div>
 
+                        <!-- Asistencias -->
                         <div class="info-card">
                             <span class="label">Asistencias</span>
                             <h3 id="resumen-asistidas">Cargando...</h3>
                             <p>Usuarios ya registrados como presentes</p>
                         </div>
 
+                        <!-- Cancelaciones -->
                         <div class="info-card">
                             <span class="label">Cancelaciones</span>
                             <h3 id="resumen-canceladas">Cargando...</h3>
                             <p>Bajas registradas hoy</p>
                         </div>
 
+                        <!-- No asistidas -->
                         <div class="info-card">
                             <span class="label">No asistidas</span>
                             <h3 id="resumen-no-asistidas">Cargando...</h3>
@@ -155,10 +189,13 @@
                     </div>
                 </section>
 
+                <!-- PANEL: GESTIÓN OPERATIVA -->
                 <section class="socios-panel panel-spacing">
                     <h2 class="h2">Gestión operativa</h2>
 
                     <div class="two-cols">
+
+                        <!-- Acceso rápido a la tabla para controlar ocupación -->
                         <a class="quick-card-link" href="#tabla-reservas-wrap">
                             <div class="info-card quick-card">
                                 <span class="label">Seguimiento</span>
@@ -167,6 +204,7 @@
                             </div>
                         </a>
 
+                        <!-- Acceso rápido a la tabla para resolver incidencias -->
                         <a class="quick-card-link" href="#tabla-reservas-wrap">
                             <div class="info-card quick-card">
                                 <span class="label">Gestión interna</span>
@@ -182,13 +220,18 @@
         </div>
     </main>
 
+    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container footer-inner">
+
+            <!-- Contacto -->
             <div>
                 <p><strong>Contacto</strong></p>
                 <p>Teléfono: 645 789 123</p>
                 <p>Correo: club@gmail.com</p>
             </div>
+
+            <!-- Horario -->
             <div>
                 <p><strong>Horario</strong></p>
                 <p class="muted">L–V 07:00–22:30 · S–D 09:00–20:00</p>
@@ -196,6 +239,7 @@
         </div>
     </footer>
 
+    <!-- JavaScript que gestiona filtros, tabla y acciones de reservas -->
     <script src="../js/admin-reservas.js?v=5"></script>
 </body>
 
