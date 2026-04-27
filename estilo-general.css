@@ -20,6 +20,11 @@
     --athena-danger: #ff9a9a;
     --athena-warning: #ffd27d;
     --athena-info: #78d2ff;
+
+    --athena-gold-main: #d7b46a;
+    --athena-gold-light: #f0d596;
+    --athena-gold-dark: #b89344;
+    --athena-gold-text-dark: #16120c;
 }
 
 /* 2. RESET Y BASE GLOBAL */
@@ -422,9 +427,10 @@ textarea {
     padding: 0.85rem 0.9rem;
     border-radius: 14px;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(11, 12, 16, 0.55);
-    color: rgba(233, 233, 238, 0.92);
+    background: #23242c;
+    color: #f5f5f7;
     outline: none;
+    font: inherit;
 }
 
 input::placeholder,
@@ -479,6 +485,17 @@ select {
     background-repeat: no-repeat;
     background-position: right 0.9rem center;
     background-size: 1rem;
+}
+
+select option {
+    background-color: #23242c;
+    color: #f5f5f7;
+}
+
+select option:checked,
+select option:selected {
+    background-color: #3a3c46;
+    color: #ffffff;
 }
 
 input[type="date"] {
@@ -568,22 +585,7 @@ input[type="password"]::-ms-clear {
     }
 }
 
-
-/* =========================================================
-   OVERRIDE FINAL COLOR DORADO ATHENA
-   Pegar al FINAL de estilo-general.css
-========================================================= */
-
-:root {
-    --athena-gold-main: #d7b46a;
-    --athena-gold-light: #f0d596;
-    --athena-gold-dark: #b89344;
-    --athena-gold-soft: rgba(215, 180, 106, 0.12);
-    --athena-gold-border: rgba(215, 180, 106, 0.34);
-    --athena-gold-shadow: rgba(215, 180, 106, 0.22);
-}
-
-/* BOTONES PRINCIPALES */
+/* 16. OVERRIDE GLOBAL FINAL DORADO */
 .btn--primary,
 .reserve-btn,
 .cancel-btn,
@@ -593,7 +595,7 @@ input[type="submit"].btn--primary,
 input[type="button"].btn--primary {
     background: linear-gradient(135deg, var(--athena-gold-light), var(--athena-gold-main)) !important;
     border: 1px solid var(--athena-gold-border) !important;
-    color: #16120c !important;
+    color: var(--athena-gold-text-dark) !important;
     box-shadow: 0 10px 24px var(--athena-gold-shadow) !important;
 }
 
@@ -606,17 +608,8 @@ input[type="submit"].btn--primary:hover,
 input[type="button"].btn--primary:hover {
     background: linear-gradient(135deg, #f6deaa, #dfbc74) !important;
     border-color: rgba(255, 220, 140, 0.55) !important;
-    color: #16120c !important;
+    color: var(--athena-gold-text-dark) !important;
     box-shadow: 0 14px 32px rgba(215, 180, 106, 0.28) !important;
-}
-
-/* BOTONES SECUNDARIOS / GHOST */
-.btn,
-.btn--ghost,
-button,
-input[type="button"],
-input[type="submit"] {
-    transition: transform 0.12s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 .btn:hover,
@@ -625,7 +618,6 @@ input[type="submit"] {
     background: rgba(255, 220, 140, 0.06) !important;
 }
 
-/* ESTADOS ACTIVOS DE MENÚ Y NAVEGACIÓN */
 .nav a.is-active,
 .nav--socios a.is-active,
 .socios-menu a.is-active {
@@ -641,7 +633,6 @@ input[type="submit"] {
     background: rgba(255, 220, 140, 0.05) !important;
 }
 
-/* ENLACES DE ACCIÓN EN TABLAS */
 .table-wrap td a,
 .actions-table a {
     color: var(--athena-gold-light) !important;
@@ -652,7 +643,6 @@ input[type="submit"] {
     color: #ffe7b3 !important;
 }
 
-/* SELECTS */
 select,
 .form-row select,
 .state-select,
@@ -664,7 +654,6 @@ select,
     padding-right: 2.8rem !important;
 }
 
-/* FOCUS DE INPUTS / TEXTAREA / SELECT */
 input:focus,
 select:focus,
 textarea:focus,
@@ -673,11 +662,11 @@ textarea:focus,
 .form-row textarea:focus,
 .state-select:focus,
 .select-perfil:focus {
-    border-color: rgba(215, 180, 106, 0.65) !important;
-    box-shadow: 0 0 0 3px rgba(215, 180, 106, 0.12) !important;
+    border-color: rgba(215, 180, 106, 0.65);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 0 0 3px rgba(215, 180, 106, 0.12);
 }
 
-/* ICONO DE CALENDARIO */
 input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 0.95 !important;
     filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(475%) hue-rotate(339deg) brightness(101%) contrast(89%) !important;
@@ -688,13 +677,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f0d596'%3E%3Cpath d='M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1Zm12 8H5v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8ZM6 6a1 1 0 0 0-1 1v1h14V7a1 1 0 0 0-1-1H6Z'/%3E%3C/svg%3E") !important;
 }
 
-/* OJO DE CONTRASEÑA EN CONTROLES NATIVOS */
-input[type="password"]::-ms-reveal,
-input[type="password"]::-ms-clear {
-    filter: brightness(0) saturate(100%) invert(91%) sepia(27%) saturate(475%) hue-rotate(339deg) brightness(101%) contrast(89%) !important;
-}
-
-/* BARRAS Y PROGRESOS */
 .progress-bar-fill,
 .progress-value,
 .table-progress-fill,
@@ -702,7 +684,6 @@ input[type="password"]::-ms-clear {
     background: linear-gradient(90deg, var(--athena-gold-light), var(--athena-gold-main)) !important;
 }
 
-/* BADGES DORADOS */
 .admin-lock-badge,
 .notification-unread,
 .weekly-check-item--done {
@@ -711,7 +692,6 @@ input[type="password"]::-ms-clear {
     color: var(--athena-gold-light) !important;
 }
 
-/* ALERTAS DE ÉXITO MÁS ACORDES */
 .alert-success {
     background: rgba(255, 220, 140, 0.08) !important;
     border-color: rgba(255, 220, 140, 0.30) !important;
@@ -719,4 +699,18 @@ input[type="password"]::-ms-clear {
 
 .alert-success strong {
     color: var(--athena-gold-light) !important;
+}
+
+/* SELECTS OSCUROS EN FORMULARIOS PÚBLICOS */
+select,
+select option,
+.form-row select,
+.form-row select option {
+    background-color: #23242c !important;
+    color: #f5f5f7 !important;
+}
+
+select option:checked {
+    background-color: #3a3c46 !important;
+    color: #ffffff !important;
 }
